@@ -1,0 +1,406 @@
+BODY {
+	background: url('../img/bg_main.png');
+	font-family: 'Trebuchet MS',Arial,SansSerif;
+}
+
+html {height: 100%}
+body {
+	width: 100%;
+	height: 100%;
+}
+
+#center {
+	width:900px;
+	background: url('../img/bg_body.png') repeat-y;
+	margin: 0px auto;
+	padding: 0px 19px;
+}
+
+#head {
+	height: 150px;
+	background: url('../img/logo.jpg');
+}
+
+#menu {
+	height: 30px;
+}
+
+#menu div {
+	height: 29px;
+}
+
+#menu_left {
+	width: 12px;
+	background: url('../img/bg_menu_left.png');
+	float: left;
+}
+
+#menu_center {
+	width: 876px;
+	background: url('../img/bg_menu_center.png');
+	float: left;
+	padding-top: 1px;
+}
+
+#menu_right {
+	width: 12px;
+	background: url('../img/bg_menu_right.png');
+	float: left;
+}
+
+#menu div a.menu_button {
+	font-size: 17px;
+	font-family:sans-serif;
+	margin-right: 15px;
+	color:silver;
+	text-decoration: none;
+}
+
+#menu div a.menu_button:hover {
+	color:aqua;
+}
+
+#sidebar {
+	background-color:#faf8f8;
+}
+
+/* Middle
+-----------------------------------------------------------------------------*/
+#middle {
+	border-left: 200px solid #faf8f8;
+	height: 1%;
+	min-height: 700px;
+}
+#middle:after {
+	content: '.';
+	display: block;
+	clear: both;
+	visibility: hidden;
+	height: 0;
+}
+#container {
+	width: 100%;
+	float: left;
+	overflow: hidden;
+	margin-right: -100%;
+}
+#content {
+	padding: 0 20px;
+}
+
+/* Sidebar Left
+-----------------------------------------------------------------------------*/
+.sl {
+	float: left;
+	width: 200px;
+	position: relative;
+	background: #faf8f8;
+	left: -200px;
+}
+
+#footer {
+	background: #BFF08E;
+	text-align: center;
+}
+
+/* Всякие другие элементы
+-----------------------------------------------------------------------------*/
+div.apply_message {
+	border: 1px green;
+	font-size: 18px;
+	text-align: center;
+}
+
+ol {
+	list-style-position: inside;
+}
+
+ul {
+	list-style-position: inside;
+}
+
+
+/* Tables
+-----------------------------------------------------------------------------*/
+table {
+	background-color: #d0d0d0;
+	font-size: 12px;
+	min-width: 50%;
+}
+
+thead tr {
+	background-color: #D3E1EC;
+	background-image: url('../img/table-title-bg.jpg');
+}
+
+tr.nechet {
+	background: #ffffff;
+}
+
+tr.chet {
+	background: #eef4fa;
+}
+
+tr.my_team {
+	background: PaleGreen;
+}
+
+td {
+	padding: 0px 2px;
+}
+
+th {
+	padding: 0px 2px;
+}
+
+table a {
+	text-decoration: none;
+}
+
+a.team {
+	text-decoration:none;
+}
+
+hr {
+	background:green;
+	margin-top: 10px;
+}
+
+/**
+ * Менюшные стили
+ */
+
+a.logout {
+	 font-size: 11px;
+}
+
+div#sidebar p {
+	font-size: 12px;
+}
+
+div#sidebar li {
+	font-size: 12px;
+	list-style: none;
+	margin-left: 4px;
+}
+
+ul.vmenu {
+	font-size: 12px;
+	border: 1px solid gray;
+	padding: 3px;
+	margin: 5px 0px;
+}
+
+ul.my_teams a {
+	text-decoration: none;
+}
+
+
+/**
+ * Новости
+ */
+h1.news {
+	 font-size: x-large;
+}
+
+div.news_short_header a {
+	text-decoration: none;
+}
+
+div.news_short_header{
+	float: left;
+	padding-left: 5px;
+}
+
+div.news_short {
+	margin-bottom: 10px;
+	background-color: #F7FFF4;
+}
+
+div.news_short_info {
+	text-align: right;
+	font-size: 11px;
+}
+
+div.news_short_header, div.news_short_info {
+	height: 22px;
+	background: honeyDew;
+}
+
+div.news_short_body {
+	clear: both;
+	padding: 1px 5px;
+}
+
+/**
+ * Страница матча
+ */
+div.home_team_ava {
+	float: left;
+	width: 300px;
+	border: solid #CDCDCD 1px;
+}
+
+div.match_result {
+	float: left;
+	font-size: 20px;
+	width: 40px;
+	border: solid #CDCDCD 1px;
+}
+
+div.away_team_ava {
+	float: left;
+	width: 300px;
+	text-align: right;
+	border: solid #CDCDCD 1px;
+}
+
+table.match {
+	border-spacing: 0;
+	width: 100%;
+	background: none;
+}
+
+td.home_team_ava {
+	width: 100px;
+	padding: 0px;
+}
+
+td.match_result {
+	text-align: center;
+	font-size: 40px;
+	font-weight: 600;
+	padding: 0px;
+}
+
+td.away_team_ava {
+	width: 100px;
+	padding: 0px;
+}
+
+table.match_goals {
+	width: 100%;
+	height: 50px;
+	background: none;
+}
+
+table.match_goals td {
+	width: 45%;
+	vertical-align: top;
+}
+
+table.match_goals td.left {
+	text-align: right;
+}
+
+table.match_goals td.center {
+	width: 10%;
+}
+
+div.match_tournament {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+div.home_team_name {
+	clear: left;
+	float: left;
+	margin-right: 10px;
+	border: double 3px;
+	width: 305px;
+}
+
+div.away_team_name {
+	float: left;
+	margin-left: 10px;
+	border: double 3px;
+	width: 305px;
+	text-align: right;
+}
+
+img.team_logo {
+	width: 130px;
+	height: 130px;
+}
+
+div.match_date {
+	font-size: 14px;
+}
+
+div.match_teams {
+	font-size: 25px;
+}
+
+table.match {
+	margin-top: 20px;
+}
+
+table.match_teams {
+	font-size: 25px;
+	background: none;
+	width: 100%;
+}
+
+td.match_team_home, td.match_away_home {
+	width: 40%;
+}
+
+ul.home_goals, ul.away_goals {
+	width: 100%;
+	/*padding: 0px 50px;*/
+	float: left;
+	list-style-type: none;
+	font-weight: bold;
+}
+
+ul.home_goals {
+	text-align: right;
+}
+
+div.comment {
+	clear: left;
+	background-color: #F7FFF4;
+	min-height: 100px;
+	margin-bottom: 10px;
+}
+
+div.comment_author {
+	float: left;
+	margin-right: 10px;
+}
+
+div.comment_text {
+	clear: right;
+	font-size: 14px;
+}
+
+div.comment_header {
+	font-size: 12px;
+	background: honeyDew;
+}
+
+
+/**
+ * Страница команды в турнире
+ */
+table.season_info {
+	min-width: 0px;
+	width: 30%;
+	background: #eef4fa;
+	font-size: medium;
+}
+
+table.matches {
+	margin: 10px 0px;
+}
+
+p.play {
+	color: green;
+}
+
+p.not_play {
+	color: red;
+}
+
+/* Страница просмотра пользовталея
+--------------------------------------------------------*/

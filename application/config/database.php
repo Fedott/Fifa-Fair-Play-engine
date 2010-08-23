@@ -18,10 +18,10 @@ return array
 			 * Ports and sockets may be appended to the hostname.
 			 */
 			'hostname'   => 'localhost',
-			'username'   => 'ko3',
-			'password'   => 'ko3',
+			'username'   => 'fifa',
+			'password'   => 'fifa',
 			'persistent' => FALSE,
-			'database'   => 'ko3',
+			'database'   => 'fifa',
 		),
 		'table_prefix' => '',
 		'charset'      => 'utf8',
@@ -40,9 +40,9 @@ return array
 			 * boolean  persistent
 			 * string   identifier
 			 */
-			'dsn'        => 'mysql:host=localhost;dbname=kohana',
-			'username'   => 'root',
-			'password'   => 'r00tdb',
+			'dsn'        => 'mysql:host=localhost;dbname=fifa',
+			'username'   => 'fifa',
+			'password'   => 'fifa',
 			'persistent' => FALSE,
 		),
 		'table_prefix' => '',

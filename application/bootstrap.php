@@ -68,17 +68,13 @@ Kohana::$config->attach(new Kohana_Config_File);
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
 Kohana::modules(array(
-	 'auth'       => MODPATH.'auth',       // Basic authentication
-	// 'cache'      => MODPATH.'cache',      // Caching with multiple backends
-	 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
-	 'database'   => MODPATH.'database',   // Database access
-	// 'image'      => MODPATH.'image',      // Image manipulation
-	 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
-	 'pagination' => MODPATH.'pagination', // Paging of results
-	 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
-	 'sprig'      => MODPATH.'sprig',      // Улучшеный ОРМ
-	 'jelly'      => MODPATH.'jelly',      // Улучшеный ОРМ
-	));
+	'database'   => MODPATH.'database',   // Database access
+	'pagination' => MODPATH.'pagination', // Paging of results
+	'jelly'      => MODPATH.'jelly',      // Улучшеный ОРМ
+	'jelly-auth' => MODPATH.'jelly-auth', // Драйвер Jelly для Auth
+	'auth'       => MODPATH.'auth',       // Basic authentication
+	'userguide'  => MODPATH.'userguide',  // Модуль свтроенной доки
+));
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
@@ -86,7 +82,7 @@ Kohana::modules(array(
  */
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
-		'controller' => 'hello',
+		'controller' => 'main',
 		'action'     => 'index',
 	));
 
