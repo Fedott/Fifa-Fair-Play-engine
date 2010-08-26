@@ -29,7 +29,11 @@
 		
 		<div id="middle">
 			<div id="container">
+				<div id="breadcrumb">
+					<?=(isset($breadcrumb)?$breadcrumb:"").$title;?>
+				</div>
 				<div id="content">
+					
 					<?=$content?>
 				</div>
 			</div>

@@ -88,6 +88,22 @@ body {
 	padding: 0 20px;
 }
 
+#breadcrumb {
+	background-color:#FAF8F8;
+	font-size:12px;
+	padding:4px 15px;
+	color: #999999;
+}
+
+#breadcrumb a {
+	text-decoration: none;
+	color: #999999;
+}
+
+#breadcrumb a:hover {
+	text-decoration: underline;
+}
+
 /* Sidebar Left
 -----------------------------------------------------------------------------*/
 .sl {

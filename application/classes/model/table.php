@@ -25,6 +25,7 @@ class Model_Table extends Jelly_Model
 			'ended' => new Field_Boolean(array(
 				'default' => FALSE,
 			)),
+			'lines' => new Field_HasMany,
 		));
 	}
 }
