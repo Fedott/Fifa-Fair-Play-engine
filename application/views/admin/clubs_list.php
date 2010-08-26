@@ -9,11 +9,11 @@
 		</tr>
 	</thead>
 	<tbody>
-	<?foreach($teams as $team):?>
-		<tr class="<?=(($i%2)==0)?'chet':'nechet'?>">
+	<?foreach($clubs as $club):?>
+		<tr class="<?=text::alternate('nechet', 'chet');?>">
 			<td><?=$i++?>.</td>
-			<td><?=html::anchor('/admin/team/view/'.$team->id, $team->name, array('class' => 'team'))?></td>
-			<td><?foreach($team->lines as $key => $line):?><?=($key==1)?', ':''?><?=$line->table->name?><?endforeach;?></td>
+			<td><?=html::anchor('/admin/club/view/'.$club->id, $club->name, array('class' => 'club'))?></td>
+			<td><?foreach($club->lines as $key => $line):?><?=($key==1)?', ':''?><?=$line->table->name?><?endforeach;?></td>
 		</tr>
 	<?endforeach;?>
 	</tbody>

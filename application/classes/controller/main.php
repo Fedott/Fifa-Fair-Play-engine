@@ -14,13 +14,8 @@
 
 		public function action_index()
 		{
-			$this->auto_render = FALSE;
-			$season = Jelly::select('table', 1);
-			echo Kohana::debug($season->as_array());
-
-//			$this->template->title = __('Поехали!');
-//			$this->template->content = __('Начинаем всё с начала =)');
-//			$this->template->content.= "<br>".$this->user;
+			$this->template->title = __('Главная');
+			$this->template->content = __('Начинаем всё с начала =)');
 		}
 
 		public function action_login()
@@ -30,7 +25,7 @@
 			if($this->auth->logged_in('login'))
 			{
 				Request::instance()->redirect('main_index');
-	}
+			}
 			if($_POST)
 			{
 				$username = $_POST['username'];
@@ -53,5 +48,47 @@
 			$this->template->title = __('Авторизация пользователя');
 			$this->template->content = $view;
 			$this->template->breadcrumb = HTML::anchor('main/index', 'Главная страница')." > ";
+		}
+
+		public function action_logout()
+		{
+			$this->auth->logout();
+			Request::instance()->redirect('');
+		}
+
+		public function action_register()
+		{
+			$form = array(
+				'username'	=> '',
+				'email'		=> '',
+				'icq'		=> '',
+			);
+
+			$errors = array();
+
+			if($_POST)
+			{
+				$post = Arr::extract($_POST, array('username','email','icq','password','password_confirm'));
+				$user = Jelly::factory('user');
+
+				try
+				{
+					$user->set($post);
+					$user->add('roles', 1);
+					$this->auth->login($user, $post->password);
+					$user->save();
+					url::redirect('');
+				}
+				catch (Validate_Exception $exp)
+				{
+					$form = $post;
+					$errors = $exp->array->errors('register_form');
+				}
+			}
+
+			$this->template->title = "Регистрация";
+			$this->template->content = new View('regform');
+			$this->template->content->form = $form;
+			$this->template->content->errors = $errors;
 		}
 	}

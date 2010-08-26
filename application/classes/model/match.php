@@ -7,7 +7,7 @@ class Model_Match extends Jelly_Model
 		$meta->fields(array(
 			'id' => new Field_Primary,
 			'date' => new Field_Timestamp,
-			'table' => new Field_BelongsTo(),
+			'table' => new Field_BelongsTo,
 			'home' => new Field_BelongsTo(array(
 				'column' => 'home_id',
 				'foreigh' => 'line.id',

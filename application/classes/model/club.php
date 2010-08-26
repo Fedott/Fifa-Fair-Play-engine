@@ -13,7 +13,11 @@ class Model_Club extends Jelly_Model
 				),
 			)),
 			'url' => new Field_String,
-			'img' => new Field_File,
+			'logo' => new Field_File(array(
+				'path' => 'media/logos',
+			)),
+			'players' => new Field_HasMany,
+			'lines' => new Field_HasMany,
 		));
 	}
 }

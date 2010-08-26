@@ -13,10 +13,4 @@
 <hr>
 <?=html::anchor('admin/tournament/edit/'.$tournament->id, 'Редактировать')?>
 <br>
-<?=html::anchor('admin/tournament/adds/'.$tournament->id, 'Добавить команды')?>
-<br>
-<?if($tournament->active && empty($tournament->ended)):?>
-	<?=html::anchor('admin/tournament/deactive/'.$tournament->id, 'Деактивировать');?>
-<?else:?>
-	<?=html::anchor('admin/tournament/active/'.$tournament->id, 'Активировать');?>
-<?endif;?>
+<?=html::anchor('admin/tournament/edit_lines/'.$tournament->id, 'Добавить команды')?>

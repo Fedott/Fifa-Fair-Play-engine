@@ -14,12 +14,44 @@
 <?=form::open()?>
 <ul>
 	<li class="">
-		<label class="desc" for="name">
+		<label class="desc" for="field-name">
 			Название
 		</label>
 		<div>
-			<input class="field text medium" type="text" name="name" id="name" value="<?=$form['name']?>">
-			<label for="name">От <b>2</b> до <b>30</b> символов</label>
+			<?=$tournament->input('name');?>
+			<label for="field-name">От <b>2</b> до <b>30</b> символов</label>
+		</div>
+	</li>
+	<li>
+		<label class="desc" for="field-type">
+			<?=__('Тип турнира');?>
+		</label>
+		<div>
+			<?=$tournament->input('type');?>
+		</div>
+	</li>
+	<li>
+		<label class="desc" for="field-active">
+			<?=__('Активировать');?>
+		</label>
+		<div>
+			<?=$tournament->input('active');?>
+		</div>
+	</li>
+	<li>
+		<label class="desc" for="field-visible">
+			<?=__('Видимый');?>
+		</label>
+		<div>
+			<?=$tournament->input('visible');?>
+		</div>
+	</li>
+	<li>
+		<label class="desc" for="field-ended">
+			<?=__('Закончен');?>
+		</label>
+		<div>
+			<?=$tournament->input('ended');?>
 		</div>
 	</li>
 	<li>

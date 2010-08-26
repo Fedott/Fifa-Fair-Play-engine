@@ -14,12 +14,23 @@
 <?=form::open()?>
 <ul>
 	<li class="">
-		<label class="desc" for="name">
+		<label class="desc" for="field-name">
 			Название
 		</label>
 		<div>
-			<input class="field text medium" type="text" name="name" id="name" value="<?=$form['name']?>">
-			<label for="name">От <b>2</b> до <b>30</b> символов</label>
+			<?=$club->input('name');?>
+			<label for="field-name">От <b>2</b> до <b>30</b> символов</label>
+		</div>
+	</li>
+	<li class="">
+		<label class="desc" for="field-logo">
+			Логотип
+		</label>
+		<div>
+			<?=$club->input('logo');?>
+			<?if(!empty($club->logo)):?>
+				<?=HTML::image("media/logos/".$club->logo);?>
+			<?endif;?>
 		</div>
 	</li>
 	<li>
