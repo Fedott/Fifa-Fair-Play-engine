@@ -32,7 +32,7 @@
 			{
 				try
 				{
-					$club->set(Arr::extract($_POST, array('name', 'logo')));
+					$club->set(Arr::extract($_POST, array('name')));
 					$club->url = url::string_to_url($club->name);
 					$club->save();
 					Request::instance()->redirect('admin/club/view/'.$club->id);
@@ -50,5 +50,35 @@
 			$this->template->title = __("Редактирование команды :name", array($club->name));
 			$this->template->content = $view;
 			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".HTML::anchor('admin/club', 'Управление командами')." > ";
+		}
+
+		public function action_edit_club_image($cid)
+		{
+			$club = Jelly::select('club', $cid);
+
+			if($_FILES)
+			{
+				try
+				{
+					$valid = Validate::factory($_FILES)
+							->rule('logo', 'Upload::type', array(array('jpg', 'png', 'gif')))
+							->rule('logo', 'Upload::size', array('200K'));
+					$valid->check();
+					$club->logo = Upload::save($_FILES['logo'], NULL, 'media/logos');
+					$club->save();
+					Request::instance()->redirect('admin/club/view/'.$club->id);
+				}
+				catch (Validate_Exception $exp)
+				{
+					$errors = $exp->array->errors('club');
+				}
+			}
+
+			$view = View::factory('admin/club_edit_image');
+			$view->club = $club;
+
+			$this->template->title = __("Загрузка логотипа для команды :name", array($club->name));
+			$this->template->content = $view;
+			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".HTML::anchor('admin/club', 'Управление командами')." > ".HTML::anchor('admin/club/view/'.$club->id, 'Команда '.$club->name)." > ";
 		}
 	}

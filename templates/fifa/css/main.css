@@ -192,6 +192,7 @@ a.logout {
 
 div#sidebar p {
 	font-size: 12px;
+	margin: 0px 12px;
 }
 
 div#sidebar li {
@@ -204,7 +205,11 @@ ul.vmenu {
 	font-size: 12px;
 	border: 1px solid gray;
 	padding: 3px;
-	margin: 5px 0px;
+	margin: 5px;
+}
+
+ul.my_teams {
+	margin: 0px 10px;
 }
 
 ul.my_teams a {

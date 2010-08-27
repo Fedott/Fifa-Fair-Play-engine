@@ -33,12 +33,15 @@
 					<?=(isset($breadcrumb)?$breadcrumb:"").$title;?>
 				</div>
 				<div id="content">
-					
 					<?=$content?>
 				</div>
 			</div>
 			<div id="sidebar" class="sl">
-
+				<?=Request::factory(Route::get('widget')->uri(array(
+						'action' => 'menu',
+						'param1' => 'default',
+					)))->execute();
+				?>
 			</div>
 		</div>
 		<div id="footer">
