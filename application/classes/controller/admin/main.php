@@ -20,7 +20,7 @@
 		public function action_index()
 		{
 			$this->template->title = __('Административный раздел');
-			$this->template->content = __('Контент');
+			$this->template->content = View::factory('admin/main');
 		}
 
 		public function action_tournament()

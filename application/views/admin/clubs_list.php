@@ -9,6 +9,7 @@
 		</tr>
 	</thead>
 	<tbody>
+	<?$i = 1;?>
 	<?foreach($clubs as $club):?>
 		<tr class="<?=text::alternate('nechet', 'chet');?>">
 			<td><?=$i++?>.</td>

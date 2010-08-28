@@ -11,7 +11,7 @@
 </ul>
 </div>
 <?endif;?>
-<?=form::open()?>
+<?=form::open(NULL, array('enctype' => 'multipart/form-data'));?>
 <ul>
 	<li class="">
 		<label class="desc" for="field-name">

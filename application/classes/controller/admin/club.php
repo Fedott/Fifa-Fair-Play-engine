@@ -25,7 +25,10 @@
 
 		public function action_edit($cid = NULL)
 		{
-			$club = Jelly::select('club', $cid);
+			if($cid === NULL)
+				$club = Jelly::factory ('club');
+			else
+				$club = Jelly::select('club', $cid);
 			$errors = array();
 
 			if($_POST)
@@ -34,6 +37,8 @@
 				{
 					$club->set(Arr::extract($_POST, array('name')));
 					$club->url = url::string_to_url($club->name);
+					if(isset($_FILES))
+						$club->logo = $_FILES['logo'];
 					$club->save();
 					Request::instance()->redirect('admin/club/view/'.$club->id);
 				}
@@ -47,38 +52,20 @@
 			$view->club = $club;
 			$view->errors = $errors;
 
-			$this->template->title = __("Редактирование команды :name", array($club->name));
+			$this->template->title = __("Редактирование команды :name", array(':name' => $club->name));
 			$this->template->content = $view;
 			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".HTML::anchor('admin/club', 'Управление командами')." > ";
 		}
 
-		public function action_edit_club_image($cid)
+		public function action_view($id)
 		{
-			$club = Jelly::select('club', $cid);
+			$club = Jelly::select('club', $id);
 
-			if($_FILES)
-			{
-				try
-				{
-					$valid = Validate::factory($_FILES)
-							->rule('logo', 'Upload::type', array(array('jpg', 'png', 'gif')))
-							->rule('logo', 'Upload::size', array('200K'));
-					$valid->check();
-					$club->logo = Upload::save($_FILES['logo'], NULL, 'media/logos');
-					$club->save();
-					Request::instance()->redirect('admin/club/view/'.$club->id);
-				}
-				catch (Validate_Exception $exp)
-				{
-					$errors = $exp->array->errors('club');
-				}
-			}
-
-			$view = View::factory('admin/club_edit_image');
+			$view = new View('admin/club_view');
 			$view->club = $club;
 
-			$this->template->title = __("Загрузка логотипа для команды :name", array($club->name));
+			$this->template->title = __("Команда :name", array(':name' => $club->name));
 			$this->template->content = $view;
-			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".HTML::anchor('admin/club', 'Управление командами')." > ".HTML::anchor('admin/club/view/'.$club->id, 'Команда '.$club->name)." > ";
+			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".HTML::anchor('admin/club', 'Управление командами')." > ";
 		}
 	}

@@ -1,5 +1,5 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
-<h2>Добавление игроков в команду: <span style="color:red;"><?=$team->name?></span></h1>
+<h2>Добавление игроков в команду: <span style="color:red;"><?=$club->name?></span></h2>
 <?if($errors):?>
 <div class="errors">
 	<p class="errors">Произошла ошибка</p>
@@ -18,7 +18,7 @@
 	<ul>
 		<?foreach($allow as $ok):?>
 		<li>
-			<?=$ok->name()?>
+			<?=$ok?>
 		</li>
 		<?endforeach;?>
 </ul>
