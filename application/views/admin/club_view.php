@@ -33,4 +33,4 @@
 <hr>
 <?=html::anchor('admin/club/edit/'.$club->id, 'Редактировать')?>
 <br>
-<?=html::anchor('admin/player/adds/'.$club->id, 'Добавить игроков')?>
+<?=html::anchor('admin/club/adds/'.$club->id, 'Добавить игроков')?>
