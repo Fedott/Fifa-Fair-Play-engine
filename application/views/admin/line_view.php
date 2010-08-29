@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
-<p>Команда, <?=$line->team->name?>, в турнире <?=$line->table->name;?></p>
-<?if($line->user_id):?>
+<p>Команда, <?=$line->club->name?>, в турнире <?=$line->table->name;?></p>
+<?if($line->user->id):?>
 <p>Управляет командой: <?=$line->user->username;?></p>
 <?else:?>
 <p>Тренер не назначен</p>

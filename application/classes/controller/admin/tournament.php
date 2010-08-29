@@ -4,7 +4,7 @@
 	{
 		public function action_index()
 		{
-			$this->template->title = __('Управление Турнирами');
+			$this->template->title = __('Управление турнирами');
 			$this->template->content = new View('admin/tournament');
 			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ";
 		}
@@ -18,7 +18,8 @@
 
 			$this->template->title = __('Список турниров');
 			$this->template->content = $view;
-			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".HTML::anchor('admin/tournament', 'Управление турнирами')." > ";
+			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".
+					HTML::anchor('admin/tournament', 'Управление турнирами')." > ";
 		}
 
 		public function action_view($id)
@@ -27,14 +28,18 @@
 			$view = new View('admin/tournament_view');
 			$view->tournament = $tournament;
 
-			$this->template->title = __('Турнир: :tname', array(':tname' => $tournament->name));
+			$this->template->title = __('Турнир :tname', array(':tname' => $tournament->name));
 			$this->template->content = $view;
-			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".HTML::anchor('admin/tournament', 'Управление турнирами')." > ";
+			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".
+					HTML::anchor('admin/tournament', 'Управление турнирами')." > ";
 		}
 
 		public function action_edit($id = NULL)
 		{
-			$tournament = Jelly::select('table', $id);
+			if($id === NULL)
+				$tournament = Jelly::factory ('table');
+			else
+				$tournament = Jelly::select('table', $id);
 			$errors = array();
 
 			if($_POST)
@@ -55,26 +60,102 @@
 			$view->errors = $errors;
 			$view->tournament = $tournament;
 
-			$this->template->title = __('Редактирование турнира, :name', array(':name' => $tournament->name));
+			$this->template->title = __('Редактирование турнира :name', array(':name' => $tournament->name));
 			$this->template->content = $view;
-			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".HTML::anchor('admin/tournament', 'Управление турнирами')." > ";
+			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".
+					HTML::anchor('admin/tournament', 'Управление турнирами')." > ".
+					HTML::anchor('admin/tournament/view/'.$tournament->id, 'Турнир '.$tournament->name)." > ";
 		}
 
 		public function action_edit_lines($tid)
 		{
 			$tournament = Jelly::select('table', $tid);
-			$clubs = Jelly::select('club')
-					->join('lines')
-					->on('lines.club_id', "=", "clubs.id")
-					->where('lines.table_id', "!=", $tournament->id)
-					->execute();
+
+			if($_POST)
+			{
+				foreach ($_POST['clubs'] as $club_id)
+				{
+					$line = Jelly::factory('line');
+					$line->club = $club_id;
+					$line->table = $tournament->id;
+					$line->save();
+				}
+
+				Request::instance()->redirect('admin/tournament/view/'.$tournament->id);
+			}
+
+			$club_in_tournament = array();
+			foreach($tournament->lines as $line)
+			{
+				$club_in_tournament[] = $line->club->id;
+			}
+			if(count($club_in_tournament))
+			{
+				$clubs = Jelly::select('club')
+						->where('id', 'NOT_IN', $club_in_tournament)
+						->execute();
+			}
+			else
+			{
+				$clubs = Jelly::select('club')
+						->execute();
+			}
 
 			$view = new View('admin/tournament_edit_lines');
 			$view->tournament = $tournament;
 			$view->clubs = $clubs;
 
-			$this->template->title = __('Редактирование команд в турнире');
+			$this->template->title = __('Добавление команд');
 			$this->template->content = $view;
-			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".HTML::anchor('admin/tournament', 'Управление турнирами')." > ";
+			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".
+					HTML::anchor('admin/tournament', 'Управление турнирами')." > ".
+					HTML::anchor('admin/tournament/view/'.$tournament->id, 'Турнир '.$tournament->name)." > ";
+		}
+
+		public function action_line_view($lid)
+		{
+			$line = Jelly::select('line', $lid);
+
+			$view = new View('admin/line_view');
+			$view->line = $line;
+
+			$this->template->title = __("Команда :name", array(':name' => $line->club->name));
+			$this->template->content = $view;
+			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".
+					HTML::anchor('admin/tournament', 'Управление турнирами')." > ".
+					HTML::anchor('admin/tournament/view/'.$line->table->id, 'Турнир '.$line->table->name)." > ";
+		}
+
+		public function action_line_coach($lid)
+		{
+			$line = Jelly::select('line', $lid);
+
+			if($_POST)
+			{
+				$line->user = $_POST['user_id'];
+				$line->save();
+				Request::instance()->redirect('admin/tournament/view/'.$line->table->id);
+			}
+
+			$users = Jelly::select('user')
+					->where('id', '!=', $line->user->id)
+					->execute();
+
+			$users_arr = array('NULL' => 'Не назначен');
+			foreach($users as $user)
+			{
+				$users_arr[$user->id] = $user->username;
+			}
+
+			$view = new View('admin/line_coach');
+			$view->line = $line;
+			$view->users = $users_arr;
+
+			$this->template->title = __('Назначение тренера');
+			$this->template->content = $view;
+			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".
+					HTML::anchor('admin/tournament', 'Управление турнирами')." > ".
+					HTML::anchor('admin/tournament/view/'.$line->table->id, 'Турнир '.$line->table->name)." > ".
+					HTML::anchor('admin/tournament/line_view/'.$line->club->id, 'Команда '.$line->club->name)." > ";
 		}
 	}

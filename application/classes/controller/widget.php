@@ -4,7 +4,10 @@
 	{
 		public function action_menu($type = NULL)
 		{
+			$auth = Auth::instance();
 			$view = View::factory('menu');
+			$view->auth = $auth;
+			$view->user = $auth->get_user();
 			echo $view->render();
 		}
 	}

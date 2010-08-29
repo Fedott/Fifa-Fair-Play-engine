@@ -62,6 +62,7 @@ body {
 
 #sidebar {
 	background-color:#faf8f8;
+	padding-top:5px;
 }
 
 /* Middle
@@ -206,6 +207,12 @@ ul.vmenu {
 	border: 1px solid gray;
 	padding: 3px;
 	margin: 5px;
+}
+
+ul.vmenu li.vmenu_title,
+ul.my_teams li.vmenu_title {
+	font-weight:bold;
+	text-align:center;
 }
 
 ul.my_teams {

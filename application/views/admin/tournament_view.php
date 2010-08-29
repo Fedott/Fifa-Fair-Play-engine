@@ -3,7 +3,7 @@
 <?if(count($tournament->lines)):?>
 <p>Команды учавствующие в турнире:</p>
 <ul>
-	<?foreach($tournament->lines as $key => $line):?><li><?=html::anchor('admin/tournament/line_view/'.$line->id, $line->team->name)?></li><?endforeach;?>
+	<?foreach($tournament->lines as $key => $line):?><li><?=html::anchor('admin/tournament/line_view/'.$line->id, $line->club->name)?></li><?endforeach;?>
 </ul>
 <?else:?>
 <p>
