@@ -13,6 +13,7 @@
 				'table' => new Field_BelongsTo,
 				'image' => new Field_File,
 				'weight' => new Field_Integer,
+				'player' => new Field_BelongsTo,
 			));
 		}
 	}

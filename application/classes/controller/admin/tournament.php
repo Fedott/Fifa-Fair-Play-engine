@@ -173,4 +173,30 @@
 					HTML::anchor('admin/tournament/view/'.$line->table->id, 'Турнир '.$line->table->name)." > ".
 					HTML::anchor('admin/tournament/line_view/'.$line->club->id, 'Команда '.$line->club->name)." > ";
 		}
+
+		public function action_trophy_edit($id = NULL)
+		{
+			if($id == NULL)
+				$trophy = Jelly::factory('trophy');
+			else
+				$trophy = Jelly::select ('trophy', $id);
+
+			$errors = array();
+
+			if($_POST)
+			{
+				try
+				{
+					$trophy->set(arr::extract($_POST, array('description', 'line', 'table', 'club', 'user', 'player', 'weight', 'image')));
+					$trophy->save();
+					Request::instance()->redirect('admin/tournament/');
+				}
+				catch (Validate_Exception $exp)
+				{
+					$errors = $exp->array->errors('trophy');
+				}
+			}
+
+			$view = new View('');
+		}
 	}
