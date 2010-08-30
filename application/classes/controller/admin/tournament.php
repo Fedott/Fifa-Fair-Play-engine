@@ -197,6 +197,14 @@
 				}
 			}
 
-			$view = new View('');
+			$view = new View('admin/trophy_edit');
+			$view->trophy = $trophy;
+			$view->errors = $errors;
+
+			$this->template->title = __('Редактирование трофея');
+			$this->template->content = $view;
+			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".
+					HTML::anchor('admin/tournament', 'Управление турнирами')." > ".
+					HTML::anchor('admin/tournament/view/'.$trophy->table->id, 'Турнир '.$trophy->table->name)." > ";
 		}
 	}

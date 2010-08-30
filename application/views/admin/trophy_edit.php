@@ -12,19 +12,19 @@
 </div>
 <?endif;?>
 
-<?=form::open_multipart();?>
+<?=form::open(NULL, array('enctype' => 'multipart/form-data'));?>
 <ul>
 	<li class="">
-		<?=form::label(array('for' => 'name', 'class' => 'desc'), 'Описание');?>
+		<?=form::label(array('for' => 'field-discription', 'class' => 'desc'), 'Описание');?>
 		<div>
-			<?=form::input(array('name' => 'description', 'class' => 'field text medium'), $form['description']);?>
+			<?=$trophy->input('description');?>
 			<?=form::label('name', "От <b>2</b> до <b>30</b> символов");?>
 		</div>
 	</li>
 	<li>
 		<?=form::label(array('for' => 'weight', 'class' => 'desc'), 'Место');?>
 		<div>
-			<?=form::input(array('name' => 'weight', 'class' => 'field text medium'), $form['weight']);?>
+			<?=$trophy->input('weight');?>
 		</div>
 	</li>
 	<li>

@@ -2,7 +2,7 @@
 
 	class Model_Trophy extends Jelly_Model
 	{
-		public function initialize(Jelly_Meta $meta)
+		public static function initialize(Jelly_Meta $meta)
 		{
 			$meta->fields(array(
 				'id' => new Field_Primary,
@@ -11,7 +11,9 @@
 				'user' => new Field_BelongsTo,
 				'club' => new Field_BelongsTo,
 				'table' => new Field_BelongsTo,
-				'image' => new Field_File,
+				'image' => new Field_File(array(
+					'path' => 'media/trophy',
+				)),
 				'weight' => new Field_Integer,
 				'player' => new Field_BelongsTo,
 			));
