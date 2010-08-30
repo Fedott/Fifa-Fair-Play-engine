@@ -92,7 +92,7 @@
 			if(count($club_in_tournament))
 			{
 				$clubs = Jelly::select('club')
-						->where('id', 'NOT_IN', $club_in_tournament)
+						->where('id', 'NOT IN', $club_in_tournament)
 						->execute();
 			}
 			else
@@ -137,9 +137,24 @@
 				Request::instance()->redirect('admin/tournament/view/'.$line->table->id);
 			}
 
-			$users = Jelly::select('user')
-					->where('id', '!=', $line->user->id)
-					->execute();
+			$users_in_tournament = array();
+			foreach($line->table->lines as $lu)
+			{
+				$users_in_tournament[] = $lu->user->id;
+			}
+
+			if(count($users_in_tournament))
+			{
+				$users = Jelly::select('user')
+						->where('id', '=', $line->user->id)
+						->or_where('id', 'NOT IN', $users_in_tournament)
+						->execute();
+			}
+			else
+			{
+				$users = Jelly::select('user')
+						->execute();
+			}
 
 			$users_arr = array('NULL' => 'Не назначен');
 			foreach($users as $user)
