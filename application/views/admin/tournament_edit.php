@@ -31,6 +31,15 @@
 		</div>
 	</li>
 	<li>
+		<label class="desc" for="field-matches">
+			<?=__('Количество кругов');?>
+		</label>
+		<div>
+			<?=$tournament->input('matches');?>
+			<label for="field-matches">Количство матчей которые каждая команда должна сыграть с каждым соперником (по уполчанию 2)</label>
+		</div>
+	</li>
+	<li>
 		<label class="desc" for="field-active">
 			<?=__('Активировать');?>
 		</label>

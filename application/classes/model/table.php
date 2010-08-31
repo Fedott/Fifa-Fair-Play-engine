@@ -26,6 +26,9 @@ class Model_Table extends Jelly_Model
 				'default' => FALSE,
 			)),
 			'lines' => new Field_HasMany,
+			'matches' => new Field_Integer(array(
+				'default' => 2,
+			)),
 		));
 	}
 }
