@@ -31,8 +31,11 @@ CREATE TABLE IF NOT EXISTS `lines` (
   `passed_goals` int(11) NOT NULL,
   `points` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
+INSERT INTO `lines` (`id`, `table_id`, `club_id`, `user_id`, `games`, `win`, `drawn`, `lose`, `goals`, `passed_goals`, `points`) VALUES
+(1, 1, 1, NULL, 0, 0, 0, 0, 0, 0, 0),
+(2, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0);
 
 CREATE TABLE IF NOT EXISTS `matches` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -64,11 +67,12 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `description` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 INSERT INTO `roles` (`id`, `name`, `description`) VALUES
 (1, 'login', 'Возможность логинеться'),
-(2, 'admin', 'Права администратора');
+(2, 'admin', 'Права администратора'),
+(3, 'coach', 'Может быть тренером');
 
 CREATE TABLE IF NOT EXISTS `roles_users` (
   `user_id` int(11) unsigned NOT NULL,
@@ -79,7 +83,8 @@ CREATE TABLE IF NOT EXISTS `roles_users` (
 
 INSERT INTO `roles_users` (`user_id`, `role_id`) VALUES
 (1, 1),
-(1, 2);
+(1, 2),
+(1, 3);
 
 CREATE TABLE IF NOT EXISTS `tables` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -128,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 INSERT INTO `users` (`id`, `email`, `username`, `password`, `logins`, `last_login`, `icq`) VALUES
-(1, 'fedotru@gmail.com', 'Федот', '0f78a7adead4549d022a95875075a130cd2e3ff9e461d96de6', 10, 1283241293, 7372085);
+(1, 'fedotru@gmail.com', 'Федот', '0f78a7adead4549d022a95875075a130cd2e3ff9e461d96de6', 14, 1283262938, 7372085);
 
 CREATE TABLE IF NOT EXISTS `user_tokens` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -140,11 +145,11 @@ CREATE TABLE IF NOT EXISTS `user_tokens` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_token` (`token`),
   KEY `fk_user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 INSERT INTO `user_tokens` (`id`, `user_id`, `user_agent`, `token`, `created`, `expires`) VALUES
 (1, 1, 'c8900548171c2227f7d7621fbc10b977624eff72', 'nMuCJqnJf77OtrQceb5eu8gbHGclUcMl', 1282822803, 1284032403),
-(2, 1, 'ff973ef53520da8a8800409721398f1f9e9c8d2a', 'oeMxBheSLOuucZJlVohC1KXCkVgfcYFJ', 1283235448, 1284445048);
+(3, 1, 'ff973ef53520da8a8800409721398f1f9e9c8d2a', 'jYPsRrUmVBO3YlTCTQAFhxJaYA5gy4Vw', 1283262938, 1284472538);
 
 
 ALTER TABLE `roles_users`

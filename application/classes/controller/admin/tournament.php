@@ -140,7 +140,8 @@
 			$users_in_tournament = array();
 			foreach($line->table->lines as $lu)
 			{
-				$users_in_tournament[] = $lu->user->id;
+				if($lu->user->id)
+					$users_in_tournament[] = $lu->user->id;
 			}
 
 			if(count($users_in_tournament))
