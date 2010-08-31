@@ -187,7 +187,9 @@
 			{
 				try
 				{
-					$trophy->set(arr::extract($_POST, array('description', 'line', 'table', 'club', 'user', 'player', 'weight', 'image')));
+					$trophy->set(arr::extract($_POST, array('description', 'line', 'table', 'club', 'user', 'player', 'weight')));
+					if(isset($_FILES))
+						$trophy->image = $_FILES['image'];
 					$trophy->save();
 					Request::instance()->redirect('admin/tournament/');
 				}

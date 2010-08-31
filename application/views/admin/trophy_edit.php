@@ -15,31 +15,39 @@
 <?=form::open(NULL, array('enctype' => 'multipart/form-data'));?>
 <ul>
 	<li class="">
-		<?=form::label(array('for' => 'field-discription', 'class' => 'desc'), 'Описание');?>
+		<label class="desc" for="field-description">
+			Описание
+		</label>
 		<div>
 			<?=$trophy->input('description');?>
-			<?=form::label('name', "От <b>2</b> до <b>30</b> символов");?>
+			<?=form::label('field-name', "От <b>2</b> до <b>30</b> символов");?>
 		</div>
 	</li>
 	<li>
-		<?=form::label(array('for' => 'weight', 'class' => 'desc'), 'Место');?>
+		<label class="desc" for="field-weight">
+			Место
+		</label>
 		<div>
 			<?=$trophy->input('weight');?>
 		</div>
 	</li>
 	<li>
-		<?=form::label(array('for' => 'table_id', 'class' => 'desc'), 'Турнир');?>
+		<label class="desc" for="field-table">
+			Турнир
+		</label>
 		<div>
-			<?=form::dropdown(array('name' => 'table_id', 'class' => 'select medium field'), $tables, $form['table_id'])?>
+			<?=$trophy->input('table');?>
 		</div>
 	</li>
 	<li>
-		<?=form::label(array('for' => 'picture', 'class' => 'desc'), 'Изображение трофея');?>
+		<label class="desc" for="field-image">
+			Изображение
+		</label>
 		<div>
-			<?=html::image($trophy->image);?>
-		</div>
-		<div>
-			<?=form::upload('picture');?>
+			<?=$trophy->input('image');?>
+			<?if(!empty($trophy->image)):?>
+				<?=HTML::image("media/trophy/".$trophy->image);?>
+			<?endif;?>
 		</div>
 	</li>
 	<li>
