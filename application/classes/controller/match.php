@@ -357,4 +357,25 @@
 			$this->template->breadcrumb = HTML::anchor('', 'Главная')." > "
 					.HTML::anchor('tournament/view/'.$match->table->id, 'Турнир: '.$match->table->name)." > ";
 		}
+
+		public function action_my()
+		{
+			if(!$this->auth->logged_in('coach'))
+				exit;
+
+			$uncmatches = Jelly::select('match')->with('home')->with('away')->with('table')->where('away.user_id', "=", $this->user->id)->where("confirm", "=", 0)->execute();
+			$uncymatches = Jelly::select('match')->with('home')->with('away')->with('table')->where('home.user_id', "=", $this->user->id)->where("confirm", "=", 0)->execute();
+			$matches = Jelly::select('match')->with('home')->with('away')->with('table')->where('home.user_id', "=", $this->user->id)->where("confirm", "=", 1)->execute();
+			$matches_a = Jelly::select('match')->with('home')->with('away')->with('table')->where('away.user_id', "=", $this->user->id)->where("confirm", "=", 1)->execute();
+
+			$view = new View('match_my');
+			$view->uncmatches = $uncmatches;
+			$view->uncymatches = $uncymatches;
+			$view->matches = $matches;
+			$view->matches_a = $matches_a;
+
+			$this->template->title = "Ваши матчи";
+			$this->template->content = $view;
+			$this->template->breadcrumb = HTML::anchor('', 'Главная')." > ";
+		}
 	}

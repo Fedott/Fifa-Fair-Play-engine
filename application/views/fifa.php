@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title><?=$title?> | Чемпионат "Красивый футбол!"</title>
+	<link rel="shortcut icon" href="/templates/fifa/img/favicon.ico" type="image/x-icon" />
 	<?=HTML::style('templates/fifa/css/reset.css');?>
 	<?=HTML::style('templates/fifa/css/main.css');?>
 	<?=HTML::style('templates/fifa/css/form.css');?>
