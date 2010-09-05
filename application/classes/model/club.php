@@ -20,4 +20,9 @@ class Model_Club extends Jelly_Model
 			'lines' => new Field_HasMany,
 		));
 	}
+
+	public function logo()
+	{
+		return 'media/logos/'.$this->logo;
+	}
 }

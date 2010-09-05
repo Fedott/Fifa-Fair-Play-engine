@@ -15,12 +15,12 @@
 <?=form::open();?>
 <ul>
 	<li>
-		<label class="desc" for="away_id">
+		<label class="desc" for="away">
 			Соперник
 			<span class="req">*</span>
 		</label>
 		<div>
-			<?=form::dropdown(array('name' => 'away_id', 'class' => 'select medium field'), $teams, $form['away_id'])?>
+			<?=form::select('away', $clubs, $match->away->id, array('id' => 'away', 'class' => 'select medium field'))?>
 		</div>
 	</li>
 	<li class="">
@@ -29,9 +29,9 @@
 			<span class="req">*</span>
 		</label>
 		<div>
-			<input class="field text medium" style="width:23.5%" type="text" name="home_goals" id="home_goals" value="<?=$form['home_goals']?>">
+			<input class="field text medium" style="width:23.5%" type="text" name="home_goals" id="home_goals" value="<?=$match->home_goals;?>">
 			:
-			<input class="field text medium" style="width:23.5%" type="text" name="away_goals" id="away_goals" value="<?=$form['away_goals']?>">
+			<input class="field text medium" style="width:23.5%" type="text" name="away_goals" id="away_goals" value="<?=$match->away_goals;?>">
 		</div>
 	</li>
 	<li>
@@ -40,32 +40,32 @@
 				У вас забили
 			</label>
 			<div class="player_select_home">
-				<?=form::dropdown(array('name' => 'goals_h[0][0]', 'class' => 'select mini field'), $my_team_players);?>
-				<?=form::input(array('name' => 'goals_h[0][1]', 'class' => 'text mini field'));?>
+				<?=form::select('goals_h[0][0]', $my_players, NULL, array('class' => 'select mini field'));?>
+				<?=form::input('goals_h[0][1]', NULL, array('class' => 'text mini field'));?>
 			</div>
 			<div class="player_select_home" style="display:none">
-				<?=form::dropdown(array('name' => 'goals_h[1][0]', 'class' => 'select mini field'), $my_team_players);?>
-				<?=form::input(array('name' => 'goals_h[1][1]', 'class' => 'text mini field'));?>
+				<?=form::select('goals_h[1][0]', $my_players, NULL, array('class' => 'select mini field'));?>
+				<?=form::input('goals_h[1][1]', NULL, array('class' => 'text mini field'));?>
 			</div>
 			<div class="player_select_home" style="display:none">
-				<?=form::dropdown(array('name' => 'goals_h[2][0]', 'class' => 'select mini field'), $my_team_players);?>
-				<?=form::input(array('name' => 'goals_h[2][1]', 'class' => 'text mini field'));?>
+				<?=form::select('goals_h[2][0]', $my_players, NULL, array('class' => 'select mini field'));?>
+				<?=form::input('goals_h[2][1]', NULL, array('class' => 'text mini field'));?>
 			</div>
 			<div class="player_select_home" style="display:none">
-				<?=form::dropdown(array('name' => 'goals_h[3][0]', 'class' => 'select mini field'), $my_team_players);?>
-				<?=form::input(array('name' => 'goals_h[3][1]', 'class' => 'text mini field'));?>
+				<?=form::select('goals_h[3][0]', $my_players, NULL, array('class' => 'select mini field'));?>
+				<?=form::input('goals_h[3][1]', NULL, array('class' => 'text mini field'));?>
 			</div>
 			<div class="player_select_home" style="display:none">
-				<?=form::dropdown(array('name' => 'goals_h[4][0]', 'class' => 'select mini field'), $my_team_players);?>
-				<?=form::input(array('name' => 'goals_h[4][1]', 'class' => 'text mini field'));?>
+				<?=form::select('goals_h[4][0]', $my_players, NULL, array('class' => 'select mini field'));?>
+				<?=form::input('goals_h[4][1]', NULL, array('class' => 'text mini field'));?>
 			</div>
 			<div class="player_select_home" style="display:none">
-				<?=form::dropdown(array('name' => 'goals_h[5][0]', 'class' => 'select mini field'), $my_team_players);?>
-				<?=form::input(array('name' => 'goals_h[5][1]', 'class' => 'text mini field'));?>
+				<?=form::select('goals_h[5][0]', $my_players, NULL, array('class' => 'select mini field'));?>
+				<?=form::input('goals_h[5][1]', NULL, array('class' => 'text mini field'));?>
 			</div>
 			<div class="player_select_home" style="display:none">
-				<?=form::dropdown(array('name' => 'goals_h[6][0]', 'class' => 'select mini field'), $my_team_players);?>
-				<?=form::input(array('name' => 'goals_h[6][1]', 'class' => 'text mini field'));?>
+				<?=form::select('goals_h[6][0]', $my_players, NULL, array('class' => 'select mini field'));?>
+				<?=form::input('goals_h[6][1]', NULL, array('class' => 'text mini field'));?>
 			</div>
 			<a class="add_goal_select_home">Добавить</a>
 		</div>
@@ -73,7 +73,7 @@
 			<label class="desc">
 				У соперника забили
 			</label>
-			<div id="away_team_players_goal">
+			<div id="away_club_players_goal">
 				
 			</div>
 		</div>
@@ -83,18 +83,17 @@
 			Комментарий к матчу
 		</label>
 		<div>
-			<?=form::textarea(array('id' => 'comment', 'name' => 'comment', 'class' => 'textarea medium field'), $comment_text);?>
+			<?=$comment->input('text');?>
 		</div>
 	</li>
 	<li>
-		<input type="hidden" name="home_id" value="<?=$uteam->id;?>">
 		<input type="submit" class="submit" value="Сохранить изменения">
 	</li>
 </ul>
 <?=form::close();?>
 <script type="text/javascript">
-	var tid = $("#away_id").val();
-	$.get('/match/get_away_team_players/' + tid, 0, function(data){
-		$('#away_team_players_goal').html(data);
+	var tid = $("#away").val();
+	$.get('<?=url::site('match/get_away_club_players');?>/' + tid, 0, function(data){
+		$('#away_club_players_goal').html(data);
 	});
 </script>

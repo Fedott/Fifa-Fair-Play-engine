@@ -10,7 +10,7 @@ jQuery( function($) {
 		var plform;
 		var i_goals_home = 1;
 		var i_goals_away = 1;
-		var form
+		var form;
 		var tmp_i;
 
 		
@@ -73,11 +73,11 @@ jQuery( function($) {
 //
 //		});
 
-		$("#away_id").bind('change', function load_players_away_team(){
+		$("#away").bind('change', function (){
 			var tid = $(this).val();
-			$('#away_team_players_goal').html('<img src="/templates/template/img/ajax_load_bar.gif"/>');
-			$.get('/match/get_away_team_players/' + tid, 0, function(data){
-				$('#away_team_players_goal').html(data);
+			$('#away_club_players_goal').html('<img src="/templates/fifa/img/ajax_load_bar.gif"/>');
+			$.get('/match/get_away_club_players/' + tid, 0, function(data){
+				$('#away_club_players_goal').html(data);
 			});
 		});
 	});

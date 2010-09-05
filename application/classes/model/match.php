@@ -10,11 +10,11 @@ class Model_Match extends Jelly_Model
 			'table' => new Field_BelongsTo,
 			'home' => new Field_BelongsTo(array(
 				'column' => 'home_id',
-				'foreigh' => 'line.id',
+				'foreign' => 'line.id',
 			)),
 			'away' => new Field_BelongsTo(array(
 				'column' => 'away_id',
-				'foreigh' => 'line.id',
+				'foreign' => 'line.id',
 			)),
 			'home_goals' => new Field_Integer(array(
 				'rules' => array(

@@ -13,7 +13,9 @@
 					),
 				)),
 				'club' => new Field_BelongsTo,
-				'year_of_birth' => new Field_Integer,
+				'year_of_birth' => new Field_Integer(array(
+					'default' => 0,
+				)),
 			));
 		}
 

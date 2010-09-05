@@ -1,17 +1,17 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
 Вы подтверждаете результат матча:<br>
-<?=$match->home->team->name." ".$match->home_goals." - ".$match->away_goals." ".$match->away->team->name;?><br>
+<?=$match->home->club->name." ".$match->home_goals." - ".$match->away_goals." ".$match->away->club->name;?><br>
 <?if(count($home_goals)):?>
-Голы хозяев:<br>
-<?foreach($home_goals as $goal):?>
-<?=$goal->player->name()." - ".$goal->count?><br>
-<?endforeach;?>
+	Голы хозяев:<br>
+	<?foreach($home_goals as $goal):?>
+		<?=$goal->player->player_name()." - ".$goal->count?><br>
+	<?endforeach;?>
 <?endif;?>
 <?if(count($away_goals)):?>
-Голы гостей:<br>
-<?foreach($away_goals as $goal):?>
-<?=$goal->player->name()." - ".$goal->count?><br>
-<?endforeach;?>
+	Голы гостей:<br>
+	<?foreach($away_goals as $goal):?>
+		<?=$goal->player->player_name()." - ".$goal->count?><br>
+	<?endforeach;?>
 <?endif;?>
 <br>
 <?=form::open();?>
@@ -21,11 +21,13 @@
 			Комментарий к матчу
 		</label>
 		<div>
-			<?=form::textarea(array('id' => 'comment', 'name' => 'comment', 'class' => 'textarea medium field'));?>
+			<?=$comment->input('text');?>
 		</div>
 	</li>
 	<li>
+		<?=form::hidden('confirm', 1);?>
 		<input type="submit" class="submit" value="Подтвердить результат">
-		| <?=html::anchor('match', 'Нет');?>
+		| <?=html::anchor('match/my', 'Нет');?>
 	</li>
 </ul>
+<?=form::close();?>

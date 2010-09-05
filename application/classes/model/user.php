@@ -24,4 +24,16 @@ class Model_User extends Model_Auth_User
 
 		parent::initialize($meta);
 	}
+
+	public function get_avatar()
+	{
+		if(!empty($this->avatar))
+		{
+			return 'media/avatars/'.$this->avatar;
+		}
+		else
+		{
+			return 'media/avatars/noava.jpg';
+		}
+	}
 }

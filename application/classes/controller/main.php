@@ -75,8 +75,8 @@
 				{
 					$user->set($post);
 					$user->add('roles', 1);
-					$this->auth->login($user, $post->password);
 					$user->save();
+					$this->auth->login($user, $post['password']);
 					url::redirect('');
 				}
 				catch (Validate_Exception $exp)

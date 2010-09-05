@@ -7,7 +7,7 @@ class Model_Goal extends Jelly_Model
 		$meta->fields(array(
 			'id' => new Field_Primary,
 			'match' => new Field_BelongsTo,
-			'palyer' => new Field_BelongsTo,
+			'player' => new Field_BelongsTo,
 			'table' => new Field_BelongsTo,
 			'line' => new Field_BelongsTo,
 			'count' => new Field_Integer,
