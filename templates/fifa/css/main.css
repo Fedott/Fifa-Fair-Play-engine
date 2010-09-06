@@ -105,6 +105,20 @@ body {
 	text-decoration: underline;
 }
 
+#apply_message {
+	border: 1px dotted green;
+	color: green;
+	margin: 5px 50px;
+	text-align: center;
+}
+
+#error_message {
+	border: 1px dotted red;
+	color: red;
+	margin: 5px 50px;
+	text-align: center;
+}
+
 /* Sidebar Left
 -----------------------------------------------------------------------------*/
 .sl {
