@@ -7,6 +7,7 @@
 		public function before()
 		{
 			$this->auth = Auth::instance();
+			$this->auth->logged_in();
 			$this->user = $this->auth->get_user();
 
 			return parent::before();
@@ -395,5 +396,20 @@
 			$this->template->title = "Ваши матчи";
 			$this->template->content = $view;
 			$this->template->breadcrumb = HTML::anchor('', 'Главная')." > ";
+		}
+
+		public function action_delete($mid)
+		{
+			$match = Jelly::select('match', $mid);
+			if($match->home->user->id != $this->user->id)
+			{
+				MISC::set_error_message(__("Вы не можете удалить матч, который вносили не вы"));
+				Request::instance()->redirect('match/my');
+			}
+			if($match->confirm == TRUE)
+			{
+				MISC::set_error_message(__("Невозможно удалить матч, так как он уже подтверждён"));
+				Request::instance()->redirect('match/my');
+			}
 		}
 	}
