@@ -26,7 +26,7 @@
 			<?if(!$tourn->loaded()):?>
 				<td><?=html::anchor('tournament/view/'.$match->table->url, $match->table->name);?></td>
 			<?endif;?>
-				<td></td>
+				<td><?=MISC::get_human_date($match->date);?></td>
 			</tr>
 		<?endforeach;?>
 		</tbody>

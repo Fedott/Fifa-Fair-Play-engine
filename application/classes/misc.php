@@ -52,4 +52,14 @@
 		{
 			return (bool) Session::instance()->get('apply_message', FALSE);
 		}
+
+		public static function confirm_link($uri, $title, $confirm_text, array $attr = array())
+		{
+			if(isset($attr['class']))
+				$attr['class'].= " confirm ";
+			else
+				$attr['class'] = " confirm ";
+			$attr['confirm_text'] = $confirm_text;
+			return HTML::anchor($uri, $title, $attr);
+		}
 	}

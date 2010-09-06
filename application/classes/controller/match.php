@@ -411,5 +411,9 @@
 				MISC::set_error_message(__("Невозможно удалить матч, так как он уже подтверждён"));
 				Request::instance()->redirect('match/my');
 			}
+
+			$match->delete();
+			MISC::set_apply_message(__("Матч успешно удалён"));
+			Request::instance()->redirect('match/my');
 		}
 	}

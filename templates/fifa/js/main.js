@@ -80,5 +80,10 @@ jQuery( function($) {
 				$('#away_club_players_goal').html(data);
 			});
 		});
+
+		// Ссылка с подтверждением
+		$("a.confirm").click(function(){
+			return confirm($(this).attr('confirm_text'));
+		});
 	});
 });
