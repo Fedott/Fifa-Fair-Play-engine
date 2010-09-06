@@ -7,7 +7,9 @@ class Model_Match extends Jelly_Model
 		$meta->sorting(array('date' => 'desc'))
 			->fields(array(
 				'id' => new Field_Primary,
-				'date' => new Field_Timestamp,
+				'date' => new Field_Integer(array(
+					'default' => time(),
+				)),
 				'table' => new Field_BelongsTo,
 				'home' => new Field_BelongsTo(array(
 					'column' => 'home_id',

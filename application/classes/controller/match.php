@@ -186,7 +186,7 @@
 			$count_matches_tmp = array();
 			foreach ($matches as $mmatch)
 			{
-				if($mmatch->home_id == $myline->id)
+				if($mmatch->home->id == $myline->id)
 				{
 					if(isset($count_matches_tmp[$mmatch->away->id]))
 					{
@@ -386,6 +386,7 @@
 					->or_where("away.user_id", "=", $this->user->id)
 					->where_close()
 					->where("confirm", "=", 1)
+					->where("table.visible", "=", 1)
 					->execute();
 
 			$view = new View('match_my');
