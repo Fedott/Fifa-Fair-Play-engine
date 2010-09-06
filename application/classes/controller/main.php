@@ -7,6 +7,7 @@
 		public function before()
 		{
 			$this->auth = Auth::instance();
+			$this->auth->logged_in();
 			$this->user = $this->auth->get_user();
 
 			parent::before();
@@ -24,7 +25,7 @@
 
 			if($this->auth->logged_in('login'))
 			{
-				Request::instance()->redirect('main_index');
+				Request::instance()->redirect();
 			}
 			if($_POST)
 			{

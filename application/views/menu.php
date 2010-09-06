@@ -13,7 +13,7 @@
 <?endif;?>
 	<ul class="vmenu">
 		<li><?=html::anchor('forum', 'Форум');?></li>
-		<?if($auth->logged_in('coach')):?><li><?=html::anchor('match', 'Мои матчи');?></li><?endif;?>
+		<?if($auth->logged_in('coach')):?><li><?=html::anchor('match/my', 'Мои матчи');?></li><?endif;?>
 		<li><?=html::anchor('match/list', 'Все матчи');?></li>
 		<li><?=html::anchor('tournament', "Турниры");?></li>
 	</ul>

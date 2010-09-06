@@ -16,16 +16,8 @@ class Model_Match extends Jelly_Model
 				'column' => 'away_id',
 				'foreign' => 'line.id',
 			)),
-			'home_goals' => new Field_Integer(array(
-				'rules' => array(
-					'not_empty' => array(TRUE),
-				)
-			)),
-			'away_goals' => new Field_Integer(array(
-				'rules' => array(
-					'not_empty' => array(TRUE),
-				)
-			)),
+			'home_goals' => new Field_Integer,
+			'away_goals' => new Field_Integer,
 			'confirm' => new Field_Boolean(array(
 				'default' => 0,
 			)),

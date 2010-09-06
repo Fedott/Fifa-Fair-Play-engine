@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
 <h2>Ваши матчи</h2>
 <?if(count($uncmatches)):?>
-	<h3>Не подтверждённые матчи</h3>
+	<h3>Не подтверждённые вами матчи</h3>
 	<ul>
 	<?foreach($uncmatches as $match):?>
 		<li><?=html::anchor('match/confirm/'.$match->id, $match->home->club->name." ".$match->home_goals." - ".$match->away_goals." ".$match->away->club->name);?> (<?=$match->table->name;?>)</li>
@@ -16,13 +16,10 @@
 	<?endforeach;?>
 	</ul>
 <?endif;?>
-<?if(count($matches) || count($matches_a)):?>
+<?if(count($matches)):?>
 	<h3>Подтверждённые матчи</h3>
 	<ul>
 	<?foreach($matches as $match):?>
-		<li><?=html::anchor('match/view/'.$match->id, $match->home->club->name." ".$match->home_goals." - ".$match->away_goals." ".$match->away->club->name);?> (<?=$match->table->name;?>)</li>
-	<?endforeach;?>
-	<?foreach($matches_a as $match):?>
 		<li><?=html::anchor('match/view/'.$match->id, $match->home->club->name." ".$match->home_goals." - ".$match->away_goals." ".$match->away->club->name);?> (<?=$match->table->name;?>)</li>
 	<?endforeach;?>
 	</ul>

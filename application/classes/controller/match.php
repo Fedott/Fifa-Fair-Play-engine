@@ -361,18 +361,36 @@
 		public function action_my()
 		{
 			if(!$this->auth->logged_in('coach'))
-				exit;
+				throw new Kohana_Exception ("permitdenided");
 
-			$uncmatches = Jelly::select('match')->with('home')->with('away')->with('table')->where('away.user_id', "=", $this->user->id)->where("confirm", "=", 0)->execute();
-			$uncymatches = Jelly::select('match')->with('home')->with('away')->with('table')->where('home.user_id', "=", $this->user->id)->where("confirm", "=", 0)->execute();
-			$matches = Jelly::select('match')->with('home')->with('away')->with('table')->where('home.user_id', "=", $this->user->id)->where("confirm", "=", 1)->execute();
-			$matches_a = Jelly::select('match')->with('home')->with('away')->with('table')->where('away.user_id', "=", $this->user->id)->where("confirm", "=", 1)->execute();
+			$uncmatches = Jelly::select('match')
+					->with('home')
+					->with('away')
+					->with('table')
+					->where('away.user_id', "=", $this->user->id)
+					->where("confirm", "=", 0)
+					->execute();
+			$uncymatches = Jelly::select('match')
+					->with('home')
+					->with('away')
+					->with('table')
+					->where('home.user_id', "=", $this->user->id)
+					->where("confirm", "=", 0)
+					->execute();
+			$matches = Jelly::select('match')
+					->with('home')->with('away')
+					->with('table')
+					->where_open()
+					->where('home.user_id', "=", $this->user->id)
+					->or_where("away.user_id", "=", $this->user->id)
+					->where_close()
+					->where("confirm", "=", 1)
+					->execute();
 
 			$view = new View('match_my');
 			$view->uncmatches = $uncmatches;
 			$view->uncymatches = $uncymatches;
 			$view->matches = $matches;
-			$view->matches_a = $matches_a;
 
 			$this->template->title = "Ваши матчи";
 			$this->template->content = $view;
