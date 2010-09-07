@@ -5,6 +5,7 @@ class Model_Match extends Jelly_Model
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->sorting(array('date' => 'desc'))
+			->load_with(array('table', 'home', 'away'))
 			->fields(array(
 				'id' => new Field_Primary,
 				'date' => new Field_Integer(array(

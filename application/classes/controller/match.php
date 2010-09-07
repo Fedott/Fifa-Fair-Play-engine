@@ -18,7 +18,7 @@
 			{
 				$tournament = Jelly::select('table', $tableid);
 				$count = Jelly::select('match')
-						->where('table_id', '=', $tournament->id)
+						->where('matches.table_id', '=', $tournament->id)
 						->count();
 			}
 
@@ -27,9 +27,6 @@
 			));
 
 			$matches = Jelly::select('match')
-					->with('home')
-					->with('away')
-					->with('table')
 					->offset($pagination->offset)
 					->limit($pagination->items_per_page)
 					->execute();
@@ -165,8 +162,9 @@
 			$clubs = array();
 			$max_matches = $tournament->matches;
 			$matches = Jelly::select('match')
-					->where("table_id", "=", $tournament->id)
-					->where_open()->where("home_id", "=", $myline->id)
+					->where("matches.table_id", "=", $tournament->id)
+					->where_open()
+					->where("home_id", "=", $myline->id)
 					->or_where("away_id", "=", $myline->id)
 					->where_close()
 					->execute();
@@ -240,9 +238,6 @@
 		public function action_view($mid)
 		{
 			$match = Jelly::select('match')
-					->with('home')
-					->with('away')
-					->with('table')
 					->where("id", "=", $mid)
 					->limit(1)
 					->execute();
@@ -274,9 +269,6 @@
 		public function action_confirm($mid)
 		{
 			$match = Jelly::select('match')
-					->with('home')
-					->with('away')
-					->with('table')
 					->where("id", "=", $mid)
 					->limit(1)
 					->execute();
@@ -354,22 +346,14 @@
 				throw new Kohana_Exception ("permitdenided");
 
 			$uncmatches = Jelly::select('match')
-					->with('home')
-					->with('away')
-					->with('table')
 					->where('away.user_id', "=", $this->user->id)
 					->where("confirm", "=", 0)
 					->execute();
 			$uncymatches = Jelly::select('match')
-					->with('home')
-					->with('away')
-					->with('table')
 					->where('home.user_id', "=", $this->user->id)
 					->where("confirm", "=", 0)
 					->execute();
 			$matches = Jelly::select('match')
-					->with('home')->with('away')
-					->with('table')
 					->where_open()
 					->where('home.user_id', "=", $this->user->id)
 					->or_where("away.user_id", "=", $this->user->id)

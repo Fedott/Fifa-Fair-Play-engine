@@ -15,4 +15,14 @@
 		{
 			return $this->where('visible', "=", $value);
 		}
+
+		public function active($value = 1)
+		{
+			return $this->where('active', "=", $value);
+		}
+
+		public function ended($value = 1)
+		{
+			return $this->where('ended', "=", $value);
+		}
 	}

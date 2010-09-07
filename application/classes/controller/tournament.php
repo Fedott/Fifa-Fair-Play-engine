@@ -10,7 +10,7 @@
 
 			$this->template->title = __("Все турниры");
 			$this->template->content = $view;
-			$this->template->breadcrumb = HTML::anchor('', 'Главная')." > ";
+			$this->template->breadcrumb = HTML::anchor('', __("Главная"))." > ";
 		}
 
 		public function action_view($url)
@@ -51,11 +51,6 @@
 					$goleodors[$player->id]['player'] = $player;
 				}
 			}
-			
-			$goals = Jelly::select('goal')
-					->with("player")
-					->group_by("player_id")
-					->where("table_id", "=", $tournament->id)->execute();
 
 			$view = new View('tournament_view');
 			$view->tournament = $tournament;
@@ -66,7 +61,90 @@
 
 			$this->template->title = __("Турнир: :name", array(":name" => $tournament->name));
 			$this->template->content = $view;
-			$this->template->breadcrumb = HTML::anchor('', 'Главная')." > "
-					.HTML::anchor('tournament', "Все турниры")." > ";
+			$this->template->breadcrumb = HTML::anchor('', __("Главная"))." > "
+					.HTML::anchor('tournament', __("Все турниры"))." > ";
+		}
+
+		public function action_club($id)
+		{
+			$line = Jelly::select('line', $id);
+
+			$tournament = $line->table;
+			$my_line = Jelly::select('line')
+					->where('table_id', "=", $tournament->id)
+					->and_where("user_id", "=", $this->user->id)
+					->limit(1)
+					->execute();
+
+			$res = DB::select_array(array('goals.player_id', 'goals.line_id'))
+					->select(array('SUM("count")', 'goals'))
+					->from('goals')
+					->group_by('player_id')
+					->limit(10)
+					->order_by('goals', 'DESC')
+					->where('table_id', "=", $tournament->id)
+					->where("line_id", "=", $line->id)
+					->execute();
+
+			$goleodors = array();
+			$players_like = array();
+			foreach ($res as $row)
+			{
+				$players_like[] = $row['player_id'];
+				$goleodors[$row['player_id']] = array('player_id' => $row['player_id'], 'goals' => $row['goals'], 'line_id' => $row['line_id']);
+			}
+
+			if(!empty($players_like))
+			{
+				$players_goals = Jelly::select('player')
+						->with('club')
+						->where(":primary_key", "IN", $players_like)
+						->execute();
+
+				foreach($players_goals as $player)
+				{
+					$goleodors[$player->id]['player'] = $player;
+				}
+			}
+
+			$matches = Jelly::select('match')
+					->line($line->id)
+					->execute();
+			
+			$played_matches = array();
+			foreach ($matches as $match)
+			{
+				if($match->home->id == $line->id)
+				{
+					if(!isset($played_matches[$match->away->id]['count']))
+						$played_matches[$match->away->id]['count'] = 1;
+					else
+						$played_matches[$match->away->id]['count']++;
+					$played_matches[$match->away->id][$played_matches[$match->away->id]['count']] = $match;
+				}
+				else
+				{
+					if(!isset($played_matches[$match->home->id]['count']))
+						$played_matches[$match->home->id]['count'] = 1;
+					else
+						$played_matches[$match->home->id]['count']++;
+					$played_matches[$match->home->id][$played_matches[$match->home->id]['count']] = $match;
+				}
+			}
+
+			$view = new View('tournament_club_view');
+			$view->matches = $matches;
+			$view->line = $line;
+			$view->goleodors = $goleodors;
+			$view->played_matches = $played_matches;
+			$view->tournament = $tournament;
+			$view->user = $this->user;
+			$view->my_line = $my_line;
+
+			$this->template->title = __("Клуб: :name", array(":name" => $line->club->name));
+			$this->template->content = $view;
+			$this->template->breadcrumb = HTML::anchor('', __("Главная"))." > "
+					.HTML::anchor('tournament', __("Все турниры"))." > "
+					.HTML::anchor('tournament/view/'.$tournament->url, __("Турнир: :name", array(':name' => $tournament->name)))." > ";
 		}
 	}

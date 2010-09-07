@@ -184,6 +184,14 @@ th {
 	padding: 0px 2px;
 }
 
+table th.number {
+	width: 20px;
+}
+
+table th.count {
+	width: 50px;
+}
+
 table a {
 	text-decoration: none;
 }
