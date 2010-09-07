@@ -2,17 +2,6 @@
 
 	class Controller_Main extends Controller_Template
 	{
-		public $template = 'fifa';
-
-		public function before()
-		{
-			$this->auth = Auth::instance();
-			$this->auth->logged_in();
-			$this->user = $this->auth->get_user();
-
-			parent::before();
-		}
-
 		public function action_index()
 		{
 			$this->template->title = __('Главная');

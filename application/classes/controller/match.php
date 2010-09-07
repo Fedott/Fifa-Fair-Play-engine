@@ -2,17 +2,6 @@
 
 	class Controller_Match extends Controller_Template
 	{
-		public $template = 'fifa';
-		
-		public function before()
-		{
-			$this->auth = Auth::instance();
-			$this->auth->logged_in();
-			$this->user = $this->auth->get_user();
-
-			return parent::before();
-		}
-
 		public function action_index()
 		{
 			$this->action_list();
