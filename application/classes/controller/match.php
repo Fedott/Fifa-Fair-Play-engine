@@ -8,9 +8,7 @@
 		}
 
 		public function action_list($tableid = NULL)
-		{
-			$tournament = Jelly::select('table', $tableid);
-			
+		{	
 			if($tableid == NULL)
 			{
 				$count = Jelly::select('match')->count();
@@ -18,10 +16,10 @@
 			}
 			else
 			{
-				$count = Jelly::select('match')
-						->where('table_id', '=', $tableid)
-						->count();
 				$tournament = Jelly::select('table', $tableid);
+				$count = Jelly::select('match')
+						->where('table_id', '=', $tournament->id)
+						->count();
 			}
 
 			$pagination = Pagination::factory(array(
@@ -46,6 +44,7 @@
 			{
 				$this->template->title = __('Матчи');
 				$this->template->breadcrumb = HTML::anchor('', 'Главная')." > "
+						.HTML::anchor('tournament', "Все турниры")." > "
 						.HTML::anchor('tournament/view/'.$tournament->id, 'Турнир: '.$tournament->name)." > ";
 			}
 			else
@@ -203,7 +202,7 @@
 				}
 			}
 
-			$lines = Jelly::select('line')->with('club')->where("id", "NOT IN", $skip_lines)->and_where('table_id', "=", $tournament->id)->execute();
+			$lines = Jelly::select('line')->where("id", "NOT IN", $skip_lines)->and_where('table_id', "=", $tournament->id)->execute();
 			$clubs = array('NULL' => 'Выберете команду соперника');
 			foreach($lines as $line)
 			{
@@ -220,6 +219,7 @@
 			$this->template->title = __('Регистрация матча');
 			$this->template->content = $view;
 			$this->template->breadcrumb = HTML::anchor('', 'Главная')." > "
+					.HTML::anchor('tournament', "Все турниры")." > "
 					.HTML::anchor('tournament/view/'.$tournament->id, 'Турнир: '.$tournament->name)." > ";
 		}
 

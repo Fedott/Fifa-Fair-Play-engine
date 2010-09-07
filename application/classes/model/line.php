@@ -5,6 +5,7 @@ class Model_Line extends Jelly_Model
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->sorting(array('points' => 'desc', 'win' => 'desc', 'games' => 'asc', 'goals' => 'desc', 'passed_goals' => 'asc'))
+			->load_with(array('club', 'user', 'table'))
 			->fields(array(
 			'id' => new Field_Primary,
 			'table' => new Field_BelongsTo,

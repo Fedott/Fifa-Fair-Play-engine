@@ -11,7 +11,9 @@ class Model_Table extends Jelly_Model
 					'not_empty' => array(TRUE),
 				),
 			)),
-			'url' => new Field_String,
+			'url' => new Field_String(array(
+				'unique' => TRUE,
+			)),
 			'type' => new Field_Enum(array(
 				'choices' => array('friendly', 'official'),
 			)),
