@@ -72,7 +72,7 @@
 	</thead>
 	<tbody>
 	<?foreach($matches as $match):?>
-		<tr class="<?=text::alternate('nechet', 'chet')?><?=(($match->away->id == $my_line->id) OR ($match->home->id == $my_line->id))?' my_team':'';?>">
+		<tr class="<?=text::alternate('nechet', 'chet')?> <?=(($line->id != $my_line->id) AND (($match->away->id == $my_line->id) OR ($match->home->id == $my_line->id)))?' my_team':'';?>">
 			<td><?=html::anchor('/tournament/club/'.$match->home->id, $clubs_arr[$match->home->club_id()]->name);?></td>
 			<td><?=html::anchor('match/view/'.$match->id, $match->home_goals." - ".$match->away_goals);?></td>
 			<td><?=html::anchor('/tournament/club/'.$match->away->id, $clubs_arr[$match->away->club_id()]->name);?></td>
@@ -96,7 +96,7 @@
 		<?text::alternate();?>
 		<?foreach($tournament->lines as $ll):?>
 			<?if($ll->id != $line->id):?>
-			<tr class="<?=text::alternate('nechet', 'chet')?>">
+			<tr class="<?=text::alternate('nechet', 'chet')?> <?=($ll->id == $my_line->id)?'my_team':'';?>">
 				<td><?=html::anchor('tournament/team/'.$ll->id, $ll->club->name);?></td>
 				<?for($i = 1; $i <= $tournament->matches; $i++):?>
 				<td>

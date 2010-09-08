@@ -237,6 +237,11 @@ ul.my_teams li.vmenu_title {
 	text-align:center;
 }
 
+ul.vmenu li.vmenu_title a,
+ul.my_teams li.vmenu_title a {
+	text-decoration: none;
+}
+
 ul.my_teams {
 	margin: 0px 10px;
 }
@@ -261,6 +266,12 @@ div#sidebar ul.vmenu.tables li table th.number {
 
 div#sidebar ul.vmenu.tables li table td.points,
 div#sidebar ul.vmenu.tables li table th.points {
+	text-align: center;
+	width: 15px;
+}
+
+div#sidebar ul.vmenu.tables li table td.goals,
+div#sidebar ul.vmenu.tables li table th.goals {
 	text-align: center;
 	width: 15px;
 }

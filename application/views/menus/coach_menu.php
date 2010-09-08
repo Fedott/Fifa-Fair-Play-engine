@@ -16,7 +16,7 @@
 	<?foreach($tables_with_lines as $table):?>
 		<ul class="vmenu tables">
 			<li class="vmenu_title">
-				<?=$table['table']->name;?>
+				<?=HTML::anchor('tournament/view/'.$table['table']->id, $table['table']->name);?>
 			</li>
 			<li>
 				<table cellpadding="3" cellspacing="1">
@@ -27,6 +27,9 @@
 							</th>
 							<th>
 								Команда
+							</th>
+							<th class="goals">
+								Мячи
 							</th>
 							<th>
 								О
@@ -41,7 +44,10 @@
 									<?=$line['position'];?>
 								</td>
 								<td>
-									<?=$line['line']->club->name;?>
+									<?=html::anchor('tournament/club/'.$line['line']->id, $line['line']->club->name);?>
+								</td>
+								<td class="goals">
+									<?=$line['line']->goals."-".$line['line']->passed_goals;?>
 								</td>
 								<td class="points">
 									<?=$line['line']->points;?>
