@@ -16,11 +16,16 @@
 		public function action_view($url)
 		{
 			$tournament = Jelly::select('table', $url);
-			$my_line = Jelly::select('line')
-					->where('table_id', "=", $tournament->id)
-					->and_where("user_id", "=", $this->user->id)
-					->limit(1)
-					->execute();
+			if($this->user->loaded())
+			{
+				$my_line = Jelly::select('line')
+						->where('table_id', "=", $tournament->id)
+						->and_where("user_id", "=", $this->user->id)
+						->limit(1)
+						->execute();
+			}
+			else
+				$my_line = Jelly::factory ('line');
 
 			$res = DB::select_array(array('goals.player_id', 'goals.line_id'))
 					->select(array('SUM("count")', 'goals'))
@@ -70,11 +75,16 @@
 			$line = Jelly::select('line', $id);
 
 			$tournament = $line->table;
-			$my_line = Jelly::select('line')
-					->where('table_id', "=", $tournament->id)
-					->and_where("user_id", "=", $this->user->id)
-					->limit(1)
-					->execute();
+			if($this->user->loaded())
+			{
+				$my_line = Jelly::select('line')
+						->where('table_id', "=", $tournament->id)
+						->and_where("user_id", "=", $this->user->id)
+						->limit(1)
+						->execute();
+			}
+			else
+				$my_line = Jelly::factory ('line');
 
 			$res = DB::select_array(array('goals.player_id', 'goals.line_id'))
 					->select(array('SUM("count")', 'goals'))
@@ -132,6 +142,13 @@
 				}
 			}
 
+			// Поскольку клубы уже загружены в линиях, мы просто пробегаемся по ним и засовываем каждый клуб в массив
+			$clubs_arr = array();
+			foreach($tournament->lines as $line)
+			{
+				$clubs_arr[$line->club->id] = $line->club;
+			}
+
 			$view = new View('tournament_club_view');
 			$view->matches = $matches;
 			$view->line = $line;
@@ -140,6 +157,7 @@
 			$view->tournament = $tournament;
 			$view->user = $this->user;
 			$view->my_line = $my_line;
+			$view->clubs_arr = $clubs_arr;
 
 			$this->template->title = __("Клуб: :name", array(":name" => $line->club->name));
 			$this->template->content = $view;

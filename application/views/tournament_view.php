@@ -17,7 +17,7 @@
 	</thead>
 	<?$i = 1;?>
 	<?foreach ($tournament->lines as $line):?>
-	<tr class="<?=text::alternate('nechet', 'chet');?><?=($line->user->id == $user->id)?' my_team':'';?>">
+	<tr class="<?=text::alternate('nechet', 'chet');?><?=($line->id == $my_line->id)?' my_team':'';?>">
 		<td><?=$i++?></td>
 		<td><?=html::anchor('tournament/club/'.$line->id, $line->club->name);?></td>
 		<td><?=$line->games;?></td>

@@ -73,9 +73,9 @@
 	<tbody>
 	<?foreach($matches as $match):?>
 		<tr class="<?=text::alternate('nechet', 'chet')?><?=(($match->away->id == $my_line->id) OR ($match->home->id == $my_line->id))?' my_team':'';?>">
-			<td><?=html::anchor('/tournament/club/'.$match->home->id, $match->home->club->name);?></td>
+			<td><?=html::anchor('/tournament/club/'.$match->home->id, $clubs_arr[$match->home->club_id()]->name);?></td>
 			<td><?=html::anchor('match/view/'.$match->id, $match->home_goals." - ".$match->away_goals);?></td>
-			<td><?=html::anchor('/tournament/club/'.$match->away->id, $match->away->club->name);?></td>
+			<td><?=html::anchor('/tournament/club/'.$match->away->id, $clubs_arr[$match->away->club_id()]->name);?></td>
 			<td><?=misc::get_human_date($match->date);?></td>
 		</tr>
 	<?endforeach;?>

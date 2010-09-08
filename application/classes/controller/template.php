@@ -7,8 +7,10 @@
 		public function before()
 		{
 			$this->auth = Auth::instance();
-			$this->auth->logged_in();
-			$this->user = $this->auth->get_user();
+			if($this->auth->logged_in())
+				$this->user = $this->auth->get_user();
+			else
+				$this->user = Jelly::factory ('user');
 
 			parent::before();
 		}

@@ -31,11 +31,33 @@
 					->limit($pagination->items_per_page)
 					->execute();
 
+			// Для оптимизации за счёт уменьшения количества запросов выбираем
+			// клубы сейчас, чтобы потом дёргать их из массива
+			$clubs_like = array();
+			$clubs_arr = array();
+			foreach($matches as $match)
+			{
+				$clubs_like[$match->home->club_id()] = $match->home->club_id();
+				$clubs_like[$match->away->club_id()] = $match->away->club_id();
+			}
+
+			if(count($clubs_like))
+			{
+				$clubs = Jelly::select('club')
+						->where("id", "IN", $clubs_like)
+						->execute();
+				foreach($clubs as $club)
+				{
+					$clubs_arr[$club->id] = $club;
+				}
+			}
+
 			$view = new View('matches_list');
 			$view->matches = $matches;
 			$view->tourn = $tournament;
 			$view->pagination = $pagination;
 			$view->user = $this->user;
+			$view->clubs_arr = $clubs_arr;
 
 			if($tournament->loaded())
 			{
@@ -263,6 +285,7 @@
 			$this->template->title = __('Просмотр матча');
 			$this->template->content = $view;
 			$this->template->breadcrumb = HTML::anchor('', 'Главная')." > "
+					.HTML::anchor('tournament', __('Все турниры'))." > "
 					.HTML::anchor('tournament/view/'.$match->table->id, 'Турнир: '.$match->table->name)." > ";
 		}
 

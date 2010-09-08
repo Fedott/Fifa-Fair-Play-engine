@@ -34,4 +34,20 @@ class Model_Line extends Jelly_Model
 			)),
 		));
 	}
+
+	/**
+	 * Возвращает ID клуба линии, без загрузки модели по связи
+	 */
+	public function club_id()
+	{
+		return ($this->loaded())?$this->_original['club']:FALSE;
+	}
+
+	/**
+	 * Возвращает ID пользователя линии, без загрузки модели по связи
+	 */
+	public function user_id()
+	{
+		return ($this->loaded())?$this->_original['user']:FALSE;
+	}
 }

@@ -19,10 +19,10 @@
 		</thead>
 		<tbody>
 		<?foreach($matches as $match):?>
-			<tr class="<?=text::alternate('nechet', 'chet');?> <?=($user AND ((int)$match->away->user->id == $user->id OR $match->home->user->id == $user->id))?'my_team':'';?>">
-				<td><?=html::anchor('tournament/club/'.$match->home->id, $match->home->club->name);?></td>
+			<tr class="<?=text::alternate('nechet', 'chet');?> <?=($user AND ((int)$match->away->user_id() == $user->id OR $match->home->user_id() == $user->id))?'my_team':'';?>">
+				<td><?=html::anchor('tournament/club/'.$match->home->id, $clubs_arr[$match->home->club_id()]->name);?></td>
 				<td><?=html::anchor('match/view/'.$match->id, $match->home_goals." - ".$match->away_goals);?></td>
-				<td><?=html::anchor('tournament/club/'.$match->away->id, $match->away->club->name);?></td>
+				<td><?=html::anchor('tournament/club/'.$match->away->id, $clubs_arr[$match->away->club_id()]->name);?></td>
 			<?if(!$tourn->loaded()):?>
 				<td><?=html::anchor('tournament/view/'.$match->table->url, $match->table->name);?></td>
 			<?endif;?>
