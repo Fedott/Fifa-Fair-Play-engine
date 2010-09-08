@@ -144,9 +144,9 @@
 
 			// Поскольку клубы уже загружены в линиях, мы просто пробегаемся по ним и засовываем каждый клуб в массив
 			$clubs_arr = array();
-			foreach($tournament->lines as $line)
+			foreach($tournament->lines as $tline)
 			{
-				$clubs_arr[$line->club->id] = $line->club;
+				$clubs_arr[$tline->club->id] = $tline->club;
 			}
 
 			$view = new View('tournament_club_view');

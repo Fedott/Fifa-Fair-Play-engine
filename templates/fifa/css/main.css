@@ -241,10 +241,29 @@ ul.my_teams {
 	margin: 0px 10px;
 }
 
-ul.my_teams a {
+ul.vmenu.teams a {
 	text-decoration: none;
 }
 
+.vmenu.tables table {
+	width: 100%
+}
+
+div#sidebar ul.vmenu.tables li {
+	margin-left: 0px;
+}
+
+div#sidebar ul.vmenu.tables li table td.number,
+div#sidebar ul.vmenu.tables li table th.number {
+	text-align: center;
+	width: 10px;
+}
+
+div#sidebar ul.vmenu.tables li table td.points,
+div#sidebar ul.vmenu.tables li table th.points {
+	text-align: center;
+	width: 15px;
+}
 
 /**
  * Новости
