@@ -19,3 +19,6 @@
 [submodule "modules/userguide"]
 	path = modules/userguide
 	url = http://github.com/kohana/userguide.git
+[submodule "modules/image"]
+	path = modules/image
+	url = http://github.com/kohana/image.git
