@@ -4,7 +4,6 @@ class Model_User extends Model_Auth_User
 {
 	public static function initialize(Jelly_Meta $meta)
 	{
-
 		$meta->fields(array(
 			'icq' => new Field_Integer(array(
 				'unique' => TRUE,
@@ -19,6 +18,21 @@ class Model_User extends Model_Auth_User
 				'rules' => array(
 					'not_empty' => array(TRUE),
 				),
+			)),
+			'last_name' => new Field_String(array(
+				'rules' => array(
+					'max_length' => array(30),
+				),
+			)),
+			'first_name' => new Field_String(array(
+				'rules' => array(
+					'max_length' => array(30),
+				),
+			)),
+			'avatar' => new Field_Image(array(
+				'path' => 'media/avatars',
+				'resize' => TRUE,
+				'max_width' => 100,
 			)),
 		));
 

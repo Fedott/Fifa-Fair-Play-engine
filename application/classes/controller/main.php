@@ -37,7 +37,7 @@
 
 			$this->template->title = __('Авторизация пользователя');
 			$this->template->content = $view;
-			$this->template->breadcrumb = HTML::anchor('main/index', 'Главная страница')." > ";
+			$this->template->breadcrumb = HTML::anchor('main/index', __("Главная"))." > ";
 		}
 
 		public function action_logout()
@@ -80,5 +80,46 @@
 			$this->template->content = new View('regform');
 			$this->template->content->form = $form;
 			$this->template->content->errors = $errors;
+		}
+
+		public function action_profile_edit()
+		{
+			if(!$this->auth->logged_in())
+			{
+				MISC::set_error_message(__("Вы не авторизированы на сайте"));
+				Request::instance()->redirect("login");
+			}
+
+			$user = Jelly::select('user', $this->user->id);
+			$errors = array();
+			if($_POST)
+			{
+				try
+				{
+					$user->set(arr::extract($_POST, array('icq', 'first_name', 'last_name')));
+					if($_POST['password'])
+					{
+						$user->set(arr::extract($_POST, array('password', 'password_confirm')));
+					}
+					if(isset($_FILES))
+					{
+						$user->avatar = $_FILES['avatar'];
+					}
+					$user->save();
+					Request::instance()->redirect("");
+				}
+				catch (Validate_Exception $exp)
+				{
+					$errors = $exp->array->errors('register_form');
+				}
+			}
+
+			$view = new View('profile_edit');
+			$view->user = $user;
+			$view->errors = $errors;
+
+			$this->template->title = __("Редактрование профиля");
+			$this->template->content = $view;
+			$this->template->breadcrumb = HTML::anchor('main/index', __("Главная"))." > ";
 		}
 	}

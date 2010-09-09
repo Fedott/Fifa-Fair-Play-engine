@@ -74,6 +74,7 @@ Kohana::modules(array(
 	'jelly-auth' => MODPATH.'jelly-auth', // Драйвер Jelly для Auth
 	'auth'       => MODPATH.'auth',       // Basic authentication
 	'userguide'  => MODPATH.'userguide',  // Модуль свтроенной доки
+	'image'      => MODPATH.'image',  // Модуль работы с изображениями
 ));
 
 /**

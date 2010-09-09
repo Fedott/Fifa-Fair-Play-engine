@@ -8,7 +8,7 @@
 		<?=$user->username?> <?=html::anchor('logout', 'Выйти', array('class' => 'logout'));?>
 	</p>
 	<p>
-		<?=html::anchor('user/profile', 'Профиль');?>
+		<?=html::anchor('main/profile', 'Профиль');?>
 	</p>
 <?endif;?>
 	<ul class="vmenu">
