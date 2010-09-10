@@ -13,7 +13,16 @@
 <?endif;?>
 	<ul class="vmenu">
 		<li><?=html::anchor('forum', 'Форум');?></li>
-		<?if($auth->logged_in('coach')):?><li><?=html::anchor('match/my', 'Мои матчи');?></li><?endif;?>
+		<?if($auth->logged_in('coach')):?>
+			<li>
+				<?=html::anchor('match/my', 'Мои матчи');?>
+				<?if($matches_not_apply_my):?>
+					<?=HTML::image('templates/fifa/img/light.png', array('title' => __("Есть не подтверждённые вами матчи")));?>
+				<?elseif($matches_not_apply_opponent):?>
+					<?=HTML::image('templates/fifa/img/not_light.png', array('title' => __("Есть не подтверждённые соперником матчи")));?>
+				<?endif;?>
+			</li>
+		<?endif;?>
 		<li><?=html::anchor('match/list', 'Все матчи');?></li>
 		<li><?=html::anchor('tournament', "Турниры");?></li>
 	</ul>

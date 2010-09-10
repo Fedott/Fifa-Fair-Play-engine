@@ -17,6 +17,9 @@
 		<ul class="vmenu tables">
 			<li class="vmenu_title">
 				<?=HTML::anchor('tournament/view/'.$table['table']->id, $table['table']->name);?>
+				<?if($table['table']->active):?>
+					<?=HTML::anchor('match/reg/'.$table['table']->id, HTML::image('templates/fifa/img/add.png', array('alt' => __("Зарегистрировать матч"))), array('title' => __("Зарегистрировать матч"), 'alt' => __("Зарегистрировать матч")));?>
+				<?endif;?>
 			</li>
 			<li>
 				<table cellpadding="3" cellspacing="1">

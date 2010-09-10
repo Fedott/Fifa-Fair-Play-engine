@@ -78,14 +78,28 @@
 		{
 			if(!$this->auth->logged_in('coach'))
 			{
-				Request::instance()->redirect('/');
+				MISC::set_error_message(__("У вас нет прав тренера"));
+				Request::instance()->redirect('');
 			}
 			if(!Jelly::select('line')->where('user_id', "=", $this->user->id)->and_where("table_id", "=", $tourn)->count())
 			{
-				Request::instance()->redirect('/');
+				MISC::set_error_message(__("Вы не являетесь тренером команды в этом турнире"));
+				Request::instance()->redirect('');
 			}
 			
 			$tournament = Jelly::select('table', $tourn);
+			// Проверяем активность и не законченность турнира
+			if($tournament->ended)
+			{
+				MISC::set_error_message(__("Регистрация матчей в турнире, :name, завершена. Турнир закончен.", array(':name' => $tournament->name)));
+				Request::instance()->redirect('tournament/view/'.$tournament->id);
+			}
+			if( ! $tournament->active)
+			{
+				MISC::set_error_message(__("Турнир, :name, в данный момент не активен", array(':name' => $tournament->name)));
+				Request::instance()->redirect('tournament/view/'.$tournament->id);
+			}
+
 			$myline = Jelly::select('line')
 					->where('table_id', "=", $tournament->id)
 					->and_where("user_id", "=", $this->user->id)
@@ -95,11 +109,6 @@
 			$comment = Jelly::factory('comment');
 			$errors = array();
 			$my_players = $myline->club->players->as_array('id', 'last_name');
-
-			foreach ($myline->club->players as $player)
-			{
-
-			}
 			
 			if($_POST)
 			{

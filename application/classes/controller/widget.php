@@ -8,6 +8,8 @@
 			$user= $auth->get_user();
 
 			$coach_menu = FALSE;
+			$matches_not_apply_my = 0;
+			$matches_not_apply_opponent = 0;
 			if($auth->logged_in('coach'))
 			{
 				$lines = Jelly::select('line')
@@ -60,12 +62,24 @@
 				$coach_menu->lines = $lines;
 				$coach_menu->tables_with_lines = $tables_with_lines;
 				$coach_menu->user = $user;
+
+				// Получаем инфу о неподтверждённых матчах
+				$matches_not_apply_my = Jelly::select('match')
+						->where('away.user_id', "=", $user->id)
+						->where("confirm", "=", 0)
+						->count();
+				$matches_not_apply_opponent = Jelly::select('match')
+						->where('home.user_id', "=", $user->id)
+						->where("confirm", "=", 0)
+						->count();
 			}
 
 			$view = View::factory('menus/main');
 			$view->auth = $auth;
 			$view->user = $auth->get_user();
 			$view->coach_menu = $coach_menu;
+			$view->matches_not_apply_my = $matches_not_apply_my;
+			$view->matches_not_apply_opponent = $matches_not_apply_opponent;
 			echo $view->render();
 		}
 	}
