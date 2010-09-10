@@ -12,12 +12,15 @@ CREATE TABLE IF NOT EXISTS `clubs` (
   `url` varchar(255) NOT NULL,
   `logo` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 INSERT INTO `clubs` (`id`, `name`, `url`, `logo`) VALUES
 (1, 'Зенит', 'zenit', '10.jpeg'),
 (2, 'Udinese', 'udinese', '4c83e40dc18341he4J0nCWQ7CnbE.jpg'),
-(3, 'Lazio', 'lazio', '');
+(3, 'Lazio', 'lazio', ''),
+(4, 'ЦСКА', 'cska', ''),
+(5, 'Спартак Москва', 'spartak-moskva', ''),
+(6, 'Сатурн', 'saturn', '');
 
 CREATE TABLE IF NOT EXISTS `comments` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -42,11 +45,14 @@ CREATE TABLE IF NOT EXISTS `goals` (
   `count` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `match_id` (`match_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 INSERT INTO `goals` (`id`, `match_id`, `player_id`, `table_id`, `line_id`, `count`) VALUES
 (1, 2, 3, 1, 1, 1),
-(2, 2, 8, 1, 2, 1);
+(2, 2, 8, 1, 2, 1),
+(3, 6, 8, 1, 2, 1),
+(4, 6, 6, 1, 3, 1),
+(5, 7, 4, 1, 1, 1);
 
 CREATE TABLE IF NOT EXISTS `lines` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -61,15 +67,21 @@ CREATE TABLE IF NOT EXISTS `lines` (
   `passed_goals` int(11) NOT NULL,
   `points` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 INSERT INTO `lines` (`id`, `table_id`, `club_id`, `user_id`, `games`, `win`, `drawn`, `lose`, `goals`, `passed_goals`, `points`) VALUES
 (1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1),
 (2, 1, 2, 2, 1, 0, 1, 0, 1, 1, 1),
 (3, 1, 3, NULL, 0, 0, 0, 0, 0, 0, 0),
 (4, 2, 1, NULL, 0, 0, 0, 0, 0, 0, 0),
-(5, 2, 2, NULL, 0, 0, 0, 0, 0, 0, 0),
-(6, 2, 3, NULL, 0, 0, 0, 0, 0, 0, 0);
+(5, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0),
+(6, 2, 3, NULL, 0, 0, 0, 0, 0, 0, 0),
+(7, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0),
+(8, 1, 5, NULL, 0, 0, 0, 0, 0, 0, 0),
+(9, 1, 6, NULL, 0, 0, 0, 0, 0, 0, 0),
+(10, 2, 4, 2, 0, 0, 0, 0, 0, 0, 0),
+(11, 2, 5, NULL, 0, 0, 0, 0, 0, 0, 0),
+(12, 2, 6, NULL, 0, 0, 0, 0, 0, 0, 0);
 
 CREATE TABLE IF NOT EXISTS `matches` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -81,11 +93,12 @@ CREATE TABLE IF NOT EXISTS `matches` (
   `away_goals` int(10) unsigned NOT NULL,
   `confirm` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 INSERT INTO `matches` (`id`, `date`, `table_id`, `home_id`, `away_id`, `home_goals`, `away_goals`, `confirm`) VALUES
 (2, 1283708488, 1, 1, 2, 1, 1, 1),
-(5, 1283788342, 1, 1, 2, 0, 0, 0);
+(6, 1283949911, 1, 2, 3, 1, 1, 0),
+(7, 1283959153, 1, 1, 2, 1, 0, 0);
 
 CREATE TABLE IF NOT EXISTS `players` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -148,7 +161,7 @@ CREATE TABLE IF NOT EXISTS `tables` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 INSERT INTO `tables` (`id`, `name`, `url`, `type`, `season`, `active`, `visible`, `ended`, `matches`) VALUES
-(1, 'Предсезонка', 'predsezonka', 'friendly', NULL, 0, 1, 0, 2),
+(1, 'Предсезонка', 'predsezonka', 'friendly', NULL, 1, 1, 0, 2),
 (2, 'Первый сезон', 'pervwy-sezon', 'official', NULL, 0, 1, 0, 2);
 
 CREATE TABLE IF NOT EXISTS `trophies` (
@@ -175,15 +188,18 @@ CREATE TABLE IF NOT EXISTS `users` (
   `logins` int(10) unsigned NOT NULL DEFAULT '0',
   `last_login` int(10) unsigned DEFAULT NULL,
   `icq` int(11) unsigned NOT NULL,
+  `first_name` varchar(30) DEFAULT NULL,
+  `last_name` varchar(30) DEFAULT NULL,
+  `avatar` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`),
   UNIQUE KEY `icq` (`icq`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
-INSERT INTO `users` (`id`, `email`, `username`, `password`, `logins`, `last_login`, `icq`) VALUES
-(1, 'fedotru@gmail.com', 'Федот', '0f78a7adead4549d022a95875075a130cd2e3ff9e461d96de6', 23, 1283860560, 7372085),
-(2, 'test@qwe.er', 'test', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 4, 1283735878, 233123);
+INSERT INTO `users` (`id`, `email`, `username`, `password`, `logins`, `last_login`, `icq`, `first_name`, `last_name`, `avatar`) VALUES
+(1, 'fedotru@gmail.com', 'Федот', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 29, 1284101704, 7372085, 'Владимир', 'Фёдоров', ''),
+(2, 'test@qwe.er', 'test', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 9, 1284047658, 233123, '', '', '4c8903bd0ab4e3.jpg');
 
 CREATE TABLE IF NOT EXISTS `user_tokens` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -201,8 +217,7 @@ INSERT INTO `user_tokens` (`id`, `user_id`, `user_agent`, `token`, `created`, `e
 (1, 1, 'c8900548171c2227f7d7621fbc10b977624eff72', 'nMuCJqnJf77OtrQceb5eu8gbHGclUcMl', 1282822803, 1284032403),
 (3, 1, 'ff973ef53520da8a8800409721398f1f9e9c8d2a', 'jYPsRrUmVBO3YlTCTQAFhxJaYA5gy4Vw', 1283262938, 1284472538),
 (5, 2, '948e2716280bf7a15fe83405f3a8a914043e75a8', '0HlQTbnWFR5SB5eNecsBF2GPF24m9yV7', 1283713921, 1284923521),
-(6, 1, '4de460a499da6d94fc265b15efc395ff5a0633c5', '9CT3RtG1Bd0A5y5L1jkVVFNw2ObTPZH7', 1283735635, 1284945235),
-(7, 1, 'ad3ede04dbb7b5c5f7856265044f815ed2debf87', 'HUhzQfNdginqEwL7DO9U8CL9977JFVcl', 1283860560, 1285070160);
+(6, 1, '4de460a499da6d94fc265b15efc395ff5a0633c5', '9CT3RtG1Bd0A5y5L1jkVVFNw2ObTPZH7', 1283735635, 1284945235);
 
 
 ALTER TABLE `goals`
