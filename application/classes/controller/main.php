@@ -122,4 +122,31 @@
 			$this->template->content = $view;
 			$this->template->breadcrumb = HTML::anchor('main/index', __("Главная"))." > ";
 		}
+
+		public function action_profile($id = NULL)
+		{
+			if($id == NULL)
+				$id = $this->user->id;
+
+			$user = Jelly::select('user', $id);
+			$coach = $user->has_role('coach');
+			if($coach)
+			{
+				$coach = array();
+				$coach['lines'] = Jelly::select('line')
+						->by_user($user->id)
+						->execute();
+			}
+
+			$view = new View('profile');
+			$view->user = $user;
+			$view->coach = $coach;
+
+			if($user->id == $this->user->id)
+				$this->template->title = __("Мой профиль");
+			else
+				$this->template->title = __("Пользователь :name", array(":name" => $user->username));
+			$this->template->content = $view;
+			$this->template->breadcrumb = HTML::anchor('main/index', __("Главная"))." > ";
+		}
 	}

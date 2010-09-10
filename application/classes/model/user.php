@@ -4,7 +4,8 @@ class Model_User extends Model_Auth_User
 {
 	public static function initialize(Jelly_Meta $meta)
 	{
-		$meta->fields(array(
+		$meta->load_with(array('counters'))
+		->fields(array(
 			'icq' => new Field_Integer(array(
 				'unique' => TRUE,
 				'rules' => array(
