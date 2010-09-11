@@ -1,28 +1,14 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-	class Field_Wysiwig extends Field_Text
+	class Field_Wysiwyg extends Field_Text
 	{
-		public $strip_tags = TRUE;
-		public $allowable_tags = array(
-			'<a>',
-			'<p>',
-			'<a>',
-			'<b>',
-			'<sub>',
-			'<div>',
-			'<ul>',
-			'<ol>',
-			'<br>',
-			'<li>',
-			'<blockquote>',
-		);
+		public $xss_clean = TRUE;
 
 		public function set($value)
 		{
-			if($this->strip_tags)
+			if($this->xss_clean)
 			{
-
-				$value = strip_tags($str, $allowable_tags);
+				$value = Security::xss_clean($value);
 			}
 
 			return parent::set($value);

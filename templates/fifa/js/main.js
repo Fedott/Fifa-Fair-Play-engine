@@ -85,5 +85,14 @@ jQuery( function($) {
 		$("a.confirm").click(function(){
 			return confirm($(this).attr('confirm_text'));
 		});
+
+		// Включем везде где надо визуальный редактор
+		$('.wysiwyg').wysiwyg({
+			controls : {
+				html : { visible : true }
+			},
+			css : '/templates/fifa/css/wysiwyg.css'
+		});
+
 	});
 });

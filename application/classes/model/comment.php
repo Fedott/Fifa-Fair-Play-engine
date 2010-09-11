@@ -7,7 +7,7 @@
 			$meta->load_with(array('author'))
 				->fields(array(
 					'id' => new Field_Primary,
-					'text' => new Field_Text,
+					'text' => new Field_Wysiwyg,
 					'date' => new Field_Integer(array(
 						'default' => time(),
 					)),
