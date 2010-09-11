@@ -76,6 +76,7 @@ Kohana::modules(array(
 	'userguide'  => MODPATH.'userguide',  // Модуль свтроенной доки
 	'image'      => MODPATH.'image',      // Модуль работы с изображениями
 	'purifier'   => MODPATH.'purifier',   // Модуль HTML Purifier
+	'forum'      => MODPATH.'forum',      // Модуль Форума от Федота
 ));
 
 /**

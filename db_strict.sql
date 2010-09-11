@@ -30,11 +30,12 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `match_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `match_id` (`match_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 INSERT INTO `comments` (`id`, `text`, `date`, `author_id`, `match_id`) VALUES
 (1, 'Твержу', 2010, 2, 2),
-(5, 'Отличный матч', 1284112646, 1, 9);
+(5, 'Отличный матч', 1284112646, 1, 9),
+(6, '<u>Вот</u> <sup>такой</sup><sub>хуйня =)</sub><br /><h3>ываыва</h3>', 1284206098, 1, 10);
 DROP TRIGGER IF EXISTS `increment_count_comments`;
 DELIMITER //
 CREATE TRIGGER `increment_count_comments` AFTER INSERT ON `comments`
@@ -63,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `counters` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 INSERT INTO `counters` (`id`, `user_id`, `comments`, `posts`, `matches`) VALUES
-(1, 1, 1, 0, 1),
+(1, 1, 2, 0, 2),
 (2, 2, 1, 0, 1);
 
 CREATE TABLE IF NOT EXISTS `goals` (
@@ -126,13 +127,14 @@ CREATE TABLE IF NOT EXISTS `matches` (
   `away_goals` int(11) unsigned NOT NULL,
   `confirm` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 INSERT INTO `matches` (`id`, `date`, `table_id`, `home_id`, `away_id`, `home_goals`, `away_goals`, `confirm`) VALUES
 (2, 1283708488, 1, 1, 2, 1, 1, 1),
 (6, 1283949911, 1, 2, 3, 1, 1, 0),
 (8, 1284112553, 1, 1, 8, 3, 0, 0),
-(9, 1284112646, 1, 1, 7, 1, 0, 0);
+(9, 1284112646, 1, 1, 7, 1, 0, 0),
+(10, 1284206098, 1, 1, 7, 0, 0, 0);
 DROP TRIGGER IF EXISTS `increment_count_matches`;
 DELIMITER //
 CREATE TRIGGER `increment_count_matches` AFTER INSERT ON `matches`
@@ -197,6 +199,14 @@ INSERT INTO `roles_users` (`user_id`, `role_id`) VALUES
 (1, 3),
 (2, 3);
 
+CREATE TABLE IF NOT EXISTS `sections` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `weight` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
 CREATE TABLE IF NOT EXISTS `tables` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -249,7 +259,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 INSERT INTO `users` (`id`, `email`, `username`, `password`, `logins`, `last_login`, `icq`, `first_name`, `last_name`, `avatar`) VALUES
-(1, 'fedotru@gmail.com', 'Федот', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 30, 1284117110, 7372085, 'Владимир', 'Фёдоров', '4c89f786dc2b5dwW0d9987Dj1pWW.gif'),
+(1, 'fedotru@gmail.com', 'Федот', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 31, 1284205486, 7372085, 'Владимир', 'Фёдоров', '4c89f786dc2b5dwW0d9987Dj1pWW.gif'),
 (2, 'test@qwe.er', 'test', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 9, 1284047658, 233123, '', '', '4c8903bd0ab4e3.jpg');
 DROP TRIGGER IF EXISTS `add_counter_for_user`;
 DELIMITER //
@@ -270,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `user_tokens` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_token` (`token`),
   KEY `fk_user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 INSERT INTO `user_tokens` (`id`, `user_id`, `user_agent`, `token`, `created`, `expires`) VALUES
 (1, 1, 'c8900548171c2227f7d7621fbc10b977624eff72', 'nMuCJqnJf77OtrQceb5eu8gbHGclUcMl', 1282822803, 1284032403),
@@ -281,6 +291,9 @@ INSERT INTO `user_tokens` (`id`, `user_id`, `user_agent`, `token`, `created`, `e
 
 ALTER TABLE `comments`
   ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`match_id`) REFERENCES `matches` (`id`) ON DELETE CASCADE;
+
+ALTER TABLE `counters`
+  ADD CONSTRAINT `counters_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 ALTER TABLE `goals`
   ADD CONSTRAINT `goals_ibfk_1` FOREIGN KEY (`match_id`) REFERENCES `matches` (`id`) ON DELETE CASCADE;
