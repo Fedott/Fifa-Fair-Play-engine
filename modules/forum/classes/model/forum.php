@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Section extends Jelly_Model
+class Model_Forum extends Jelly_Model
 {
 	public static function initialize(Jelly_Meta $meta)
 	{
@@ -12,7 +12,15 @@ class Model_Section extends Jelly_Model
 						'required' => array(TRUE),
 					),
 				)),
+				'description' => new Field_Wysiwyg,
+				'role' => new Field_BelongsTo,
 				'weight' => new Field_Integer(array(
+					'default' => 0,
+				)),
+				'count_topics' => new Field_Integer(array(
+					'default' => 0,
+				)),
+				'count_posts' => new Field_Integer(array(
 					'default' => 0,
 				)),
 			));

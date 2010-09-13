@@ -67,6 +67,19 @@ INSERT INTO `counters` (`id`, `user_id`, `comments`, `posts`, `matches`) VALUES
 (1, 1, 2, 0, 2),
 (2, 2, 1, 0, 1);
 
+CREATE TABLE IF NOT EXISTS `forums` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `role_id` int(11) unsigned NOT NULL,
+  `weight` int(11) NOT NULL,
+  `count_topics` int(11) unsigned NOT NULL,
+  `count_posts` int(11) unsigned NOT NULL,
+  `section_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
 CREATE TABLE IF NOT EXISTS `goals` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `match_id` int(11) unsigned NOT NULL,
@@ -172,6 +185,35 @@ INSERT INTO `players` (`id`, `first_name`, `last_name`, `year_of_birth`, `club_i
 (6, 'Tomaso', 'Rocchi', 0, 3),
 (8, 'Ivanov', 'Petr', 0, 2);
 
+CREATE TABLE IF NOT EXISTS `posts` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `text` text NOT NULL,
+  `date` int(11) unsigned NOT NULL,
+  `topic_id` int(11) unsigned NOT NULL,
+  `author_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+DROP TRIGGER IF EXISTS `increment_count_posts`;
+DELIMITER //
+CREATE TRIGGER `increment_count_posts` AFTER INSERT ON `posts`
+ FOR EACH ROW BEGIN
+	UPDATE `topics` SET `count_posts` = `count_posts` + 1 WHERE `id` = NEW.topic_id;
+	UPDATE `forums` SET `count_posts` = `count_posts` + 1 WHERE `id` = (SELECT `topics`.`forum_id` FROM `topics` WHERE `id` = NEW.topic_id);
+END
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `unincrement_count_posts`;
+DELIMITER //
+CREATE TRIGGER `unincrement_count_posts` AFTER DELETE ON `posts`
+ FOR EACH ROW BEGIN
+	UPDATE `topics` SET `count_posts` = `count_posts` - 1 WHERE `id` = OLD.topic_id;
+	UPDATE `forums` SET `count_posts` = `count_posts` - 1 WHERE `id` = (SELECT `topics`.`forum_id` FROM `topics` WHERE `id` = OLD.topic_id);
+END
+//
+DELIMITER ;
+
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
@@ -200,7 +242,7 @@ INSERT INTO `roles_users` (`user_id`, `role_id`) VALUES
 (2, 3);
 
 CREATE TABLE IF NOT EXISTS `sections` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `weight` int(11) NOT NULL,
   PRIMARY KEY (`id`)
@@ -224,6 +266,35 @@ CREATE TABLE IF NOT EXISTS `tables` (
 INSERT INTO `tables` (`id`, `name`, `url`, `type`, `season`, `active`, `visible`, `ended`, `matches`) VALUES
 (1, 'Предсезонка', 'predsezonka', 'friendly', NULL, 1, 1, 0, 2),
 (2, 'Первый сезон', 'pervwy-sezon', 'official', NULL, 0, 1, 0, 2);
+
+CREATE TABLE IF NOT EXISTS `topics` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `desctioption` varchar(1000) NOT NULL,
+  `count_posts` int(11) unsigned NOT NULL,
+  `count_views` int(11) unsigned NOT NULL,
+  `date` int(11) unsigned NOT NULL,
+  `forum_id` int(11) unsigned NOT NULL,
+  `author_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+DROP TRIGGER IF EXISTS `increment_count_topics`;
+DELIMITER //
+CREATE TRIGGER `increment_count_topics` AFTER INSERT ON `topics`
+ FOR EACH ROW BEGIN
+	UPDATE `forums` SET `count_topics` = `count_topics` + 1 WHERE `id` = NEW.forum_id;
+END
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `unincrement_count_topics`;
+DELIMITER //
+CREATE TRIGGER `unincrement_count_topics` AFTER DELETE ON `topics`
+ FOR EACH ROW BEGIN
+	UPDATE `forums` SET `count_topics` = `count_topics` - 1 WHERE `id` = OLD.forum_id;
+END
+//
+DELIMITER ;
 
 CREATE TABLE IF NOT EXISTS `trophies` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -260,7 +331,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `email`, `username`, `password`, `logins`, `last_login`, `icq`, `first_name`, `last_name`, `avatar`) VALUES
 (1, 'fedotru@gmail.com', 'Федот', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 31, 1284205486, 7372085, 'Владимир', 'Фёдоров', '4c89f786dc2b5dwW0d9987Dj1pWW.gif'),
-(2, 'test@qwe.er', 'test', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 9, 1284047658, 233123, '', '', '4c8903bd0ab4e3.jpg');
+(2, 'test@qwe.er', 'test', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 10, 1284293502, 233123, '', '', '4c8903bd0ab4e3.jpg');
 DROP TRIGGER IF EXISTS `add_counter_for_user`;
 DELIMITER //
 CREATE TRIGGER `add_counter_for_user` AFTER INSERT ON `users`
@@ -285,7 +356,7 @@ CREATE TABLE IF NOT EXISTS `user_tokens` (
 INSERT INTO `user_tokens` (`id`, `user_id`, `user_agent`, `token`, `created`, `expires`) VALUES
 (1, 1, 'c8900548171c2227f7d7621fbc10b977624eff72', 'nMuCJqnJf77OtrQceb5eu8gbHGclUcMl', 1282822803, 1284032403),
 (3, 1, 'ff973ef53520da8a8800409721398f1f9e9c8d2a', 'jYPsRrUmVBO3YlTCTQAFhxJaYA5gy4Vw', 1283262938, 1284472538),
-(5, 2, '948e2716280bf7a15fe83405f3a8a914043e75a8', '0HlQTbnWFR5SB5eNecsBF2GPF24m9yV7', 1283713921, 1284923521),
+(5, 2, '948e2716280bf7a15fe83405f3a8a914043e75a8', 'UES8Wj1NIOzzr6M9s5yAP5zSg2dBWdLz', 1283713921, 1284923521),
 (6, 1, '4de460a499da6d94fc265b15efc395ff5a0633c5', '9CT3RtG1Bd0A5y5L1jkVVFNw2ObTPZH7', 1283735635, 1284945235);
 
 
