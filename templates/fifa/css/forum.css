@@ -35,6 +35,10 @@
 	display: block;
 }
 
+.section .section_body {
+	padding: 4px;
+}
+
 .section .forum_main {
 	float: left;
 	width: 50%;
@@ -68,6 +72,5 @@
 }
 
 .section .section_body .forum .forum_main {
-	padding: 4px;
 	background-color: #FFF;
 }
