@@ -1,0 +1,73 @@
+/* 
+    Document   : forum
+    Created on : 15.09.2010, 15:41:51
+    Author     : Fedot (fedotru@gmail.com)
+    Description:
+        Стили для форума.
+*/
+
+/**
+ * Стили для вывода Разделов
+ */
+.space {
+	 width: 10px;
+	 line-height: 10px;
+}
+
+.section {
+	clear: both;
+}
+
+.section dl {
+	position: relative;
+	overflow: hidden;
+}
+
+.section .section_header {
+	font-weight: bold;
+	background: #99CD20 url('../img/section_header_bg.gif') repeat-x;
+	padding: 5px;
+	font-size: 13px;
+	height: 15px;
+	color: #FFF;
+	padding-left: 8px;
+	list-style: none;
+	display: block;
+}
+
+.section .forum_main {
+	float: left;
+	width: 50%;
+}
+
+.section .count_topics {
+	float: left;
+	width: 8%;
+	text-align: center;
+}
+
+.section .count_posts {
+	float: left;
+	width: 15%;
+	text-align: center;
+}
+
+.section .last_post {
+	float: left;
+	width: 27%;
+	text-align: center;
+}
+
+.section .forum {
+	list-style: none;
+}
+
+.section .section_body .forum .count_topics,
+.section .section_body .forum .count_posts {
+	line-height: 40px;
+}
+
+.section .section_body .forum .forum_main {
+	padding: 4px;
+	background-color: #FFF;
+}

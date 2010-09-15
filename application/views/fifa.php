@@ -7,6 +7,7 @@
 	<?=HTML::style('templates/fifa/css/reset.css');?>
 	<?=HTML::style('templates/fifa/css/main.css');?>
 	<?=HTML::style('templates/fifa/css/form.css');?>
+	<?=HTML::style('templates/fifa/css/forum.css');?>
 	<?=HTML::style('templates/fifa/js/jwysiwyg/jquery.wysiwyg.css');?>
 	<?=HTML::script('templates/fifa/js/jquery.js');?>
 	<?=HTML::script('templates/fifa/js/jquery.listen.js');?>

@@ -1,5 +1,14 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-Route::set('forum', 'forum(/<action>(/<id>))', array(
-	'controller' => 'forum',
-));
+Route::set('forum/admin', 'forum/admin(/<action>(/<id>))')
+		->defaults(array(
+			'controller' => 'admin',
+			'directory'  => 'forum',
+			'action'     => 'index',
+		));
+
+Route::set('forum', 'forum(/<action>(/<id>))')
+		->defaults(array(
+			'controller' => 'forum',
+			'action'     => 'index',
+		));

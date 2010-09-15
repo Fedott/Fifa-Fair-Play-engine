@@ -27,6 +27,7 @@ class Model_Topic extends Jelly_Model
 					'foreign' => 'users.id',
 				)),
 				'forum' => new Field_BelongsTo,
+				'posts' => new Field_HasMany,
 			));
 	}
 }

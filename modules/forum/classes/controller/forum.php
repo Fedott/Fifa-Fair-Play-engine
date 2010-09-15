@@ -7,6 +7,10 @@ class Controller_Forum extends Controller_Template
 		$sections = Jelly::select('section')->execute();
 
 		$view = new View('forum/index');
-		
+		$view->sections = $sections;
+
+		$this->template->title = __("Форум");
+		$this->template->content = $view;
+		$this->template->breadcrumb = HTML::anchor('', 'Главная')." > ";
 	}
 }

@@ -4,16 +4,17 @@ class Model_Forum extends Jelly_Model
 {
 	public static function initialize(Jelly_Meta $meta)
 	{
-		$meta->sorting(array('weight' => 'desc'))
+		$meta->sorting(array('weight' => 'asc'))
 			->fields(array(
 				'id' => new Field_Primary,
 				'name' => new Field_String(array(
 					'rules' => array(
-						'required' => array(TRUE),
+						'not_empty' => array(TRUE),
 					),
 				)),
 				'description' => new Field_Wysiwyg,
 				'role' => new Field_BelongsTo,
+				'section' => new Field_BelongsTo,
 				'weight' => new Field_Integer(array(
 					'default' => 0,
 				)),
@@ -23,6 +24,7 @@ class Model_Forum extends Jelly_Model
 				'count_posts' => new Field_Integer(array(
 					'default' => 0,
 				)),
+				'topics' => new Field_HasMany,
 			));
 	}
 }
