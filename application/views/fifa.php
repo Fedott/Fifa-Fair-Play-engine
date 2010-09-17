@@ -2,7 +2,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-	<title><?=$title?> | Чемпионат "Красивый футбол!"</title>
+	<title><?=$title;?> <?=(isset($breadcrumb)?misc::title_from_breadcrumb($breadcrumb):"");?> &bull; Чемпионат "Красивый футбол!"</title>
 	<link rel="shortcut icon" href="/templates/fifa/img/favicon.ico" type="image/x-icon" />
 	<?=HTML::style('templates/fifa/css/reset.css');?>
 	<?=HTML::style('templates/fifa/css/main.css');?>

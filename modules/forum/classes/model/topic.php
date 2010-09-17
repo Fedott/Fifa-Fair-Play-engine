@@ -30,4 +30,10 @@ class Model_Topic extends Jelly_Model
 				'posts' => new Field_HasMany,
 			));
 	}
+
+	public function views_increment()
+	{
+		$this->count_views++;
+		return $this->save();
+	}
 }

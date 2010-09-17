@@ -107,6 +107,14 @@
 	width: 25%;
 }
 
+.block dl dd.count_replies {
+	width: 8%;
+}
+
+.block dl dd.count_views {
+	width: 11%;
+}
+
 .block_header dl dd {
 	display: block;
 	float: left;

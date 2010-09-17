@@ -62,4 +62,19 @@
 			$attr['confirm_text'] = $confirm_text;
 			return HTML::anchor($uri, $title, $attr);
 		}
+
+		public static function title_from_breadcrumb($breadcrumb)
+		{
+			$bc_sections = explode(" > ", strip_tags($breadcrumb));
+			$title = '';
+			foreach ($bc_sections as $num => $str)
+			{
+				if($num != 0 AND !empty ($str))
+				{
+					$title = " &bull; ".$str;
+				}
+			}
+
+			return $title;
+		}
 	}

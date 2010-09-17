@@ -63,8 +63,8 @@
 			{
 				$this->template->title = __('Матчи');
 				$this->template->breadcrumb = HTML::anchor('', 'Главная')." > "
-						.HTML::anchor('tournament', "Все турниры")." > "
-						.HTML::anchor('tournament/view/'.$tournament->id, 'Турнир: '.$tournament->name)." > ";
+						.HTML::anchor('tournament', "Турниры")." > "
+						.HTML::anchor('tournament/view/'.$tournament->id, $tournament->name)." > ";
 			}
 			else
 			{
@@ -248,8 +248,8 @@
 			$this->template->title = __('Регистрация матча');
 			$this->template->content = $view;
 			$this->template->breadcrumb = HTML::anchor('', 'Главная')." > "
-					.HTML::anchor('tournament', "Все турниры")." > "
-					.HTML::anchor('tournament/view/'.$tournament->id, 'Турнир: '.$tournament->name)." > ";
+					.HTML::anchor('tournament', "Турниры")." > "
+					.HTML::anchor('tournament/view/'.$tournament->id, $tournament->name)." > ";
 		}
 
 		public function action_get_away_club_players($cid)
@@ -294,8 +294,8 @@
 			$this->template->title = __('Просмотр матча');
 			$this->template->content = $view;
 			$this->template->breadcrumb = HTML::anchor('', 'Главная')." > "
-					.HTML::anchor('tournament', __('Все турниры'))." > "
-					.HTML::anchor('tournament/view/'.$match->table->id, 'Турнир: '.$match->table->name)." > ";
+					.HTML::anchor('tournament', __('Турниры'))." > "
+					.HTML::anchor('tournament/view/'.$match->table->id, $match->table->name)." > ";
 		}
 
 		public function action_confirm($mid)
@@ -369,7 +369,8 @@
 			$this->template->title = __('Подтверждение результата матча');
 			$this->template->content = $view;
 			$this->template->breadcrumb = HTML::anchor('', 'Главная')." > "
-					.HTML::anchor('tournament/view/'.$match->table->id, 'Турнир: '.$match->table->name)." > ";
+					.HTML::anchor('tournament', __('Турниры'))." > "
+					.HTML::anchor('tournament/view/'.$match->table->id, $match->table->name)." > ";
 		}
 
 		public function action_my()

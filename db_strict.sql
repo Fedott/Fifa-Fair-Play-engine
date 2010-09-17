@@ -77,8 +77,12 @@ CREATE TABLE IF NOT EXISTS `forums` (
   `count_posts` int(11) unsigned NOT NULL,
   `section_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
+INSERT INTO `forums` (`id`, `name`, `description`, `role_id`, `weight`, `count_topics`, `count_posts`, `section_id`) VALUES
+(1, 'Премьер лига', 'Вот она премьер лига нашего чемпионата.', 3, 0, 0, 0, 1),
+(2, 'Первый дивизион', 'Первый дивизион нашего чемпионата.<br />Есть все шансы на выход в Премьеру.', 3, 0, 0, 0, 1),
+(3, 'РПЛ', 'Обуждение Росийской препьер лиги', 1, 0, 0, 0, 2);
 
 CREATE TABLE IF NOT EXISTS `goals` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -246,8 +250,11 @@ CREATE TABLE IF NOT EXISTS `sections` (
   `name` varchar(255) NOT NULL,
   `weight` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
+INSERT INTO `sections` (`id`, `name`, `weight`) VALUES
+(1, 'Чемпионат Красивый футбол', -1),
+(2, 'Реальный футбол', 0);
 
 CREATE TABLE IF NOT EXISTS `tables` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -270,7 +277,7 @@ INSERT INTO `tables` (`id`, `name`, `url`, `type`, `season`, `active`, `visible`
 CREATE TABLE IF NOT EXISTS `topics` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
-  `desctioption` varchar(1000) NOT NULL,
+  `description` varchar(1000) NOT NULL,
   `count_posts` int(11) unsigned NOT NULL,
   `count_views` int(11) unsigned NOT NULL,
   `date` int(11) unsigned NOT NULL,
@@ -330,7 +337,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 INSERT INTO `users` (`id`, `email`, `username`, `password`, `logins`, `last_login`, `icq`, `first_name`, `last_name`, `avatar`) VALUES
-(1, 'fedotru@gmail.com', 'Федот', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 31, 1284205486, 7372085, 'Владимир', 'Фёдоров', '4c89f786dc2b5dwW0d9987Dj1pWW.gif'),
+(1, 'fedotru@gmail.com', 'Федот', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 34, 1284727142, 7372085, 'Владимир', 'Фёдоров', '4c89f786dc2b5dwW0d9987Dj1pWW.gif'),
 (2, 'test@qwe.er', 'test', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 10, 1284293502, 233123, '', '', '4c8903bd0ab4e3.jpg');
 DROP TRIGGER IF EXISTS `add_counter_for_user`;
 DELIMITER //

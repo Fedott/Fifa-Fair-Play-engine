@@ -8,7 +8,7 @@
 			$view = new View('tournament');
 			$view->tournaments = $tournaments;
 
-			$this->template->title = __("Все турниры");
+			$this->template->title = __("Турниры");
 			$this->template->content = $view;
 			$this->template->breadcrumb = HTML::anchor('', __("Главная"))." > ";
 		}
@@ -64,10 +64,10 @@
 			$view->my_line = $my_line;
 			$view->uchastie = (bool) $my_line->loaded();
 
-			$this->template->title = __("Турнир: :name", array(":name" => $tournament->name));
+			$this->template->title = __(":name", array(":name" => $tournament->name));
 			$this->template->content = $view;
 			$this->template->breadcrumb = HTML::anchor('', __("Главная"))." > "
-					.HTML::anchor('tournament', __("Все турниры"))." > ";
+					.HTML::anchor('tournament', __("Турниры"))." > ";
 		}
 
 		public function action_club($id)
@@ -162,7 +162,7 @@
 			$this->template->title = __("Клуб: :name", array(":name" => $line->club->name));
 			$this->template->content = $view;
 			$this->template->breadcrumb = HTML::anchor('', __("Главная"))." > "
-					.HTML::anchor('tournament', __("Все турниры"))." > "
-					.HTML::anchor('tournament/view/'.$tournament->url, __("Турнир: :name", array(':name' => $tournament->name)))." > ";
+					.HTML::anchor('tournament', __("Турниры"))." > "
+					.HTML::anchor('tournament/view/'.$tournament->url, __(":name", array(':name' => $tournament->name)))." > ";
 		}
 	}
