@@ -7,6 +7,18 @@ Route::set('forum/admin', 'forum/admin(/<action>(/<id>))')
 			'action'     => 'index',
 		));
 
+Route::set('forum/topic/view', 'forum/topic/view/<id>(/<page>)')
+		->defaults(array(
+			'controller' => 'forum',
+			'action'     => 'topic_view',
+		));
+
+Route::set('forum/topic/create', 'forum/topic/create/<forumid>')
+		->defaults(array(
+			'controller' => 'forum',
+			'action'     => 'topic_create',
+		));
+
 Route::set('forum', 'forum(/<action>(/<id>))')
 		->defaults(array(
 			'controller' => 'forum',

@@ -10,7 +10,7 @@ class Model_Post extends Jelly_Model
 				'title' => new Field_String,
 				'text' => new Field_Wysiwyg(array(
 					'rules' => array(
-						'required' => array(TRUE)
+						'not_empty' => array(TRUE)
 					),
 				)),
 				'date' => new Field_Integer(array(

@@ -3,5 +3,5 @@
 	'id' => 'field-'.$name,
 	'rows' => 8,
 	'cols' => 40,
-	'class' => 'textarea medium field wysiwyg',
+	'class' => 'textarea field wysiwyg max',
 )); ?>

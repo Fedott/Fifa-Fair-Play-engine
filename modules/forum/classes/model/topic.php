@@ -9,7 +9,7 @@ class Model_Topic extends Jelly_Model
 				'id' => new Field_Primary,
 				'title' => new Field_String(array(
 					'rules' => array(
-						'required' => array(TRUE),
+						'not_empty' => array(TRUE),
 					),
 				)),
 				'description' => new Field_String,

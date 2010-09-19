@@ -40,4 +40,75 @@ class Controller_Forum extends Controller_Template
 				.HTML::anchor("forum", __("Форум"))." > "
 				.HTML::anchor("forum/section/".$forum->section->id, $forum->section->name)." > ";
 	}
+
+	public function action_topic_create($forum_id)
+	{
+		$topic = Jelly::factory('topic');
+		$post = Jelly::factory('post');
+		$forum = Jelly::select('forum', $forum_id);
+
+		$errors = array();
+
+		if($_POST)
+		{
+			try
+			{
+				$topic->set(arr::extract($_POST, array('title', 'description')));
+				$topic->author = $this->user->id;
+				$topic->forum = $forum_id;
+				$topic->date = time();
+				$topic->save();
+				$post->set(arr::extract($_POST, array('title', 'text')));
+				$post->author = $topic->author;
+				$post->topic = $topic->id;
+				$post->date = (int) $topic->date;
+				$post->save();
+				Request::instance()->redirect('forum/topic/view/'.$topic->id);
+			}
+			catch (Validate_Exception $exp)
+			{
+				$errors = $exp->array->errors('topic');
+			}
+		}
+
+		$view = new View('forum/topic_create');
+		$view->topic = $topic;
+		$view->post = $post;
+		$view->errors = $errors;
+
+		$this->template->title = __("Новая тема");
+		$this->template->content = $view;
+		$this->template->breadcrumb = HTML::anchor('', __("Главная"))." > "
+				.HTML::anchor("forum", __("Форум"))." > "
+				.HTML::anchor("forum/section/".$forum->section->id, $forum->section->name)." > "
+				.HTML::anchor('forum/view/'.$forum->id, $topic->forum->name)." > ";
+	}
+
+	public function action_topic_view($id)
+	{
+		$topic = Jelly::select('topic')->with('forum')->load($id);
+		$count_posts = Jelly::select('post')->by_topic($topic->id)->count();
+
+		$pagination = Pagination::factory(array(
+			'total_items' => $count_posts,
+		));
+
+		$posts = Jelly::select('post')
+				->by_topic($topic->id)
+				->offset($pagination->offset)
+				->limit($pagination->items_per_page)
+				->execute();
+
+		$view = new View('forum/topic_view');
+		$view->topic = $topic;
+		$view->posts = $posts;
+		$view->pagination = $pagination;
+
+		$this->template->title = $topic->title;
+		$this->template->content = $view;
+		$this->template->breadcrumb = HTML::anchor('', __("Главная"))." > "
+				.HTML::anchor("forum", __("Форум"))." > "
+				.HTML::anchor("forum/section/".$topic->forum->section->id, $topic->forum->section->name)." > "
+				.HTML::anchor('forum/view/'.$topic->forum->id, $topic->forum->name)." > ";
+	}
 }

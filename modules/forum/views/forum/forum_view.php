@@ -27,7 +27,7 @@
 						<dt class="list_main">
 							<?=html::anchor('forum/topic_view/'.$topic->id, $topic->title);?>
 							<br/>
-							<?=__("От :username » :date", array(':username' => $topic->author->username, ':date' => $topic->date));?>
+							<?=__("От :username » :date", array(':username' => $topic->author['username'], ':date' => $topic->date));?>
 						</dt>
 						<dd class="count_replies">
 							<?=$topic->count_posts - 1;?>
