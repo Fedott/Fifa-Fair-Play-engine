@@ -4,8 +4,7 @@ class Model_User extends Model_Auth_User
 {
 	public static function initialize(Jelly_Meta $meta)
 	{
-		$meta->load_with(array('counters'))
-		->fields(array(
+		$meta->fields(array(
 			'icq' => new Field_Integer(array(
 				'unique' => TRUE,
 				'rules' => array(
@@ -35,6 +34,15 @@ class Model_User extends Model_Auth_User
 				'resize' => TRUE,
 				'max_width' => 100,
 			)),
+			'posts' => new Field_Integer(array(
+				'default' => 0,
+			)),
+			'topics' => new Field_Integer(array(
+				'default' => 0,
+			)),
+			'matches' => new Field_Integer(array(
+				'default' => 0,
+			))
 		));
 
 		parent::initialize($meta);

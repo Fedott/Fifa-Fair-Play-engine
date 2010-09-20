@@ -40,7 +40,7 @@ DROP TRIGGER IF EXISTS `increment_count_comments`;
 DELIMITER //
 CREATE TRIGGER `increment_count_comments` AFTER INSERT ON `comments`
  FOR EACH ROW BEGIN
-	UPDATE `counters` SET comments = comments + 1 WHERE `user_id` = NEW.author_id;
+	UPDATE `users` SET comments = comments + 1 WHERE `id` = NEW.author_id;
 END
 //
 DELIMITER ;
@@ -48,24 +48,10 @@ DROP TRIGGER IF EXISTS `unincrement_count_comments`;
 DELIMITER //
 CREATE TRIGGER `unincrement_count_comments` AFTER DELETE ON `comments`
  FOR EACH ROW BEGIN
-	UPDATE `counters` SET comments = comments - 1 WHERE `user_id` = OLD.author_id;
+	UPDATE `users` SET comments = comments - 1 WHERE `id` = OLD.author_id;
 END
 //
 DELIMITER ;
-
-CREATE TABLE IF NOT EXISTS `counters` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) unsigned NOT NULL,
-  `comments` int(11) unsigned NOT NULL DEFAULT '0',
-  `posts` int(11) unsigned NOT NULL DEFAULT '0',
-  `matches` int(11) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
-
-INSERT INTO `counters` (`id`, `user_id`, `comments`, `posts`, `matches`) VALUES
-(1, 1, 2, 0, 2),
-(2, 2, 1, 0, 1);
 
 CREATE TABLE IF NOT EXISTS `forums` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -80,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `forums` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 INSERT INTO `forums` (`id`, `name`, `description`, `role_id`, `weight`, `count_topics`, `count_posts`, `section_id`) VALUES
-(1, 'Премьер лига', 'Вот она премьер лига нашего чемпионата.', 3, 0, 0, 0, 1),
+(1, 'Премьер лига', 'Вот она премьер лига нашего чемпионата.', 3, 0, 1, 1, 1),
 (2, 'Первый дивизион', 'Первый дивизион нашего чемпионата.<br />Есть все шансы на выход в Премьеру.', 3, 0, 0, 0, 1),
 (3, 'РПЛ', 'Обуждение Росийской препьер лиги', 1, 0, 0, 0, 2);
 
@@ -156,7 +142,7 @@ DROP TRIGGER IF EXISTS `increment_count_matches`;
 DELIMITER //
 CREATE TRIGGER `increment_count_matches` AFTER INSERT ON `matches`
  FOR EACH ROW BEGIN
-	UPDATE `counters` SET matches = matches + 1 WHERE `user_id` = (SELECT `user_id` FROM `lines` WHERE `id` = NEW.home_id);
+	UPDATE `users` SET matches = matches + 1 WHERE `id` = (SELECT `user_id` FROM `lines` WHERE `id` = NEW.home_id);
 END
 //
 DELIMITER ;
@@ -164,8 +150,8 @@ DROP TRIGGER IF EXISTS `unincrement_count_matches`;
 DELIMITER //
 CREATE TRIGGER `unincrement_count_matches` AFTER DELETE ON `matches`
  FOR EACH ROW BEGIN
-	UPDATE `counters` SET matches = matches - 1 WHERE `user_id` = (SELECT `user_id` FROM `lines` WHERE `id` = OLD.home_id);
-	UPDATE `counters` SET matches = matches - OLD.confirm WHERE `user_id` = (SELECT `user_id` FROM `lines` WHERE `id` = OLD.away_id);
+	UPDATE `users` SET matches = matches - 1 WHERE `id` = (SELECT `user_id` FROM `lines` WHERE `id` = OLD.home_id);
+	UPDATE `users` SET matches = matches - OLD.confirm WHERE `id` = (SELECT `user_id` FROM `lines` WHERE `id` = OLD.away_id);
 END
 //
 DELIMITER ;
@@ -197,14 +183,17 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `topic_id` int(11) unsigned NOT NULL,
   `author_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
+INSERT INTO `posts` (`id`, `title`, `text`, `date`, `topic_id`, `author_id`) VALUES
+(1, 'Тест', 'Тест ёлки палки =)<br /><a href="http://fko3.fifafairplay.ru">вот сюда ходи</a>', 1284985705, 1, 0);
 DROP TRIGGER IF EXISTS `increment_count_posts`;
 DELIMITER //
 CREATE TRIGGER `increment_count_posts` AFTER INSERT ON `posts`
  FOR EACH ROW BEGIN
 	UPDATE `topics` SET `count_posts` = `count_posts` + 1 WHERE `id` = NEW.topic_id;
 	UPDATE `forums` SET `count_posts` = `count_posts` + 1 WHERE `id` = (SELECT `topics`.`forum_id` FROM `topics` WHERE `id` = NEW.topic_id);
+	UPDATE `users` SET `posts` = `posts` + 1 WHERE `id` = NEW.author_id;
 END
 //
 DELIMITER ;
@@ -214,6 +203,7 @@ CREATE TRIGGER `unincrement_count_posts` AFTER DELETE ON `posts`
  FOR EACH ROW BEGIN
 	UPDATE `topics` SET `count_posts` = `count_posts` - 1 WHERE `id` = OLD.topic_id;
 	UPDATE `forums` SET `count_posts` = `count_posts` - 1 WHERE `id` = (SELECT `topics`.`forum_id` FROM `topics` WHERE `id` = OLD.topic_id);
+	UPDATE `users` SET `posts` = `posts` - 1 WHERE `id` = OLD.author_id;
 END
 //
 DELIMITER ;
@@ -277,20 +267,23 @@ INSERT INTO `tables` (`id`, `name`, `url`, `type`, `season`, `active`, `visible`
 CREATE TABLE IF NOT EXISTS `topics` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
-  `description` varchar(1000) NOT NULL,
+  `description` varchar(1000) DEFAULT NULL,
   `count_posts` int(11) unsigned NOT NULL,
   `count_views` int(11) unsigned NOT NULL,
   `date` int(11) unsigned NOT NULL,
   `forum_id` int(11) unsigned NOT NULL,
   `author_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
+INSERT INTO `topics` (`id`, `title`, `description`, `count_posts`, `count_views`, `date`, `forum_id`, `author_id`) VALUES
+(1, 'Тест', NULL, 1, 0, 1284985705, 1, 1);
 DROP TRIGGER IF EXISTS `increment_count_topics`;
 DELIMITER //
 CREATE TRIGGER `increment_count_topics` AFTER INSERT ON `topics`
  FOR EACH ROW BEGIN
 	UPDATE `forums` SET `count_topics` = `count_topics` + 1 WHERE `id` = NEW.forum_id;
+	UPDATE `users` SET `posts` = `posts` + 1 WHERE `id` = NEW.author_id;
 END
 //
 DELIMITER ;
@@ -299,6 +292,7 @@ DELIMITER //
 CREATE TRIGGER `unincrement_count_topics` AFTER DELETE ON `topics`
  FOR EACH ROW BEGIN
 	UPDATE `forums` SET `count_topics` = `count_topics` - 1 WHERE `id` = OLD.forum_id;
+	UPDATE `users` SET `posts` = `posts` - 1 WHERE `id` = OLD.author_id;
 END
 //
 DELIMITER ;
@@ -330,23 +324,19 @@ CREATE TABLE IF NOT EXISTS `users` (
   `first_name` varchar(30) DEFAULT NULL,
   `last_name` varchar(30) DEFAULT NULL,
   `avatar` varchar(255) DEFAULT NULL,
+  `comments` int(11) unsigned NOT NULL DEFAULT '0',
+  `posts` int(11) unsigned NOT NULL DEFAULT '0',
+  `matches` int(11) unsigned NOT NULL DEFAULT '0',
+  `topics` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`),
   UNIQUE KEY `icq` (`icq`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
-INSERT INTO `users` (`id`, `email`, `username`, `password`, `logins`, `last_login`, `icq`, `first_name`, `last_name`, `avatar`) VALUES
-(1, 'fedotru@gmail.com', 'Федот', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 34, 1284727142, 7372085, 'Владимир', 'Фёдоров', '4c89f786dc2b5dwW0d9987Dj1pWW.gif'),
-(2, 'test@qwe.er', 'test', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 10, 1284293502, 233123, '', '', '4c8903bd0ab4e3.jpg');
-DROP TRIGGER IF EXISTS `add_counter_for_user`;
-DELIMITER //
-CREATE TRIGGER `add_counter_for_user` AFTER INSERT ON `users`
- FOR EACH ROW BEGIN
-	INSERT INTO `counters` SET user_id = NEW.id;
-END
-//
-DELIMITER ;
+INSERT INTO `users` (`id`, `email`, `username`, `password`, `logins`, `last_login`, `icq`, `first_name`, `last_name`, `avatar`, `comments`, `posts`, `matches`, `topics`) VALUES
+(1, 'fedotru@gmail.com', 'Федот', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 35, 1284985530, 7372085, 'Владимир', 'Фёдоров', '4c89f786dc2b5dwW0d9987Dj1pWW.gif', 0, 0, 0, 0),
+(2, 'test@qwe.er', 'test', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 10, 1284293502, 233123, '', '', '4c8903bd0ab4e3.jpg', 0, 0, 0, 0);
 
 CREATE TABLE IF NOT EXISTS `user_tokens` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -369,9 +359,6 @@ INSERT INTO `user_tokens` (`id`, `user_id`, `user_agent`, `token`, `created`, `e
 
 ALTER TABLE `comments`
   ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`match_id`) REFERENCES `matches` (`id`) ON DELETE CASCADE;
-
-ALTER TABLE `counters`
-  ADD CONSTRAINT `counters_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 ALTER TABLE `goals`
   ADD CONSTRAINT `goals_ibfk_1` FOREIGN KEY (`match_id`) REFERENCES `matches` (`id`) ON DELETE CASCADE;

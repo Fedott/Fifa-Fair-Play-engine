@@ -5,6 +5,7 @@ class Model_Forum extends Jelly_Model
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->sorting(array('weight' => 'asc'))
+			->load_with(array('role'))
 			->fields(array(
 				'id' => new Field_Primary,
 				'name' => new Field_String(array(

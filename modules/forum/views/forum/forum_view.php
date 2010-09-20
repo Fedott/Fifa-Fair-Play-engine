@@ -25,7 +25,7 @@
 				<li class="list">
 					<dl>
 						<dt class="list_main">
-							<?=html::anchor('forum/topic_view/'.$topic->id, $topic->title);?>
+							<?=html::anchor('forum/topic/view/'.$topic->id, $topic->title);?>
 							<br/>
 							<?=__("От :username » :date", array(':username' => $topic->author['username'], ':date' => $topic->date));?>
 						</dt>
@@ -44,4 +44,9 @@
 			</ul>
 		</div>
 	</div>
+</div>
+<div class="forum_nav">
+	<?if($auth->logged_in($forum->role->name) OR $auth->logged_in('admin')):?>
+		<?=html::anchor('forum/topic/create/'.$forum->id, __("Новая тема"));?>
+	<?endif;?>
 </div>

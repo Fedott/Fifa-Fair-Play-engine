@@ -33,6 +33,7 @@ class Controller_Forum extends Controller_Template
 
 		$view = new View('forum/forum_view');
 		$view->forum = $forum;
+		$view->auth = $this->auth;
 
 		$this->template->title = $forum->name;
 		$this->template->content = $view;
