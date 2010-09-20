@@ -180,3 +180,128 @@
 	float: left;
 	line-height: 25px
 }
+
+.profile_block {
+	border-right:1px solid #D5D5D5;
+	color:#666666;
+	float:left;
+	line-height:1.2em;
+	margin:5px 0;
+	overflow:hidden;
+	padding:1px;
+	width:140px;
+}
+
+.postprofile {
+	border-right: 1px solid #D8D8D8;
+	min-height: 120px;
+}
+
+.postprofile .profile_top,
+.postprofile .profile_rank,
+.postprofile .profile_avatar {
+	margin-bottom: 3px;
+	text-align: center;
+}
+
+.postprofile p {
+	color: #666;
+	padding: 0px;
+	margin: 0px 0px 2px;
+	font-size: 11px;
+}
+
+.postprofile .profile_author {
+	padding-left: 5px;
+	font-size: 12px;
+}
+
+.postprofile a:link,
+.postprofile a:active,
+.postprofile a:visited {
+	color: #4E9D63;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.postprofile .profile_details {
+	margin-top: 5px;
+}
+
+.postprofile strong {
+	font-weight: normal;
+	color: #000;
+}
+
+.post_body {
+	margin-left: 150px;
+	color: #333;
+	padding: 5px 0px;
+}
+
+.post_content {
+	min-height: 105px;
+}
+
+p.post_link {
+	color: #666;
+	float: right;
+	font-family: Verdana,Helvetica,Arial,sans-serif;
+	padding: 0px 0px 5px;
+	font-size: 10px;
+}
+
+p.post_link a {
+	text-decoration: none;
+	background: url("../img/icon_post_target.gif") no-repeat;
+	height: 9px;
+	width: 11px;
+	display: block;
+	float: left;
+	margin-top: 3px;
+}
+
+.post_content h3 {
+	border:medium none;
+	font-family: "Trebuchet MS",Verdana,Helvetica,Arial,sans-serif;
+	font-size:15px;
+	line-height:125%;
+	margin:0 0 0.3em !important;
+	padding:2px 0 0;
+	text-transform:none;
+	color: #4e9d63;
+}
+
+.post_content .content {
+	clear: right;
+	margin-right: 3px;
+	color: #333;
+	font-family: "Lucida Grande","Trebuchet MS",Verdana,Helvetica,Arial,sans-serif;
+	font-size: 13px;
+}
+
+ul.profile_icons {
+	clear: both;
+	list-style: none outside none;
+	padding-top: 10px;
+}
+
+ul.profile_icons li {
+	background-position: 0 100%;
+	float: right;
+	margin: 0px 0px 0px 2px;
+	padding: 0px;
+}
+
+.clear {
+	background: none repeat scroll 0 0 transparent;
+}
+
+.block_footer {
+	clear: both;
+}
+
+.post .block_content {
+	background: #F2F2F2 url("../img/post_bg.gif") repeat-x left top;
+	padding: 0px 5px;
+}

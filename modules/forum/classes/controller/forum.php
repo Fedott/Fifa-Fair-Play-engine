@@ -60,7 +60,7 @@ class Controller_Forum extends Controller_Template
 				$topic->date = time();
 				$topic->save();
 				$post->set(arr::extract($_POST, array('title', 'text')));
-				$post->author = $topic->author;
+				$post->author = $topic->user->id;
 				$post->topic = $topic->id;
 				$post->date = (int) $topic->date;
 				$post->save();

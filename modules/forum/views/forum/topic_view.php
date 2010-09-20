@@ -6,10 +6,9 @@
 			<div class="block_border">
 				<div class="block_content">
 					<div class="profile_block">
-						<div class="profile">
+						<div class="postprofile">
 							<div class="profile_top">
 								<p class="profile_author">
-									<?=Kohana::debug($post->author);exit;?>
 									<?=html::anchor('main/profile/'.$post->author['id'], $post->author['username']);?>
 								</p>
 							</div>
