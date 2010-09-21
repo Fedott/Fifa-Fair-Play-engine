@@ -4,7 +4,7 @@ class Model_Post extends Jelly_Model
 {
 	public static function initialize(Jelly_Meta $meta)
 	{
-		$meta->sorting(array('date' => 'desc'))
+		$meta->sorting(array('date' => 'asc'))
 			->fields(array(
 				'id' => new Field_Primary,
 				'title' => new Field_String,

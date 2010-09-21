@@ -60,9 +60,9 @@ class Controller_Forum extends Controller_Template
 				$topic->date = time();
 				$topic->save();
 				$post->set(arr::extract($_POST, array('title', 'text')));
-				$post->author = $topic->user->id;
+				$post->author = $this->user->id;
 				$post->topic = $topic->id;
-				$post->date = (int) $topic->date;
+				$post->date = $topic->date;
 				$post->save();
 				Request::instance()->redirect('forum/topic/view/'.$topic->id);
 			}
@@ -82,7 +82,7 @@ class Controller_Forum extends Controller_Template
 		$this->template->breadcrumb = HTML::anchor('', __("Главная"))." > "
 				.HTML::anchor("forum", __("Форум"))." > "
 				.HTML::anchor("forum/section/".$forum->section->id, $forum->section->name)." > "
-				.HTML::anchor('forum/view/'.$forum->id, $topic->forum->name)." > ";
+				.HTML::anchor('forum/view/'.$forum->id, $forum->name)." > ";
 	}
 
 	public function action_topic_view($id)
@@ -92,6 +92,7 @@ class Controller_Forum extends Controller_Template
 
 		$pagination = Pagination::factory(array(
 			'total_items' => $count_posts,
+			'group'       => 'forum',
 		));
 
 		$posts = Jelly::select('post')
@@ -104,6 +105,7 @@ class Controller_Forum extends Controller_Template
 		$view->topic = $topic;
 		$view->posts = $posts;
 		$view->pagination = $pagination;
+		$view->postform = Jelly::factory('post');
 
 		$this->template->title = $topic->title;
 		$this->template->content = $view;
@@ -111,5 +113,42 @@ class Controller_Forum extends Controller_Template
 				.HTML::anchor("forum", __("Форум"))." > "
 				.HTML::anchor("forum/section/".$topic->forum->section->id, $topic->forum->section->name)." > "
 				.HTML::anchor('forum/view/'.$topic->forum->id, $topic->forum->name)." > ";
+	}
+
+	public function action_topic_reply($topic_id)
+	{
+		$topic = Jelly::select('topic', $topic_id);
+		$post = Jelly::factory('post');
+
+		$errors = array();
+
+		if($_POST)
+		{
+			try
+			{
+				$post->set(arr::extract($_POST, array('title', 'text')));
+				$post->author = $this->user->id;
+				$post->topic = $topic->id;
+				$post->date = time();
+				$post->save();
+				Request::instance()->redirect('forum/topic/view/'.$topic->id.'?postid='.$post->id.'#post'.$post->id);
+			}
+			catch (Validate_Exception $exp)
+			{
+				$errors = $exp->array->errors('topic');
+			}
+		}
+
+		$view = new View('forum/topic_reply');
+		$view->post = $post;
+		$view->errors = $errors;
+
+		$this->template->title = __("Ответить");
+		$this->template->content = $view;
+		$this->template->breadcrumb = HTML::anchor('', __("Главная"))." > "
+				.HTML::anchor("forum", __("Форум"))." > "
+				.HTML::anchor("forum/section/".$topic->forum->section->id, $topic->forum->section->name)." > "
+				.HTML::anchor('forum/view/'.$topic->forum->id, $topic->forum->name)." > "
+				.HTML::anchor('forum/topic/view/'.$topic->id, $topic->title)." > ";
 	}
 }

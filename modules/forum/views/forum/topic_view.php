@@ -32,7 +32,7 @@
 					<div class="post_body">
 						<div class="post_content">
 							<p class="post_link">
-								<?=html::anchor('forum/topic/view/'.$topic->id.'/'.$post->id, "&nbsp;");?>
+								<?=html::anchor('forum/topic/view/'.$topic->id.'?postid='.$post->id.'#post'.$post->id, "&nbsp;");?>
 								<?=$post->date;?>
 							</p>
 							<h3>
@@ -60,3 +60,29 @@
 		</div>
 	</div>
 <?endforeach;?>
+<div class="topic_action">
+	<div class="pagination">
+		<?=$pagination;?>
+	</div>
+</div>
+<div class="reply_form">
+	<?=form::open('forum/topic/reply/'.$topic->id);?>
+	<ul>
+		<li>
+			<?=form::label('field-title', __("Заголовок"), array('class' => 'desc'));?>
+			<div>
+				<?=$postform->input('title');?>
+			</div>
+		</li>
+		<li>
+			<?=form::label('field-text', __("Текст"), array('class' => 'desc'));?>
+			<div>
+				<?=$postform->input('text');?>
+			</div>
+		</li>
+		<li>
+			<?=form::submit(NULL, __("Отправить"));?>
+		</li>
+	</ul>
+	<?=form::close();?>
+</div>

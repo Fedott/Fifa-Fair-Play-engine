@@ -185,7 +185,7 @@
 	border-right:1px solid #D5D5D5;
 	color:#666666;
 	float:left;
-	line-height:1.2em;
+	line-height:13px;
 	margin:5px 0;
 	overflow:hidden;
 	padding:1px;
@@ -304,4 +304,8 @@ ul.profile_icons li {
 .post .block_content {
 	background: #F2F2F2 url("../img/post_bg.gif") repeat-x left top;
 	padding: 0px 5px;
+}
+
+.topic_action div.pagination {
+	float: right;
 }
