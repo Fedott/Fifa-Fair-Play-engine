@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `forums` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 INSERT INTO `forums` (`id`, `name`, `description`, `role_id`, `weight`, `count_topics`, `count_posts`, `section_id`) VALUES
-(1, 'Премьер лига', 'Вот она премьер лига нашего чемпионата.', 3, 0, 1, 1, 1),
+(1, 'Премьер лига', 'Вот она премьер лига нашего чемпионата.', 3, 0, 1, 4, 1),
 (2, 'Первый дивизион', 'Первый дивизион нашего чемпионата.<br />Есть все шансы на выход в Премьеру.', 3, 0, 0, 0, 1),
 (3, 'РПЛ', 'Обуждение Росийской препьер лиги', 1, 0, 0, 0, 2);
 
@@ -177,16 +177,19 @@ INSERT INTO `players` (`id`, `first_name`, `last_name`, `year_of_birth`, `club_i
 
 CREATE TABLE IF NOT EXISTS `posts` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
   `text` text NOT NULL,
   `date` int(11) unsigned NOT NULL,
   `topic_id` int(11) unsigned NOT NULL,
   `author_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 INSERT INTO `posts` (`id`, `title`, `text`, `date`, `topic_id`, `author_id`) VALUES
-(1, 'Тест', 'Тест ёлки палки =)<br /><a href="http://fko3.fifafairplay.ru">вот сюда ходи</a>', 1284985705, 1, 0);
+(1, 'Тест', 'Тест ёлки палки =)<br /><a href="http://fko3.fifafairplay.ru">вот сюда ходи</a>', 1284985705, 1, 1),
+(2, 'Пипец', 'qweqweqw<br>Точно =)', 1285102032, 1, 1),
+(3, '', 'dsgsdfgsfg', 1285105381, 1, 1),
+(4, '', 'dsgsdfgsfg<br>hu<br>jg<br>hj<br>fgh<br>j<br>fghjf<br>ghj<br>fgh<br>j<br>fgh<br>j<br>fghjf<br>ghj<br>fghj', 1285110800, 1, 1);
 DROP TRIGGER IF EXISTS `increment_count_posts`;
 DELIMITER //
 CREATE TRIGGER `increment_count_posts` AFTER INSERT ON `posts`
@@ -277,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `topics` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 INSERT INTO `topics` (`id`, `title`, `description`, `count_posts`, `count_views`, `date`, `forum_id`, `author_id`) VALUES
-(1, 'Тест', NULL, 1, 0, 1284985705, 1, 1);
+(1, 'Тест', NULL, 4, 0, 1284985705, 1, 1);
 DROP TRIGGER IF EXISTS `increment_count_topics`;
 DELIMITER //
 CREATE TRIGGER `increment_count_topics` AFTER INSERT ON `topics`
@@ -335,7 +338,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 INSERT INTO `users` (`id`, `email`, `username`, `password`, `logins`, `last_login`, `icq`, `first_name`, `last_name`, `avatar`, `comments`, `posts`, `matches`, `topics`) VALUES
-(1, 'fedotru@gmail.com', 'Федот', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 35, 1284985530, 7372085, 'Владимир', 'Фёдоров', '4c89f786dc2b5dwW0d9987Dj1pWW.gif', 0, 0, 0, 0),
+(1, 'fedotru@gmail.com', 'Федот', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 36, 1285102011, 7372085, 'Владимир', 'Фёдоров', '4c89f786dc2b5dwW0d9987Dj1pWW.gif', 0, 4, 0, 0),
 (2, 'test@qwe.er', 'test', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 10, 1284293502, 233123, '', '', '4c8903bd0ab4e3.jpg', 0, 0, 0, 0);
 
 CREATE TABLE IF NOT EXISTS `user_tokens` (
