@@ -27,7 +27,7 @@
 						<dt class="list_main">
 							<?=html::anchor('forum/topic/view/'.$topic->id, $topic->title);?>
 							<br/>
-							<?=__("От :username » :date", array(':username' => $topic->author['username'], ':date' => $topic->date()));?>
+							<?=__("От :username » :date", array(':username' => $topic->author->username, ':date' => $topic->date()));?>
 						</dt>
 						<dd class="count_replies">
 							<?=$topic->count_posts - 1;?>
@@ -36,7 +36,14 @@
 							<?=$topic->count_views;?>
 						</dd>
 						<dd class="last_post">
-							&nbsp;
+							<?$lastpost = $topic->posts[$topic->posts->count() - 1];?>
+							<span>
+								<?=__("От");?>
+								<?=html::anchor('mail/profile/'.$lastpost->author->id, $lastpost->author->username);?>
+								<?=html::anchor('forum/topic/view/'.$topic->id.'?postid='.$lastpost->id."#post".$lastpost->id, html::image('templates/fifa/img/icon_post_target.gif'));?>
+								<br>
+								<?=$lastpost->date();?>
+							</span>
 						</dd>
 					</dl>
 				</li>

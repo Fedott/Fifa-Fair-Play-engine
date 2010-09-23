@@ -5,7 +5,7 @@ class Model_Topic extends Jelly_Model
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->sorting(array('date' => 'desc'))
-			->load_with(array('role'))
+			->load_with(array('author'))
 			->fields(array(
 				'id' => new Field_Primary,
 				'title' => new Field_String(array(
@@ -25,7 +25,7 @@ class Model_Topic extends Jelly_Model
 				)),
 				'author' => new Field_BelongsTo(array(
 					'column' => 'author_id',
-					'foreign' => 'users.id',
+					'foreign' => 'user.id',
 				)),
 				'forum' => new Field_BelongsTo,
 				'posts' => new Field_HasMany,

@@ -155,8 +155,8 @@ class Controller_Forum extends Controller_Template
 
 	public function action_test()
 	{
-		$post = Jelly::select('post', 1);
-		echo Kohana::debug($post->author);
+		$post = Jelly::select('topic', 1);
+		echo Kohana::debug($post->posts[$post->posts->count() - 1]);
 		exit;
 	}
 }
