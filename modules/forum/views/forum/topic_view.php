@@ -9,7 +9,7 @@
 						<div class="postprofile">
 							<div class="profile_top">
 								<p class="profile_author">
-									<?=html::anchor('main/profile/'.$post->author['id'], $post->author['username']);?>
+									<?=html::anchor('main/profile/'.$post->author->id, $post->author->username);?>
 								</p>
 							</div>
 						<!--
@@ -17,14 +17,17 @@
 
 							</p>
 						-->
+							<div class="profile_avatar">
+								<?=html::image($post->author->get_avatar());?>
+							</div>
 							<div class="profile_details">
 								<p>
 									<strong><?=__("Сообщений:");?></strong>
-									<?=$post->author['posts'];?>
+									<?=$post->author->posts;?>
 								</p>
 								<p>
 									<strong><?=__("Матчей:");?></strong>
-									<?=$post->author['matches'];?>
+									<?=$post->author->matches;?>
 								</p>
 							</div>
 						</div>
@@ -33,7 +36,7 @@
 						<div class="post_content">
 							<p class="post_link">
 								<?=html::anchor('forum/topic/view/'.$topic->id.'?postid='.$post->id.'#post'.$post->id, "&nbsp;");?>
-								<?=$post->date;?>
+								<?=$post->date();?>
 							</p>
 							<h3>
 								<?=$post->title;?>
@@ -65,17 +68,19 @@
 		<?=$pagination;?>
 	</div>
 </div>
+<?if($auth->logged_in($topic->role['name'])):?>
 <div class="reply_form">
 	<?=form::open('forum/topic/reply/'.$topic->id);?>
+	<?=form::label('field-title', __("Ответить"), array('class' => 'desc'));?>
 	<ul>
 		<li>
-			<?=form::label('field-title', __("Заголовок"), array('class' => 'desc'));?>
+			<?form::label('field-title', __("Заголовок"), array('class' => 'desc'));?>
 			<div>
 				<?=$postform->input('title');?>
 			</div>
 		</li>
 		<li>
-			<?=form::label('field-text', __("Текст"), array('class' => 'desc'));?>
+			<?form::label('field-text', __("Текст"), array('class' => 'desc'));?>
 			<div>
 				<?=$postform->input('text');?>
 			</div>
@@ -86,3 +91,4 @@
 	</ul>
 	<?=form::close();?>
 </div>
+<?endif;?>

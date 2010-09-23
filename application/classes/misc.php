@@ -14,7 +14,8 @@
 
 		public static function get_human_date($date = NULL)
 		{
-			return date('d-m-Y H:i', $date);
+			return strftime('%e %b %y %X', $date);
+//			return date('d M Y H:i', $date);
 		}
 
 		public static function set_error_message($text)

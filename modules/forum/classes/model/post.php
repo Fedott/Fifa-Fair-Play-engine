@@ -5,6 +5,7 @@ class Model_Post extends Jelly_Model
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->sorting(array('date' => 'asc'))
+			->load_with(array('author'))
 			->fields(array(
 				'id' => new Field_Primary,
 				'title' => new Field_String,
@@ -19,8 +20,16 @@ class Model_Post extends Jelly_Model
 				'topic' => new Field_BelongsTo,
 				'author' => new Field_BelongsTo(array(
 					'column' => 'author_id',
-					'foreign' => 'users.id',
+					'foreign' => 'user.id',
 				)),
 			));
+	}
+
+	public function date()
+	{
+		if($this->loaded())
+			return MISC::get_human_date ($this->date);
+		else
+			return NULL;
 	}
 }

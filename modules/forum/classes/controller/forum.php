@@ -106,6 +106,7 @@ class Controller_Forum extends Controller_Template
 		$view->posts = $posts;
 		$view->pagination = $pagination;
 		$view->postform = Jelly::factory('post');
+		$view->auth = $this->auth;
 
 		$this->template->title = $topic->title;
 		$this->template->content = $view;
@@ -150,5 +151,12 @@ class Controller_Forum extends Controller_Template
 				.HTML::anchor("forum/section/".$topic->forum->section->id, $topic->forum->section->name)." > "
 				.HTML::anchor('forum/view/'.$topic->forum->id, $topic->forum->name)." > "
 				.HTML::anchor('forum/topic/view/'.$topic->id, $topic->title)." > ";
+	}
+
+	public function action_test()
+	{
+		$post = Jelly::select('post', 1);
+		echo Kohana::debug($post->author);
+		exit;
 	}
 }

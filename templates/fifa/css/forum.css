@@ -277,7 +277,7 @@ p.post_link a {
 	margin-right: 3px;
 	color: #333;
 	font-family: "Lucida Grande","Trebuchet MS",Verdana,Helvetica,Arial,sans-serif;
-	font-size: 13px;
+	font-size: 14px;
 }
 
 ul.profile_icons {
@@ -306,6 +306,22 @@ ul.profile_icons li {
 	padding: 0px 5px;
 }
 
+.topic_action {
+	overflow: hidden;
+	position: relative;
+	display: block;
+	margin-bottom: 5px;
+}
+
 .topic_action div.pagination {
 	float: right;
+}
+
+div.reply_form {
+	background: #FAF8F8;
+	padding: 5px;
+}
+
+div.reply_form ul {
+	width: 70%;
 }
