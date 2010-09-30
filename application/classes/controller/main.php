@@ -66,8 +66,17 @@
 					$user->set($post);
 					$user->add('roles', 1);
 					$user->save();
+					$data = array(
+						'row' => serialize(array(
+							'username'      => $user->username,
+							'user_email'    => $user->email,
+							'user_icq'      => $user->icq,
+						)),
+						'sc' => Kohana::config('auth.sc'),
+					);
+					Curl::post('http://'.$_SERVER['SERVER_NAME']."/forum/kohana_user_add.php", $data);
 					$this->auth->login($user, $post['password']);
-					url::redirect('');
+					Request::instance()->redirect('');
 				}
 				catch (Validate_Exception $exp)
 				{

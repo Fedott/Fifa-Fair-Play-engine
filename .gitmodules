@@ -25,3 +25,6 @@
 [submodule "modules/purifier"]
 	path = modules/purifier
 	url = http://github.com/shadowhand/purifier.git
+[submodule "modules/kohana-curl"]
+	path = modules/kohana-curl
+	url = http://github.com/AlexKupreev/kohana-curl.git

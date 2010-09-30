@@ -77,6 +77,7 @@ Kohana::modules(array(
 	'image'      => MODPATH.'image',      // Модуль работы с изображениями
 	'purifier'   => MODPATH.'purifier',   // Модуль HTML Purifier
 	'forum'      => MODPATH.'forum',      // Модуль Форума от Федота
+	'kohana-curl'=> MODPATH.'kohana-curl' // Модуль Curl
 ));
 
 /**
@@ -93,10 +94,11 @@ Route::set('logout', 'logout')
 			'controller' => 'main',
 			'action' => 'logout',
 		));
-Route::set('register', 'register')
+Route::set('register', '<register>')
 		->defaults(array(
 			'controller' => 'main',
-			'action' => 'reg',
+			'action' => 'register',
+			'register' => 'register|reg'
 		));
 Route::set('widget', 'widget/<action>(/<param1>(/<param2>(/<param3>)))')
 		->defaults(array(

@@ -82,4 +82,40 @@
 			$view->matches_not_apply_opponent = $matches_not_apply_opponent;
 			echo $view->render();
 		}
+
+
+		/**
+		 * Контроллер проверки логина и пасса для phpBB3
+		 */
+		public function action_check_login_user()
+		{
+			$this->auto_render = FALSE;
+			$username = Security::xss_clean($_POST['username']);
+			$password = Security::xss_clean($_POST['password']);
+			$check_string = $_POST['cs'];
+			$sc = Kohana::config('auth.sc');
+			if($sc != $check_string)
+			{
+				exit;
+			}
+
+			$user = Jelly::select("user")->where('username', '=', $username)->limit(1)->execute();
+			if(!$user->loaded())
+			{
+				echo 0;
+				exit;
+			}
+
+			$auth = Auth::instance();
+			$userpassword = $user->password;
+			$hash_password = $auth->hash_password($password, $auth->find_salt($user->password));
+			if($userpassword === $hash_password)
+			{
+				echo 1;
+			}
+			else
+			{
+				echo 0;
+			}
+		}
 	}
