@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `forums` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 INSERT INTO `forums` (`id`, `name`, `description`, `role_id`, `weight`, `count_topics`, `count_posts`, `section_id`) VALUES
-(1, 'Премьер лига', 'Вот она премьер лига нашего чемпионата.', 3, 0, 1, 4, 1),
+(1, 'Премьер лига', 'Вот она премьер лига нашего чемпионата.', 3, 0, 2, 7, 1),
 (2, 'Первый дивизион', 'Первый дивизион нашего чемпионата.<br />Есть все шансы на выход в Премьеру.', 3, 0, 0, 0, 1),
 (3, 'РПЛ', 'Обуждение Росийской препьер лиги', 1, 0, 0, 0, 2);
 
@@ -183,13 +183,16 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `topic_id` int(11) unsigned NOT NULL,
   `author_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 INSERT INTO `posts` (`id`, `title`, `text`, `date`, `topic_id`, `author_id`) VALUES
 (1, 'Тест', 'Тест ёлки палки =)<br /><a href="http://fko3.fifafairplay.ru">вот сюда ходи</a>', 1284985705, 1, 1),
 (2, 'Пипец', 'qweqweqw<br>Точно =)', 1285102032, 1, 1),
 (3, '', 'dsgsdfgsfg', 1285105381, 1, 1),
-(4, '', 'dsgsdfgsfg<br>hu<br>jg<br>hj<br>fgh<br>j<br>fghjf<br>ghj<br>fgh<br>j<br>fgh<br>j<br>fghjf<br>ghj<br>fghj', 1285110800, 1, 1);
+(4, '', 'dsgsdfgsfg<br>hu<br>jg<br>hj<br>fgh<br>j<br>fghjf<br>ghj<br>fgh<br>j<br>fgh<br>j<br>fghjf<br>ghj<br>fghj', 1285110800, 1, 1),
+(5, 'Это фуфло', 'Это фуфло полное. Я вообще не вижу в этом ни какого смысла.<br />На кой хер оно надо?', 1285232992, 1, 1),
+(6, 'Новые приключения Федота', 'Новые захватывающие приключения Федота и сайта красивого футбола!', 1285253411, 2, 1),
+(7, 'Круто!', 'Жду начала!<br />По моему это будет круто!', 1285255027, 2, 2);
 DROP TRIGGER IF EXISTS `increment_count_posts`;
 DELIMITER //
 CREATE TRIGGER `increment_count_posts` AFTER INSERT ON `posts`
@@ -233,10 +236,8 @@ CREATE TABLE IF NOT EXISTS `roles_users` (
 
 INSERT INTO `roles_users` (`user_id`, `role_id`) VALUES
 (1, 1),
-(2, 1),
 (1, 2),
-(1, 3),
-(2, 3);
+(1, 3);
 
 CREATE TABLE IF NOT EXISTS `sections` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -277,10 +278,11 @@ CREATE TABLE IF NOT EXISTS `topics` (
   `forum_id` int(11) unsigned NOT NULL,
   `author_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 INSERT INTO `topics` (`id`, `title`, `description`, `count_posts`, `count_views`, `date`, `forum_id`, `author_id`) VALUES
-(1, 'Тест', NULL, 4, 0, 1284985705, 1, 1);
+(1, 'Тест', NULL, 5, 0, 1284985705, 1, 1),
+(2, 'Новые приключения Федота', NULL, 2, 0, 1285253411, 1, 1);
 DROP TRIGGER IF EXISTS `increment_count_topics`;
 DELIMITER //
 CREATE TRIGGER `increment_count_topics` AFTER INSERT ON `topics`
@@ -335,11 +337,10 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`),
   UNIQUE KEY `icq` (`icq`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 INSERT INTO `users` (`id`, `email`, `username`, `password`, `logins`, `last_login`, `icq`, `first_name`, `last_name`, `avatar`, `comments`, `posts`, `matches`, `topics`) VALUES
-(1, 'fedotru@gmail.com', 'Федот', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 36, 1285102011, 7372085, 'Владимир', 'Фёдоров', '4c89f786dc2b5dwW0d9987Dj1pWW.gif', 0, 4, 0, 0),
-(2, 'test@qwe.er', 'test', '6dc288f11444c62cd60b54db803d1ffe86abeb063c9ea417b3', 10, 1284293502, 233123, '', '', '4c8903bd0ab4e3.jpg', 0, 0, 0, 0);
+(1, 'fedotru@gmail.com', 'Федот', '911968d8bf13a4423513d33d9a191e40c6feaf0ee69cf48a2b', 43, 1285845878, 7372085, 'Владимир', 'Фёдоров', '4c89f786dc2b5dwW0d9987Dj1pWW.gif', 0, 7, 0, 0);
 
 CREATE TABLE IF NOT EXISTS `user_tokens` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -351,12 +352,11 @@ CREATE TABLE IF NOT EXISTS `user_tokens` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_token` (`token`),
   KEY `fk_user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 INSERT INTO `user_tokens` (`id`, `user_id`, `user_agent`, `token`, `created`, `expires`) VALUES
 (1, 1, 'c8900548171c2227f7d7621fbc10b977624eff72', 'nMuCJqnJf77OtrQceb5eu8gbHGclUcMl', 1282822803, 1284032403),
 (3, 1, 'ff973ef53520da8a8800409721398f1f9e9c8d2a', 'jYPsRrUmVBO3YlTCTQAFhxJaYA5gy4Vw', 1283262938, 1284472538),
-(5, 2, '948e2716280bf7a15fe83405f3a8a914043e75a8', 'UES8Wj1NIOzzr6M9s5yAP5zSg2dBWdLz', 1283713921, 1284923521),
 (6, 1, '4de460a499da6d94fc265b15efc395ff5a0633c5', '9CT3RtG1Bd0A5y5L1jkVVFNw2ObTPZH7', 1283735635, 1284945235);
 
 
