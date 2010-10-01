@@ -155,7 +155,7 @@
 			$view = new View('profile');
 			$view->user = $user;
 			$view->coach = $coach;
-			$view->my_profile = (bool) $user->id == $this->user->id;
+			$view->my_profile = ($user->id == $this->user->id)?true:false;
 
 			if($user->id == $this->user->id)
 				$this->template->title = __("Мой профиль");
