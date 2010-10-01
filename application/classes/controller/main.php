@@ -48,6 +48,11 @@
 
 		public function action_register()
 		{
+			if($this->auth->logged_in())
+			{
+				MISC::set_error_message(__("Вы уже авторизированы."));
+				Request::instance()->redirect('');
+			}
 			$form = array(
 				'username'	=> '',
 				'email'		=> '',

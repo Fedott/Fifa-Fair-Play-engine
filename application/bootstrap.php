@@ -94,11 +94,15 @@ Route::set('logout', 'logout')
 			'controller' => 'main',
 			'action' => 'logout',
 		));
-Route::set('register', '<register>')
+Route::set('register', 'register')
 		->defaults(array(
 			'controller' => 'main',
 			'action' => 'register',
-			'register' => 'register|reg'
+		));
+Route::set('reg', 'reg')
+		->defaults(array(
+			'controller' => 'main',
+			'action' => 'register',
 		));
 Route::set('widget', 'widget/<action>(/<param1>(/<param2>(/<param3>)))')
 		->defaults(array(
