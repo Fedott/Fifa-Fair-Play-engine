@@ -47,8 +47,11 @@
 			Аватар
 		</label>
 		<div>
+			<div class="avatar">
+				<?=html::image($user->get_avatar());?>
+			</div>
 			<?=$user->input('avatar');?>
-			<label for="field-avatar">
+			<label for="field-avatar" class="avatar">
 				Не больше <b>500 Кб</b>
 				<br/>
 				При необходимости будет автоматически уменьшен до <b>100px</b> в ширину
@@ -73,7 +76,7 @@
 		</div>
 	</li>
 	<li>
-		<input type="submit" class="submit" value="Зарегистрироваться">
+		<input type="submit" class="submit" value="Сохранить изменения">
 	</li>
 </ul>
 <?=form::close();?>

@@ -1,5 +1,5 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
-<h2><?=$user->username;?></h2>
+<h2 class="login"><?=$user->username;?> <?=($my_profile)?(html::anchor('main/profile_edit', __("Редактированить"))):"";?></h2>
 <div class="avatar">
 	<?=HTML::image($user->get_avatar());?>
 </div>

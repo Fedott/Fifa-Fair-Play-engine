@@ -484,3 +484,17 @@ p.not_play {
 
 /* Страница просмотра пользовталея
 --------------------------------------------------------*/
+h2.login a {
+	font-size: 12px;
+	font-weight: normal;
+	text-decoration: none;
+	vertical-align: middle;
+}
+
+form div.avatar {
+	float: right;
+}
+
+form label.avatar {
+	clear: none;
+}
