@@ -303,7 +303,8 @@ div.news_short_info {
 	font-size: 12px;
 }
 
-div.news_short_header, div.news_short_info {
+div.news_short_header,
+div.news_short_info {
 	height: 22px;
 	background: honeyDew;
 }
@@ -490,12 +491,28 @@ table.matches {
 	margin: 10px 0px;
 }
 
+table.matches tbody div.club_info_in_profile {
+	position: relative;
+}
+
 p.play {
 	color: green;
 }
 
 p.not_play {
 	color: red;
+}
+
+.popup_profile {
+	position: absolute;
+	display: none;
+	z-index: 50;
+	background: honeydew;
+	min-width: 200px;
+	min-height: 75px;
+	font-size: 14px;
+	padding: 5px;
+	border: 1px solid green;
 }
 
 /* Страница просмотра пользовталея

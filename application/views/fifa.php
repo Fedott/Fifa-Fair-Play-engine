@@ -11,6 +11,7 @@
 	<?=HTML::style('templates/fifa/js/jwysiwyg/jquery.wysiwyg.css');?>
 	<?=HTML::script('templates/fifa/js/jquery.js');?>
 	<?=HTML::script('templates/fifa/js/jquery.listen.js');?>
+	<?=HTML::script('templates/fifa/js/jquery.corner.js');?>
 	<?=HTML::script('templates/fifa/js/jwysiwyg/jquery.wysiwyg.js');?>
 	<?=HTML::script('templates/fifa/js/main.js');?>
 </head>

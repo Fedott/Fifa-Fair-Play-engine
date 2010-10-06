@@ -89,9 +89,76 @@ jQuery( function($) {
 		// Включем везде где надо визуальный редактор
 		$('.wysiwyg').wysiwyg({
 			controls : {
-				html : { visible : true }
+				html : {visible : true}
 			},
 			css : '/templates/fifa/css/wysiwyg.css'
+		});
+
+
+		// Всплывающие подсказки
+		$(".popup_profile").corner("10px;")
+		$('.club_info_in_profile').each(function ()
+		{
+			// options
+			var distance = 10;
+			var time = 250;
+			var hideDelay = 500;
+
+			var hideDelayTimer = null;
+
+			// tracker
+			var beingShown = false;
+			var shown = false;
+
+			var trigger = $('.popup_profile_trigger', this);
+			var popup = $('.popup_profile', this).css('opacity', 0);
+
+			//наводим на элемент
+			$([trigger.get(0), popup.get(0)]).mouseover(function ()
+			{
+				// показывать элемент
+				if (hideDelayTimer) clearTimeout(hideDelayTimer);
+
+				// не вызывают анимации снова, если уже виден
+				if (beingShown || shown) {
+					return;
+				} else {
+					beingShown = true;
+
+					// сбросить позиции всплывающее окно
+					popup.css({
+						top: distance - popup.height() - 12,
+						left: 0,
+						display: 'block' // Приносит всплывающих назад, чтобы посмотреть
+					})
+
+					// (we're using chaining on the popup) now animate it's opacity and position
+					.animate({
+						top: '-=' + distance + 'px',
+						opacity: 1
+					}, time, 'swing', function() {
+						// once the animation is complete, set the tracker variables
+						beingShown = false;
+						shown = true;
+					});
+				}
+			}).mouseout(function ()
+			{
+				// reset the timer if we get fired again - avoids double animations
+				if (hideDelayTimer) clearTimeout(hideDelayTimer);
+				hideDelayTimer = setTimeout(function () {
+					hideDelayTimer = null;
+					popup.animate({
+						top: '-=' + distance + 'px',
+						opacity: 0
+					}, time, 'swing', function () {
+						//отслеживаем переменные
+						shown = false;
+
+						popup.css('display', 'none');
+					});
+				}, hideDelay);
+			});
 		});
 
 	});

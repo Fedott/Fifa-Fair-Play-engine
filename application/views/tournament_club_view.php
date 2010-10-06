@@ -97,7 +97,23 @@
 		<?foreach($tournament->lines as $ll):?>
 			<?if($ll->id != $line->id):?>
 			<tr class="<?=text::alternate('nechet', 'chet')?> <?=($ll->id == $my_line->id)?'my_team':'';?>">
-				<td><?=html::anchor('tournament/team/'.$ll->id, $ll->club->name);?> <?=html::image('templates/fifa/img/profile_info.png');?></td>
+				<td class="">
+					<div class="club_info_in_profile">
+						<?=html::anchor('tournament/club/'.$ll->id, $ll->club->name);?>
+						<?=html::image('templates/fifa/img/profile_info.png', array('class' => 'popup_profile_trigger'));?>
+						<div class="popup_profile">
+							<strong><?=$ll->club->name;?></strong>
+							<br>
+							<?if($ll->user->loaded()):?>
+								<?=__("Тренер: ").$ll->user->username;?>
+								<br>
+								ICQ: <?=$ll->user->icq;?>
+							<?else:?>
+								У команды нет тренера
+							<?endif;?>
+						</div>
+					</div>
+				</td>
 				<?for($i = 1; $i <= $tournament->matches; $i++):?>
 				<td>
 					<?if(arr::path($played_matches, $ll->id.".count", 0) >= $i):?>
