@@ -290,6 +290,7 @@ div.news_short_header a {
 div.news_short_header{
 	float: left;
 	padding-left: 5px;
+	font-size: 16px;
 }
 
 div.news_short {
@@ -299,7 +300,7 @@ div.news_short {
 
 div.news_short_info {
 	text-align: right;
-	font-size: 11px;
+	font-size: 12px;
 }
 
 div.news_short_header, div.news_short_info {
@@ -310,6 +311,21 @@ div.news_short_header, div.news_short_info {
 div.news_short_body {
 	clear: both;
 	padding: 1px 5px;
+	font-size: 14px;
+}
+
+div#news_body {
+	font-size: 14px;
+	background-color: #F7FFF4;
+}
+
+div#news_header {
+	background: honeyDew;
+}
+
+div#news_footer {
+	font-size: 12px;
+	background: honeyDew;
 }
 
 /**
