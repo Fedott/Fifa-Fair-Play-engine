@@ -107,6 +107,17 @@ END
 //
 DELIMITER ;
 
+CREATE TABLE IF NOT EXISTS `news` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `text` text NOT NULL,
+  `link` varchar(255) DEFAULT NULL,
+  `url` varchar(255) NOT NULL,
+  `date` int(11) unsigned NOT NULL,
+  `author_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS `players` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `first_name` varchar(70) DEFAULT NULL,
