@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
 <?if($user == NULL):?>
 <p>
-	<?=html::anchor('login', 'Войдите')." на сайт"."<br>Или ".html::anchor('reg', 'зарегистрируйтесь');?>
+	<?=html::anchor('login', __('Войдите'))." на сайт"."<br>Или ".html::anchor('reg', 'зарегистрируйтесь');?>
 </p>
 <?else:?>
 	<p>
@@ -12,7 +12,8 @@
 	</p>
 <?endif;?>
 	<ul class="vmenu">
-		<li><?=html::anchor('forum', 'Форум');?></li>
+		<li><?=html::anchor('news', __("Новости"));?></li>
+		<li><?=html::anchor('forum', __("Форум"));?></li>
 		<?if($auth->logged_in('coach')):?>
 			<li>
 				<?=html::anchor('match/my', 'Мои матчи');?>

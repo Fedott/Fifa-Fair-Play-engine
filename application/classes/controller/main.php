@@ -4,8 +4,22 @@
 	{
 		public function action_index()
 		{
+			$count = Jelly::select('news')->count();
+			$pagination = Pagination::factory(array(
+				'total_items' => $count,
+			));
+
+			$News = Jelly::select('news')
+					->offset($pagination->offset)
+					->limit($pagination->items_per_page)
+					->execute();
+
+			$view = new View('news_list');
+			$view->News = $News;
+			$view->pagination = $pagination;
+
 			$this->template->title = __('Главная');
-			$this->template->content = __('Начинаем всё с начала =)');
+			$this->template->content = $view;
 		}
 
 		public function action_login()
