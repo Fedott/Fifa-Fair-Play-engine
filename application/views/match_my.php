@@ -28,3 +28,6 @@
 	<?endforeach;?>
 	</ul>
 <?endif;?>
+<?if(!count($matches) AND !count($uncmatches) AND !count($uncymatches)):?>
+	Вы ещё не сыграли ни одного матча.
+<?endif;?>

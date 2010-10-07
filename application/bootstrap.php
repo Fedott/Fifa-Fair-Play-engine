@@ -104,6 +104,11 @@ Route::set('reg', 'reg')
 			'controller' => 'main',
 			'action' => 'register',
 		));
+Route::set('profile', 'profile(/<id>)')
+		->defaults(array(
+			'controller' => 'main',
+			'action'     => 'profile',
+		));
 Route::set('widget', 'widget/<action>(/<param1>(/<param2>(/<param3>)))')
 		->defaults(array(
 			'controller' => 'widget',

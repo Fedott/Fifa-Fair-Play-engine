@@ -129,12 +129,13 @@
 					{
 						$user->set(arr::extract($_POST, array('password', 'password_confirm')));
 					}
-					if(isset($_FILES))
+					if(isset($_FILES) AND arr::path($_FILES, 'avatar.size', FALSE))
 					{
 						$user->avatar = $_FILES['avatar'];
 					}
 					$user->save();
-					Request::instance()->redirect("");
+					MISC::set_apply_message(__("Данные профиля успешно изменены"));
+					Request::instance()->redirect("main/profile");
 				}
 				catch (Validate_Exception $exp)
 				{
@@ -154,9 +155,24 @@
 		public function action_profile($id = NULL)
 		{
 			if($id == NULL)
+			{
+				if(!$this->auth->logged_in())
+				{
+					MISC::set_error_message("Вы не авторизированы на сайте");
+					Request::instance()->redirect("login");
+				}
+
 				$id = $this->user->id;
+			}
 
 			$user = Jelly::select('user', $id);
+
+			if(!$user->loaded())
+			{
+				MISC::set_error_message(__("Такого пользователя не существует"));
+				Request::instance()->redirect('');
+			}
+
 			$coach = $user->has_role('coach');
 			if($coach)
 			{

@@ -1,5 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
 <h2>Турниры:</h2>
+<?if(count($tournaments)):?>
 <table cellpadding="3" cellspacing="1">
 	<thead>
 		<tr>
@@ -18,3 +19,6 @@
 		</tr>
 	<?endforeach;?>
 </table>
+<?else:?>
+	Ещё нет ни одного турнира.
+<?endif;?>
