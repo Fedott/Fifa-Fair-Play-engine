@@ -59,11 +59,18 @@
 			</div>
 		</div>
 		<div id="footer">
-		
+			<div class="socil_buttons">
+				<a href="http://twitter.com/fifafairplay_ru">
+					<?=html::image('templates/fifa/img/twitter.png', array('alt' => __("Мы в твиттере")));?>
+				</a>
+			</div>
+			<div class="c">
+				Чемпионат "Красивый футбол!" &copy;
+			</div>
 		</div>
 	</div>
-	<div id="kohana-profiler">
+<!--	<div id="kohana-profiler">
 <?php echo View::factory('profiler/stats') ?>
-</div>
+</div> -->
 </body>
 </html>

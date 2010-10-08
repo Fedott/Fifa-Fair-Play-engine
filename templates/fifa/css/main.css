@@ -130,8 +130,28 @@ body {
 }
 
 #footer {
-	background: #BFF08E;
+	background-color:#dfdede;
 	text-align: center;
+	padding: 5px 5px;
+	overflow: hidden;
+}
+
+#footer .socil_buttons {
+	text-align: left;
+	margin-left: 20px;
+	position: relative;
+	float: left;
+	display: block;
+	height: 36px;
+}
+
+#footer .c {
+	float: right;
+	position: relative;
+	display: block;
+	height: 36px;
+	line-height: 36px;
+	margin-right: 20px
 }
 
 /* Всякие другие элементы
