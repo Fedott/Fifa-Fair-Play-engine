@@ -5,6 +5,7 @@ class Model_News extends Jelly_Model
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->load_with(array('author'))
+			->sorting(array('date' => 'DESC'))
 			->fields(array(
 			'id' => new Field_Primary,
 			'title' => new Field_String(array(
