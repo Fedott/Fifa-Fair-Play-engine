@@ -4,6 +4,11 @@
 <head>
 	<title><?=$title;?> <?=(isset($breadcrumb)?misc::title_from_breadcrumb($breadcrumb):"");?> &bull; Чемпионат "Красивый футбол!"</title>
 	<link rel="shortcut icon" href="/templates/fifa/img/favicon.ico" type="image/x-icon" />
+
+	<meta http-equiv="Content-Type" Content="text/html; Charset=UTF-8">
+	<meta http-equiv="content-language" content="ru">
+	<meta name="description" Content="Чемпионат Красивый футбол сайт где проводится чемпионат по игре FIFA Soccer. Сдесь в этом чемпионате играют только в красивый футбол, без багов, без задротства. Чемпионат создан для получения удовольствия от игры в футбол на виртуальных полях.">
+
 	<?=HTML::style('templates/fifa/css/reset.css');?>
 	<?=HTML::style('templates/fifa/css/main.css');?>
 	<?=HTML::style('templates/fifa/css/form.css');?>
