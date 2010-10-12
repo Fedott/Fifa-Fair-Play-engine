@@ -335,16 +335,19 @@ div.news_short_body {
 	font-size: 14px;
 }
 
-div#news_body {
+div#news_body,
+div#page_body {
 	font-size: 14px;
 	background-color: #F7FFF4;
 }
 
-div#news_header {
+div#news_header,
+div#page_header {
 	background: honeyDew;
 }
 
-div#news_footer {
+div#news_footer,
+div#page_footer {
 	font-size: 12px;
 	background: honeyDew;
 }

@@ -4,3 +4,7 @@
 <?=html::anchor('admin/player/', 'Управление игроками');?>
 <br>
 <?=html::anchor('admin/tournament/', 'Управление турнирами');?>
+<br>
+<?=html::anchor('admin/page/', 'Управление страницами');?>
+<br>
+<?=html::anchor('admin/news/', 'Управление новостями');?>

@@ -11,30 +11,31 @@
 	</ul>
 </div>
 <?endif;?>
-<?=form::open(NULL, array('enctype' => 'multipart/form-data'));?>
+<?=form::open();?>
 <ul>
 	<li class="">
 		<label class="desc" for="field-name">
 			Название
 		</label>
 		<div>
-			<?=$club->input('name');?>
-			<label for="field-name">От <b>2</b> до <b>30</b> символов</label>
+			<?=$category->input('name');?>
+			<label for="field-name">От <b>2</b> до <b>255</b> символов</label>
 		</div>
 	</li>
 	<li class="">
-		<label class="desc" for="field-logo">
-			Логотип
+		<label class="desc" for="field-description">
+			Описание
 		</label>
 		<div>
-			<?=$club->input('logo');?>
-			<?if(!empty($club->logo)):?>
-				<?=HTML::image("media/logos/".$club->logo);?>
-			<?endif;?>
+			<?=$category->input('description');?>
 		</div>
 	</li>
 	<li>
-		<input type="submit" class="submit" value="Сохранить изменения">
+		<?if($category->loaded()):?>
+			<input type="submit" class="submit" value="Сохранить изменения">
+		<?else:?>
+			<input type="submit" class="submit" value="Создать">
+		<?endif;?>
 	</li>
 </ul>
 <?=form::close();?>

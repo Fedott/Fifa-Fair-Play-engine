@@ -77,7 +77,8 @@ Kohana::modules(array(
 	'image'      => MODPATH.'image',      // Модуль работы с изображениями
 	'purifier'   => MODPATH.'purifier',   // Модуль HTML Purifier
 //	'forum'      => MODPATH.'forum',      // Модуль Форума от Федота
-	'kohana-curl'=> MODPATH.'kohana-curl' // Модуль Curl
+	'kohana-curl'=> MODPATH.'kohana-curl',// Модуль Curl
+	'pages'      => MODPATH.'pages',      // Модуль страниц от Федота
 ));
 
 /**
