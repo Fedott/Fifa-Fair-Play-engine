@@ -8,3 +8,5 @@
 <?=html::anchor('admin/page/', 'Управление страницами');?>
 <br>
 <?=html::anchor('admin/news/', 'Управление новостями');?>
+<br>
+<?=html::anchor('admin/user/', 'Управление пользователями');?>
