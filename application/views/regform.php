@@ -69,7 +69,7 @@
 <!--			<span class="req">*</span>-->
 		</label>
 		<div>
-			<input class="field text medium" type="text" name="skype" id="icq" maxlength="12" value="<?=$form['skype']?>">
+			<input class="field text medium" type="text" name="skype" id="icq" maxlength="32" value="<?=$form['skype']?>">
 			<label for="skype">Только буквы литинского алфавита и цифры</label>
 		</div>
 	</li>
