@@ -28,3 +28,6 @@
 [submodule "modules/kohana-curl"]
 	path = modules/kohana-curl
 	url = http://github.com/AlexKupreev/kohana-curl.git
+[submodule "modules/captcha"]
+	path = modules/captcha
+	url = http://github.com/kolanos/kohana-captcha.git

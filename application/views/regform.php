@@ -73,6 +73,17 @@
 			<label for="skype">Только буквы литинского алфавита и цифры</label>
 		</div>
 	</li>
+	<li class="">
+		<label class="desc" for="chelovechnost">
+			Человечность
+			<span class="req">*</span>
+		</label>
+		<div>
+			<?=$captcha;?>
+			<br/>
+			<input class="field text medium" type="text" name="chelovechnost" id="chelovechnost">
+		</div>
+	</li>
 	<li>
 		<input type="submit" class="submit" value="Зарегистрироваться">
 	</li>

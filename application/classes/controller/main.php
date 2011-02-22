@@ -62,6 +62,7 @@
 
 		public function action_register()
 		{
+			$captcha = Captcha::instance();
 			if($this->auth->logged_in())
 			{
 				MISC::set_error_message(__("Вы уже авторизированы."));
@@ -84,6 +85,14 @@
 				try
 				{
 					$user->set($post);
+					$user->validate();
+					$cv = Validate::factory($_POST)
+							->rule('chelovechnost','Captcha::valid')
+							->rule('chelovechnost', 'not_empty');
+					if( ! $cv->check())
+					{
+						throw new Validate_Exception($cv, 'Bad captcha');
+					}
 					$user->add('roles', 1);
 					$user->save();
 					$data = array(
@@ -109,6 +118,7 @@
 			$this->template->content = new View('regform');
 			$this->template->content->form = $form;
 			$this->template->content->errors = $errors;
+			$this->template->content->captcha = $captcha;
 		}
 
 		public function action_profile_edit()
