@@ -39,7 +39,7 @@ class Controller_Admin_User extends Controller_Admin
 		{
 			try
 			{
-				$user->set(arr::extract($_POST, array('username', 'roles', 'last_name', 'first_name')));
+				$user->set(arr::extract($_POST, array('username', 'roles', 'last_name', 'first_name', 'icq', 'skype')));
 				if($_POST['password'])
 				{
 					$user->set(arr::extract($_POST, array('password', 'password_confirm')));

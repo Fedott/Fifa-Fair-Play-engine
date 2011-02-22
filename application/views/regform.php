@@ -56,11 +56,21 @@
 	<li class="">
 		<label class="desc" for="icq">
 			ICQ
-			<span class="req">*</span>
+<!--			<span class="req">*</span>-->
 		</label>
 		<div>
 			<input class="field text medium" type="text" name="icq" id="icq" maxlength="12" value="<?=$form['icq']?>">
 			<label for="icq">Только цифры</label>
+		</div>
+	</li>
+	<li class="">
+		<label class="desc" for="skype">
+			Skype
+<!--			<span class="req">*</span>-->
+		</label>
+		<div>
+			<input class="field text medium" type="text" name="skype" id="icq" maxlength="12" value="<?=$form['skype']?>">
+			<label for="skype">Только буквы литинского алфавита и цифры</label>
 		</div>
 	</li>
 	<li>

@@ -35,11 +35,21 @@
 	<li class="">
 		<label class="desc" for="field-icq">
 			ICQ
-			<span class="req">*</span>
+<!--			<span class="req">*</span>-->
 		</label>
 		<div>
 			<?=$user->input('icq');?>
 			<label for="field-icq">Только цифры</label>
+		</div>
+	</li>
+	<li class="">
+		<label class="desc" for="field-skype">
+			Skype
+<!--			<span class="req">*</span>-->
+		</label>
+		<div>
+			<?=$user->input('skype');?>
+			<label for="field-skype">Только буквы литинского алфавита и цифры</label>
 		</div>
 	</li>
 	<li class="">

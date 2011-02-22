@@ -71,13 +71,14 @@
 				'username'	=> '',
 				'email'		=> '',
 				'icq'		=> '',
+				'skype'     => '',
 			);
 
 			$errors = array();
 
 			if($_POST)
 			{
-				$post = Arr::extract($_POST, array('username','email','icq','password','password_confirm'));
+				$post = Arr::extract($_POST, array('username','email','icq', 'skype','password','password_confirm'));
 				$user = Jelly::factory('user');
 
 				try
@@ -90,6 +91,7 @@
 							'username'      => $user->username,
 							'user_email'    => $user->email,
 							'user_icq'      => $user->icq,
+							'pf_skype'      => $user->skype,
 						)),
 						'sc' => Kohana::config('auth.sc'),
 					);
@@ -124,7 +126,7 @@
 			{
 				try
 				{
-					$user->set(arr::extract($_POST, array('icq', 'first_name', 'last_name')));
+					$user->set(arr::extract($_POST, array('icq', 'first_name', 'last_name', 'skype')));
 					if($_POST['password'])
 					{
 						$user->set(arr::extract($_POST, array('password', 'password_confirm')));

@@ -261,7 +261,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` char(50) NOT NULL,
   `logins` int(11) unsigned NOT NULL DEFAULT '0',
   `last_login` int(11) unsigned DEFAULT NULL,
-  `icq` int(11) unsigned NOT NULL,
+  `icq` int(11) unsigned DEFAULT NULL,
+  `skype` varchar(32) DEFAULT NULL,
   `first_name` varchar(30) DEFAULT NULL,
   `last_name` varchar(30) DEFAULT NULL,
   `avatar` varchar(255) DEFAULT NULL,
@@ -272,7 +273,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`),
-  UNIQUE KEY `icq` (`icq`)
+  UNIQUE KEY `icq` (`icq`),
+  UNIQUE KEY `skype` (`skype`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `user_tokens` (

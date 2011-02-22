@@ -8,10 +8,20 @@ class Model_User extends Model_Auth_User
 			'icq' => new Field_Integer(array(
 				'unique' => TRUE,
 				'rules' => array(
-					'not_empty' => array(TRUE),
-					'min_length' => array(5),
+//					'min_length' => array(5),
 					'max_length' => array(10),
 				),
+				'default' => NULL,
+				'null' => TRUE,
+			)),
+			'skype' => new Field_String(array(
+				'unique' => TRUE,
+				'rules' => array(
+//					'min_length' => array(6),
+					'max_length' => array(32),
+				),
+				'default' => NULL,
+				'null' => TRUE,
 			)),
 			'email' => new Field_Email(array(
 				'unique' => TRUE,
