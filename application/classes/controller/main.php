@@ -91,7 +91,6 @@
 							'username'      => $user->username,
 							'user_email'    => $user->email,
 							'user_icq'      => $user->icq,
-							'pf_skype'      => $user->skype,
 						)),
 						'sc' => Kohana::config('auth.sc'),
 					);
