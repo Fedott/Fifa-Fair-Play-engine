@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
 <h1><?=$line->club->name;?></h1>
 <p>Турнир: <?=html::anchor('/tournament/view/'.$tournament->url, $tournament->name);?></p>
-<p>Тренер: <?=$line->user->first_name." ".$line->user->last_name." (".$line->user->username.")";?> ICQ: <?=$line->user->icq;?></p>
+<p>Тренер: <?=$line->user->first_name." ".$line->user->last_name." (".$line->user->username.")";?> <?=$line->user->get_im(", ");?></p>
 <table class="season_info">
 	<tbody>
 		<tr>
@@ -107,7 +107,7 @@
 							<?if($ll->user->loaded()):?>
 								<?=__("Тренер: ").$ll->user->username;?>
 								<br>
-								ICQ: <?=$ll->user->icq;?>
+								<?=$ll->user->get_im("<br/>");?>
 							<?else:?>
 								У команды нет тренера
 							<?endif;?>

@@ -69,4 +69,23 @@ class Model_User extends Model_Auth_User
 			return 'media/avatars/noava.jpg';
 		}
 	}
+
+	public function get_im($delimiter = ", ")
+	{
+		$return = '';
+		if( ! empty($this->icq))
+		{
+			$return.= "ICQ: ".$this->icq;
+		}
+		if( ! empty($this->skype))
+		{
+			if( ! empty($return))
+			{
+				$return.= $delimiter;
+			}
+			$return.= "Skype: ".$this->skype." <a href='skype:".$this->skype."?chat'>".html::image('templates/fifa/img/chat.png')."</a>";
+		}
+
+		return $return;
+	}
 }

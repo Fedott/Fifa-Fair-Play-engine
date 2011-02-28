@@ -161,5 +161,10 @@ jQuery( function($) {
 			});
 		});
 
+
+		// Подтверждение матча
+		$("input.match_confirm").click(function(){
+			$(this).attr('disabled', 'disabled');
+		});
 	});
 });

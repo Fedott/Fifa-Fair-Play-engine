@@ -26,7 +26,7 @@
 	</li>
 	<li>
 		<?=form::hidden('confirm', 1);?>
-		<input type="submit" class="submit" value="Подтвердить результат">
+		<input type="submit" class="submit match_confirm" value="Подтвердить результат">
 		| <?=html::anchor('match/my', 'Нет');?>
 	</li>
 </ul>

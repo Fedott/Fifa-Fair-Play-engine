@@ -11,6 +11,10 @@
 		<p>Фамилия: <?=$user->last_name;?></p>
 	<?endif;?>
 
+	<p>
+		<?=$user->get_im("<br/>");?>
+	</p>
+
 	<?if($coach):?>
 		<?if(count($coach['lines'])):?>
 			<p><b>Тренер команд:</b></p>
