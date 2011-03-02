@@ -252,14 +252,16 @@
 					.HTML::anchor('tournament/view/'.$tournament->id, $tournament->name)." > ";
 		}
 
-		public function action_get_away_club_players($cid)
+		public function action_get_away_club_players($line_id)
 		{
-			if($cid == "NULL")
+			if($line_id == "NULL")
 				exit;
+
+			$line = Jelly::select('line', $line_id);
 
 			$this->auto_render = FALSE;
 
-			$players = Jelly::select('player')->where("club_id", "=", $cid)->execute();
+			$players = Jelly::select('player')->where("club_id", "=", $line->club->id)->execute();
 			$view = new View('match_away_club_players');
 			$view->players = $players->as_array('id', 'last_name');
 
