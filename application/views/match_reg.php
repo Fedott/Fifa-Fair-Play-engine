@@ -87,7 +87,7 @@
 		</div>
 	</li>
 	<li>
-		<input type="submit" class="submit" value="Сохранить изменения">
+		<input type="submit" class="submit" value="Сохранить изменения" id="match_register">
 	</li>
 </ul>
 <?=form::close();?>

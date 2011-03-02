@@ -78,4 +78,22 @@
 
 			return $title;
 		}
+
+		static public function not_duplicate_send($field_name, $interval = 60)
+		{
+			$last_send = Session::instance()->get($field_name, 0);
+			if($last_send < time() - $interval)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		static public function duplicate_send_time_set($field_name)
+		{
+			return Session::instance()->set($field_name, time());
+		}
 	}

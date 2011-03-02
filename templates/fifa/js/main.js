@@ -13,7 +13,7 @@ jQuery( function($) {
 		var form;
 		var tmp_i;
 
-		
+
 
 		$('#add_player_button').click(function addplayerform()
 		{
@@ -162,9 +162,14 @@ jQuery( function($) {
 		});
 
 
-		// Подтверждение матча
+		// Подтверждение/Регистрация матча
 		$("input.match_confirm").click(function(){
-			$(this).attr('disabled', 'disabled');
+			$(this).parent().hide();
+			$(this).parent().parent().append('<li><img src="/templates/fifa/img/ajax_load_bar.gif"/></li>');
+		});
+		$("input#match_register").click(function(){
+			$(this).hide();
+			$(this).parent().parent().append('<li><img src="/templates/fifa/img/ajax_load_bar.gif"/></li>');
 		});
 	});
 });

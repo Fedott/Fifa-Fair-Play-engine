@@ -14,7 +14,7 @@
 	<?endforeach;?>
 <?endif;?>
 <br>
-<?=form::open();?>
+<?=form::open(NULL, array('id' => 'confirm_form'));?>
 <ul>
 	<li>
 		<label class="desc" for="comment">

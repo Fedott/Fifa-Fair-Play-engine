@@ -110,7 +110,7 @@
 			$errors = array();
 			$my_players = $myline->club->players->as_array('id', 'last_name');
 			
-			if($_POST)
+			if($_POST AND MISC::not_duplicate_send('register_match'))
 			{
 				try
 				{
@@ -159,6 +159,7 @@
 
 					if($match->home_goals == $home_goals_count AND $match->away_goals == $away_goals_count)
 					{
+						MISC::duplicate_send_time_set('register_match');
 						$match->save();
 						foreach($home_goals as $goal)
 						{
@@ -187,6 +188,16 @@
 				{
 					$errors = $exp->array->errors('match');
 				}
+			}
+			elseif ( ! MISC::not_duplicate_send('register_match'))
+			{
+				$last_match = Jelly::select('match')
+						->where('table_id', '=', $tournament->id)
+						->where('home_id', '=', $myline->id)
+						->limit(1)
+						->execute();
+
+				Request::instance()->redirect('match/view/'.$last_match->id);
 			}
 
 			// Клубы с которыми не сыграны все матчи в турнире
