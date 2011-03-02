@@ -108,7 +108,11 @@
 			$match = Jelly::factory('match');
 			$comment = Jelly::factory('comment');
 			$errors = array();
-			$my_players = $myline->club->players->as_array('id', 'last_name');
+			$my_players = array();
+			foreach($myline->club->players as $my_player)
+			{
+				$my_players[$my_player->id] = $my_player->player_name();
+			}
 			
 			if($_POST AND MISC::not_duplicate_send('register_match'))
 			{
@@ -273,8 +277,14 @@
 			$this->auto_render = FALSE;
 
 			$players = Jelly::select('player')->where("club_id", "=", $line->club->id)->execute();
+			$players_arr = array();
+			foreach($players as $player)
+			{
+				$players_arr[$player->id] = $player->player_name();
+			}
+
 			$view = new View('match_away_club_players');
-			$view->players = $players->as_array('id', 'last_name');
+			$view->players = $players_arr;
 
 			echo $view;
 		}
