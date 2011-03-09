@@ -19,3 +19,11 @@
 	<?endforeach;?>
 	</tbody>
 </table>
+<hr/>
+<div class="control-panel">
+	<ul>
+		<li>
+			<?=html::anchor('admin/club/edit', 'Создать команду');?>
+		</li>
+	</ul>
+</div>

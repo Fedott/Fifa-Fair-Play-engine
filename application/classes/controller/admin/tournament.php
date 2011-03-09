@@ -4,9 +4,7 @@
 	{
 		public function action_index()
 		{
-			$this->template->title = __('Управление турнирами');
-			$this->template->content = new View('admin/tournament');
-			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ";
+			$this->action_listen();
 		}
 
 		public function action_listen()

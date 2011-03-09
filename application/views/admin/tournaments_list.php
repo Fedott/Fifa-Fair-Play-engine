@@ -19,3 +19,14 @@
 	<?endforeach;?>
 	</tbody>
 </table>
+<hr/>
+<div class="control-panel">
+	<ul>
+		<li>
+			<?=html::anchor('admin/tournament/edit', 'Создать турнир');?>
+		</li>
+		<li>
+			<?=html::anchor('admin/tournament/trophy_edit', 'Создать трофей');?>
+		</li>
+	</ul>
+</div>

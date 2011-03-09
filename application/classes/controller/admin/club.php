@@ -4,11 +4,7 @@
 	{
 		public function action_index()
 		{
-			$view = new View('admin/club');
-
-			$this->template->title = __("Управление клубами");
-			$this->template->content = $view;
-			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ";
+			$this->action_list();
 		}
 
 		public function action_list()
