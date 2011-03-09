@@ -117,7 +117,16 @@
 				<?for($i = 1; $i <= $tournament->matches; $i++):?>
 				<td>
 					<?if(arr::path($played_matches, $ll->id.".count", 0) >= $i):?>
-						<p class="play">Сыгран (<?=$played_matches[$ll->id][$i]->home_goals;?> - <?=$played_matches[$ll->id][$i]->away_goals;?>)</p>
+						<p class="play">Сыгран (<?php
+							if (($played_matches[$ll->id][$i]->home->id == $line->id AND $played_matches[$ll->id][$i]->home_goals > $played_matches[$ll->id][$i]->away_goals) OR ($played_matches[$ll->id][$i]->home->id != $line->id AND $played_matches[$ll->id][$i]->home_goals < $played_matches[$ll->id][$i]->away_goals))
+							{
+								echo "<font class='green'>".$played_matches[$ll->id][$i]->home_goals." - ".$played_matches[$ll->id][$i]->away_goals."</font>";
+							}
+							else
+							{
+								echo "<font class='red'>".$played_matches[$ll->id][$i]->home_goals." - ".$played_matches[$ll->id][$i]->away_goals."</font>";
+							}
+						?>)</p>
 					<?else:?>
 						<p class="not_play">Не сыгран</p>
 					<?endif;?>
