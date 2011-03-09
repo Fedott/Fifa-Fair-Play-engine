@@ -19,7 +19,7 @@ class Model_News extends Jelly_Model
 				)
 			)),
 			'link' => new Field_String,
-			'url' => new Field_String(array(
+			'url' => new Field_Slug(array(
 				'unique' => TRUE,
 			)),
 			'date' => new Field_Integer(array(
