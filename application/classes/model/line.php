@@ -4,7 +4,8 @@ class Model_Line extends Jelly_Model
 {
 	public static function initialize(Jelly_Meta $meta)
 	{
-		$meta->sorting(array('points' => 'desc', 'win' => 'desc', 'games' => 'asc', 'goals' => 'desc', 'passed_goals' => 'asc'))
+		// TODO: Костыль из костылей в строке сортировки добавлены тильды, для эмуляции экранирования. Очень опасно!!!
+		$meta->sorting(array('points' => 'desc', 'goals` - `passed_goals' => 'desc', 'win' => 'desc', 'games' => 'asc', 'goals' => 'desc', 'passed_goals' => 'asc'))
 			->load_with(array('club', 'user', 'table'))
 			->fields(array(
 			'id' => new Field_Primary,
