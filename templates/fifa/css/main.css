@@ -518,11 +518,13 @@ table.matches tbody div.club_info_in_profile {
 	position: relative;
 }
 
-p.play {
+p.play,
+p.green {
 	color: green;
 }
 
-p.not_play {
+p.not_play,
+p.red {
 	color: red;
 }
 

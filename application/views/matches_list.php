@@ -11,10 +11,11 @@
 				<th>Домашняя команда</th>
 				<th>Счёт</th>
 				<th>Гостевая команды</th>
-			<?if(!$tourn->loaded()):?>
+			<?if( ! $tourn->loaded()):?>
 				<th>Турнир</th>
 			<?endif;?>
 				<th>Дата</th>
+				<th>Подтверждён</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -27,6 +28,7 @@
 				<td><?=html::anchor('tournament/view/'.$match->table->url, $match->table->name);?></td>
 			<?endif;?>
 				<td><?=MISC::get_human_date($match->date);?></td>
+				<td><?=($match->confirm)?'<p class="green">'.__("Да").'</p>':'<p class="red">'.__("Нет").'</p>';?></td>
 			</tr>
 		<?endforeach;?>
 		</tbody>
