@@ -120,9 +120,14 @@
 			$matches = Jelly::select('match')
 					->line($line->id)
 					->execute();
+
+			$matches_asc = Jelly::select('match')
+					->line($line->id)
+					->order_by('date', 'asc')
+					->execute();
 			
 			$played_matches = array();
-			foreach ($matches as $match)
+			foreach ($matches_asc as $match)
 			{
 				if($match->home->id == $line->id)
 				{
