@@ -30,7 +30,9 @@
 <?else:?>
 <p>Нет игроков</p>
 <?endif?>
-<hr>
-<?=html::anchor('admin/club/edit/'.$club->id, 'Редактировать')?>
-<br>
-<?=html::anchor('admin/club/adds/'.$club->id, 'Добавить игроков')?>
+<hr/>
+<?=html::anchor('admin/club/edit/'.$club->id, 'Редактировать');?>
+<br/>
+<?=html::anchor('admin/club/adds/'.$club->id, 'Добавить игроков');?>
+<br/>
+<?=html::anchor('admin/club/parse_from_wiki/'.$club->id, 'Добавить игроков из wiki');?>

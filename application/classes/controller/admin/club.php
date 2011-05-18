@@ -107,4 +107,63 @@
 					HTML::anchor('admin/club', 'Управление клубами')." > ".
 					HTML::anchor('admin/club/view/'.$club->id, 'Клуб '.$club->name)." > ";
 		}
+		
+		public function action_parse_from_wiki($club_id)
+		{
+			$club = Jelly::select("club", $club_id);
+			$errors = array();
+			$allow = array();
+			
+			if($_POST)
+			{
+				include Kohana::find_file('vendor', 'phpQuery');
+				
+				$tables = phpQuery::newDocumentHTML($_POST['tables']);
+				
+				$players_arr = array();
+				foreach ($tables->find("tr.vcard.agent span.fn") as $player)
+				{
+					$player_full_name = array('first_name' => NULL, 'last_name' => NULL);
+					$player_name = pq($player)->text();
+					$player_name = preg_replace("!\(.+\)!", "", $player_name);
+					if(substr_count($player_name, " "))
+					{
+						$tmp = explode(" ", $player_name, 2);
+						$player_full_name['first_name'] = trim($tmp[0]);
+						$player_full_name['last_name'] = trim($tmp[1]);
+					}
+					else
+					{
+						$player_full_name['last_name'] = trim($player_name);
+					}
+					
+					$players_arr[] = $player_full_name;
+				}
+				
+				foreach($players_arr as $player_arr)
+				{
+					try
+					{
+						$player = Jelly::factory('player');
+						$player->set(array('last_name' => $player_arr['last_name'], 'first_name' => $player_arr['first_name'], 'club' => $club->id));
+						$player->save();
+						$allow[] = $player->player_name(false);
+					}
+					catch (Validate_Exception $exp)
+					{
+						$errors[] = $player->player_name().": ".implode(",", $exp->array->errors('player'));
+					}
+				}
+			}
+			
+			$view = new View('admin/parse_from_wiki');
+			$view->club = $club;
+			$view->errors = $errors;
+			$view->allow = $allow;
+			
+			$this->template->title = __("Парсер игроков из wiki");
+			$this->template->content = $view;
+			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".
+					HTML::anchor('admin/club', 'Управление клубами')." > ";
+		}
 	}
