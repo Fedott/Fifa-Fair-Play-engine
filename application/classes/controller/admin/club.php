@@ -161,9 +161,10 @@
 			$view->errors = $errors;
 			$view->allow = $allow;
 			
-			$this->template->title = __("Парсер игроков из wiki");
+			$this->template->title = __("Добавление игроков из wiki");
 			$this->template->content = $view;
 			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".
-					HTML::anchor('admin/club', 'Управление клубами')." > ";
+					HTML::anchor('admin/club', 'Управление клубами')." > ".
+					HTML::anchor('admin/club/view/'.$club->id, 'Клуб '.$club->name)." > ";
 		}
 	}
