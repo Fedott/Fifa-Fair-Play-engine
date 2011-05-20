@@ -109,9 +109,19 @@
 			$comment = Jelly::factory('comment');
 			$errors = array();
 			$my_players = array();
-			foreach($myline->club->players as $my_player)
+			$mplayers = Jelly::select('player')
+					->select("*")
+					->select(array('SUM("goals.count")', 'goals_count'))
+					->where('player.club:foreign_key', '=', $myline->club->id)
+					->order_by('goals_count', 'DESC')
+					->order_by('last_name')
+					->join('goals', 'LEFT OUTER')->on('player:primary_key', '=', 'goals.player_id')
+					->group_by('players.id')
+					->execute();
+			
+			foreach($mplayers as $my_player)
 			{
-				$my_players[$my_player->id] = $my_player->player_name();
+				$my_players[$my_player->id] = $my_player->player_name(true, true);
 			}
 			
 			if($_POST AND MISC::not_duplicate_send('register_match'))
@@ -276,11 +286,19 @@
 
 			$this->auto_render = FALSE;
 
-			$players = Jelly::select('player')->where("club_id", "=", $line->club->id)->execute();
+			$players = Jelly::select('player')
+					->select("*")
+					->select(array('SUM("goals.count")', 'goals_count'))
+					->where("club_id", "=", $line->club->id)
+					->order_by('goals_count', 'DESC')
+					->order_by('last_name')
+					->join('goals', 'LEFT OUTER')->on('player:primary_key', '=', 'goals.player_id')
+					->group_by('players.id')
+					->execute();
 			$players_arr = array();
 			foreach($players as $player)
 			{
-				$players_arr[$player->id] = $player->player_name();
+				$players_arr[$player->id] = $player->player_name(true, true);
 			}
 
 			$view = new View('match_away_club_players');

@@ -19,13 +19,22 @@
 			));
 		}
 
-		public function player_name($limit = TRUE)
+		public function player_name($limit = TRUE, $last_name_first = FALSE)
 		{
 			if(!empty($this->first_name))
 			{
-				if($limit){
-					$return = text::limit_chars($this->first_name, 1, '.');
-					$return.= $this->last_name;
+				if($limit)
+				{
+					if($last_name_first)
+					{
+						$return = $this->last_name;
+						$return.= ' '.text::limit_chars($this->first_name, 1, '.');
+					}
+					else
+					{
+						$return = text::limit_chars($this->first_name, 1, '.');
+						$return.= ' '.$this->last_name;
+					}
 				}
 				else
 				{
