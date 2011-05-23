@@ -123,6 +123,7 @@
 			{
 				$my_players[$my_player->id] = $my_player->player_name(true, true);
 			}
+			$my_players[0] = __("Автогол");
 			
 			if($_POST AND MISC::not_duplicate_send('register_match'))
 			{
@@ -300,6 +301,7 @@
 			{
 				$players_arr[$player->id] = $player->player_name(true, true);
 			}
+			$players_arr[0] = __("Автогол");
 
 			$view = new View('match_away_club_players');
 			$view->players = $players_arr;
