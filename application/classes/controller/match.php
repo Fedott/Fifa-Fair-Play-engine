@@ -18,7 +18,7 @@
 			{
 				$tournament = Jelly::select('table', $tableid);
 				$count = Jelly::select('match')
-						->where('matches.table_id', '=', $tournament->id)
+						->tournament($tournament->id)
 						->count();
 			}
 
@@ -26,10 +26,21 @@
 				'total_items' => $count,
 			));
 
-			$matches = Jelly::select('match')
-					->offset($pagination->offset)
-					->limit($pagination->items_per_page)
-					->execute();
+			if($tournament->loaded())
+			{
+				$matches = Jelly::select('match')
+						->tournament($tournament->id)
+						->offset($pagination->offset)
+						->limit($pagination->items_per_page)
+						->execute();
+			}
+			else
+			{
+				$matches = Jelly::select('match')
+						->offset($pagination->offset)
+						->limit($pagination->items_per_page)
+						->execute();
+			}
 
 			// Для оптимизации за счёт уменьшения количества запросов выбираем
 			// клубы сейчас, чтобы потом дёргать их из массива
