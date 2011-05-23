@@ -249,6 +249,10 @@ ul.vmenu {
 	border: 1px solid gray;
 	padding: 3px;
 	margin: 5px;
+	
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 
 ul.vmenu li.vmenu_title,
