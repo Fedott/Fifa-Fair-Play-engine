@@ -44,12 +44,16 @@
 
 			// Для оптимизации за счёт уменьшения количества запросов выбираем
 			// клубы сейчас, чтобы потом дёргать их из массива
+			// Так же делаем с комментами
 			$clubs_like = array();
 			$clubs_arr = array();
+			$matches_ids = array();
+			$comments_arr = array();
 			foreach($matches as $match)
 			{
 				$clubs_like[$match->home->club_id()] = $match->home->club_id();
 				$clubs_like[$match->away->club_id()] = $match->away->club_id();
+				$matches_ids[] = $match->id;
 			}
 
 			if(count($clubs_like))
@@ -62,6 +66,17 @@
 					$clubs_arr[$club->id] = $club;
 				}
 			}
+			
+			if(count($matches_ids))
+			{
+				$comments = Jelly::select('comment')
+						->where('match_id', 'IN', $matches_ids)
+						->execute();
+				foreach($comments as $comment)
+				{
+					$comments_arr[$comment->match_id()][] = $comment;
+				}
+			}
 
 			$view = new View('matches_list');
 			$view->matches = $matches;
@@ -69,6 +84,7 @@
 			$view->pagination = $pagination;
 			$view->user = $this->user;
 			$view->clubs_arr = $clubs_arr;
+			$view->comments_arr = $comments_arr;
 
 			if($tournament->loaded())
 			{
