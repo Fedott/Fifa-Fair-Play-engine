@@ -1,15 +1,4 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
-<script type="text/javascript">
-jQuery( function($) {
-	$(document).ready( function() {
-		$("a.comments_views").click(function() {
-			$(this).siblings("ul").show().attr('top');
-			return false;
-		});
-	});
-});
-</script>
-
 <?if($tourn->loaded()):?>
 	<h2>Матчи турнира "<?=$tourn->name;?>"</h2>
 <?else:?>
@@ -42,7 +31,7 @@ jQuery( function($) {
 				<td>
 					<?if(isset($comments_arr[$match->id])):?>
 						<div class="match_comments_wrapper">
-							<a href="" class="comments_views">Смотреть</a>
+							<a href="<?=url::site('match/view/'.$match->id);?>" class="comments_views">Смотреть</a>
 							<ul class="match_commnets">
 								<?foreach($comments_arr[$match->id] as $comment):?>
 									<li>
