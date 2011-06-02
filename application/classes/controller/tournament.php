@@ -113,7 +113,8 @@
 
 				foreach($players_goals as $player)
 				{
-					$goleodors[$player->id]['player'] = $player;
+					$player_id = (int) $player->id;
+					$goleodors[$player_id]['player'] = $player;
 				}
 			}
 
