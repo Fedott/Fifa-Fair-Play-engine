@@ -249,6 +249,10 @@ ul.vmenu {
 	border: 1px solid gray;
 	padding: 3px;
 	margin: 5px;
+	
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 
 ul.vmenu li.vmenu_title,
@@ -482,6 +486,7 @@ div.comment {
 	background-color: #F7FFF4;
 	min-height: 100px;
 	margin-bottom: 10px;
+	overflow: hidden;
 }
 
 div.comment_author {
@@ -499,6 +504,37 @@ div.comment_header {
 	background: honeyDew;
 }
 
+div.match_comments_wrapper {
+/*	position: relative;*/
+}
+
+ul.match_commnets {
+	display: none;
+	position: absolute;
+	border: 1px solid green;
+	min-height: 100px;
+	min-width: 500px;
+	width: 500px;
+	padding: 5px;
+	z-index: 50;
+	background: honeydew;
+		
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+ul.match_commnets li {
+	list-style: none;
+}
+
+ul.match_commnets p.comment_author {
+	
+}
+
+ul.match_commnets p.comment_text {
+	margin-bottom: 5px;
+}
 
 /**
  * Страница команды в турнире

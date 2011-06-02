@@ -17,6 +17,7 @@
 	<?=HTML::script('templates/fifa/js/jquery.js');?>
 	<?=HTML::script('templates/fifa/js/jquery.listen.js');?>
 	<?=HTML::script('templates/fifa/js/jquery.corner.js');?>
+	<?=HTML::script('templates/fifa/js/jquery.popup.js');?>
 	<?=HTML::script('templates/fifa/js/jwysiwyg/jquery.wysiwyg.js');?>
 	<?=HTML::script('templates/fifa/js/main.js');?>
 </head>
@@ -74,8 +75,8 @@
 			</div>
 		</div>
 	</div>
-<!--	<div id="kohana-profiler">
-<?php echo View::factory('profiler/stats') ?>
-</div> -->
+<div id="kohana-profiler">
+	<?View::factory('profiler/stats') ?>
+</div> 
 </body>
 </html>

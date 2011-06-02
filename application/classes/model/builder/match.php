@@ -9,4 +9,9 @@
 					->or_where("away_id", "=", $value)
 					->where_close();
 		}
+		
+		public function tournament($tournament_id)
+		{
+			return $this->where("matches.table_id", "=", $tournament_id);
+		}
 	}
