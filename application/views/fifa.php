@@ -18,6 +18,8 @@
 	<?=HTML::script('templates/fifa/js/jquery.listen.js');?>
 	<?=HTML::script('templates/fifa/js/jquery.corner.js');?>
 	<?=HTML::script('templates/fifa/js/jquery.popup.js');?>
+	<?=HTML::script('templates/fifa/js/jquery.form.js');?>
+	<?=HTML::script('templates/fifa/js/jquery.tmpl.js');?>
 	<?=HTML::script('templates/fifa/js/jwysiwyg/jquery.wysiwyg.js');?>
 	<?=HTML::script('templates/fifa/js/main.js');?>
 </head>

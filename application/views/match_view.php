@@ -1,4 +1,50 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
+<script type="text/javascript">
+jQuery( function($) {
+	$(document).ready( function() {
+		var comments_array = <?=json_encode($comments);?>;
+		if(comments_array.length)
+		{
+			$("#comment_tmpl").tmpl(comments_array).appendTo("div.comments");
+		}
+		var options = {
+			dataType: 'json',
+			beforeSubmit: function () {
+				$("#comment_add_form").hide();
+				$("#comment_add_loadbar").show();
+			},
+			success: function (respone){
+				if(respone.complete == true)
+				{
+					$("#comment_tmpl").tmpl(respone.comment).appendTo("div.comments");
+					$("#comment_add_form").hide();
+					$("#comment_add_loadbar").hide();
+				}
+				else
+				{
+					alert('При добавлении комментария возникли ошибки: ' + respone.errors);
+					$("#comment_add_form").show();
+					$("#comment_add_loadbar").hide();
+				}
+			}
+		};
+		$("#comment_add_form").ajaxForm(options);
+	});
+})
+</script>
+<script id="comment_tmpl" type="text/x-jquery-tmpl">
+	<div class="comment">
+		<div class="comment_author">
+			<img src="${avatar_url}" alt="${username}" />
+		</div>
+		<div class="comment_header">
+			<b>${username}</b> ${date}
+		</div>
+		<div class="comment_text">
+			{{html text}}
+		</div>
+	</div>
+</script>
 <table cellspacing="0" cellpadding="0" class="match">
 	<tbody>
 		<tr>
@@ -59,21 +105,23 @@
 		</tr>
 	</tbody>
 </table>
-<?if(count($comments)):?>
+
 <div class="comments">
 	<h4>Комментарии к матчу:</h4>
-	<?foreach($comments as $comment):?>
-	<div class="comment">
-		<div class="comment_author">
-			<?=html::image($comment->author->get_avatar(), array('alt' => $comment->author->username));?>
-		</div>
-		<div class="comment_header">
-			<b><?=$comment->author->username;?></b> <?=misc::get_human_date($comment->date);?>
-		</div>
-		<div class="comment_text">
-			<?=$comment->text;?>
-		</div>
-	</div>
-	<?endforeach;?>
+	
 </div>
-<?endif;?>
+<img id="comment_add_loadbar" src="/templates/fifa/img/ajax_load_bar.gif" style="display: none;"/>
+<?if(Auth::instance()->logged_in()):?>
+	<?=form::open('ajax/comment/add', array('id' => 'comment_add_form'));?>
+		<h4>Добавить комментарий</h4>
+		<?php echo Form::textarea('comment_text', '', array(
+				'id' => 'field-comment_text',
+				'rows' => 8,
+				'cols' => 40,
+				'class' => 'textarea field wysiwyg max',
+			));
+		?>
+		<?=form::hidden('match_id', $match->id);?>
+		<?=form::submit("", "Добавить");?>
+	<?=form::close();?>
+<? endif; ?>
