@@ -7,7 +7,11 @@ class Model_Comment extends Jelly_Model
 		$meta->load_with(array('author'))
 			->fields(array(
 				'id' => new Field_Primary,
-				'text' => new Field_Wysiwyg,
+				'text' => new Field_Wysiwyg(array(
+					'rules' => array(
+						'not_empty' => array(TRUE)
+					)
+				)),
 				'date' => new Field_Integer(array(
 					'default' => time(),
 				)),

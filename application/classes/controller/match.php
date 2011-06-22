@@ -354,12 +354,23 @@
 			$comments = Jelly::select('comment')
 					->where("match_id", "=", $match->id)
 					->execute();
+			
+			$comments_array = array();
+			foreach($comments as $comment)
+			{
+				$comments_array[] = array(
+					'avatar_url' => url::site($comment->author->get_avatar()),
+					'username'   => $comment->author->username,
+					'date'       => misc::get_human_date($comment->date),
+					'text'       => $comment->text,
+				);
+			}
 
 			$view = new View("match_view");
 			$view->home_goals = $home_goals;
 			$view->away_goals = $away_goals;
 			$view->match = $match;
-			$view->comments = $comments;
+			$view->comments = $comments_array;
 
 			$this->template->title = __('Просмотр матча');
 			$this->template->content = $view;
