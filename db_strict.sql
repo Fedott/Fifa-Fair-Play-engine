@@ -289,6 +289,21 @@ CREATE TABLE IF NOT EXISTS `user_tokens` (
   KEY `fk_user_id` (`user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS `pro_players` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nick` varchar(255) NOT NULL,
+  `games` int(11) NOT NULL,
+  `goals` int(11) NOT NULL,
+  `assists` int(11) NOT NULL,
+  `shots` int(11) NOT NULL,
+  `passes` int(11) NOT NULL,
+  `tackles` int(11) NOT NULL,
+  `season` int(11) NOT NULL,
+  `date` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nick` (`nick`,`date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 ALTER TABLE `comments`
   ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`match_id`) REFERENCES `matches` (`id`) ON DELETE CASCADE;
