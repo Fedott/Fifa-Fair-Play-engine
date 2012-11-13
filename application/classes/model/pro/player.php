@@ -62,8 +62,6 @@ class Model_Pro_Player extends Jelly_Model
 				continue;
 			}
 
-			file_put_contents("/tmp/test.html", $members_page_source);
-
 			foreach($members_page->find('table tbody tr.nowrap') as $player_tr)
 			{
 				$player_tr = pq($player_tr);
