@@ -120,39 +120,21 @@
 				
 				$tables = phpQuery::newDocumentHTML($_POST['tables']);
 
-				$count = 0;
 				$players_arr = array();
-				foreach ($tables->find("tr") as $player_tr)
+				foreach ($tables->find("tr.vcard.agent span.fn") as $player)
 				{
-					if($count++ < 1)
+					$player_full_name = array('first_name' => NULL, 'last_name' => NULL);
+					$player_name = pq($player)->text();
+					$player_name = preg_replace("!\(.+\)!", "", $player_name);
+					if(substr_count($player_name, " "))
 					{
-						continue;
+						$tmp = explode(" ", $player_name, 2);
+						$player_full_name['first_name'] = trim($tmp[0]);
+						$player_full_name['last_name'] = trim($tmp[1]);
 					}
-					$player_full_name = array('first_name' => NULL, 'last_name' => NULL, 'year_of_birth' => NULL);
-					$player_tr = pq($player_tr)->find("td");
-					$i_td = 1;
-					foreach($player_tr as $player_td)
+					else
 					{
-						if($i_td == 4)
-						{
-							$tmp = pq($player_td)->find("a:first")->attr("title");
-							$tmp = explode(",", $tmp);
-							if(count($tmp) == 2)
-							{
-								$player_full_name = array('first_name' => trim($tmp[1]), 'last_name' => $tmp[0]);
-							}
-							else
-							{
-								$player_full_name['last_name'] = $tmp[0];
-							}
-						}
-						if($i_td == 5)
-						{
-							$tmp = pq($player_td)->text();
-							$player_full_name['year_of_birth'] = $tmp;
-						}
-
-						$i_td++;
+						$player_full_name['last_name'] = trim($player_name);
 					}
 					
 					$players_arr[] = $player_full_name;
@@ -163,11 +145,7 @@
 					try
 					{
 						$player = Jelly::factory('player');
-						$player->set(array(
-						                  'last_name' => $player_arr['last_name'],
-						                  'first_name' => $player_arr['first_name'],
-						                  'year_of_birth' => $player_arr['year_of_birth'],
-						                  'club' => $club->id));
+						$player->set(array('last_name' => $player_arr['last_name'], 'first_name' => $player_arr['first_name'], 'club' => $club->id));
 						$player->save();
 						$allow[] = $player->player_name(false);
 					}
