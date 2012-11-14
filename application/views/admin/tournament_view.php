@@ -3,7 +3,15 @@
 <?if(count($tournament->lines)):?>
 <p>Команды учавствующие в турнире:</p>
 <ul>
-	<?foreach($tournament->lines as $key => $line):?><li><?=html::anchor('admin/tournament/line_view/'.$line->id, $line->club->name)?></li><?endforeach;?>
+	<?php /** @var $line Model_Line */?>
+	<?foreach($tournament->lines as $key => $line):?>
+		<li>
+			<?=html::anchor('admin/tournament/line_view/'.$line->id, $line->club->name)?>
+			<?if($line->win + $line->drawn + $line->lose == 0):?>
+				| <?=html::anchor('admin/tournament/line_delete/'.$line->id, 'X');?>
+			<?endif;?>
+		</li>
+	<?endforeach;?>
 </ul>
 <?else:?>
 <p>

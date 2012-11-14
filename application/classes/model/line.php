@@ -1,5 +1,17 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
+/**
+ * @property $table
+ * @property $club
+ * @property $user
+ * @property $games
+ * @property $win
+ * @property $drawn
+ * @property $lose
+ * @property $goals
+ * @property $passed_goals
+ * @property $points
+ */
 class Model_Line extends Jelly_Model
 {
 	public static function initialize(Jelly_Meta $meta)

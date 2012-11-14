@@ -110,6 +110,21 @@
 					HTML::anchor('admin/tournament/view/'.$tournament->id, 'Турнир '.$tournament->name)." > ";
 		}
 
+		public function action_line_delete($id)
+		{
+			/** @var $line Model_Line */
+			$line = Jelly::select('line', $id);
+			if($line->drawn + $line->lose + $line->win == 0)
+			{
+				$line->delete();
+				MISC::set_apply_message('Команда успешно удалена из турнира');
+				Request::instance()->redirect(Request::$referrer);
+			}
+
+			MISC::set_error_message('Команда не может быть удалена из турнира, атк ак у неё имеються сыгранные матчи');
+			Request::instance()->redirect(Request::$referrer);
+		}
+
 		public function action_line_view($lid)
 		{
 			$line = Jelly::select('line', $lid);
