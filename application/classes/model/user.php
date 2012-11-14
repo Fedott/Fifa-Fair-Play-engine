@@ -23,6 +23,15 @@ class Model_User extends Model_Auth_User
 				'default' => NULL,
 				'null' => TRUE,
 			)),
+			'origin' => new Field_String(array(
+				'unique' => TRUE,
+				'rules' => array(
+					'not_empty' => array(TRUE),
+					'max_length' => array(32),
+				),
+				'null' => TRUE,
+				'default' => NULL,
+			)),
 			'email' => new Field_Email(array(
 				'unique' => TRUE,
 				'rules' => array(
@@ -72,20 +81,20 @@ class Model_User extends Model_Auth_User
 
 	public function get_im($delimiter = ", ")
 	{
-		$return = '';
+		$return = array();
 		if( ! empty($this->icq))
 		{
-			$return.= "ICQ: ".$this->icq;
+			$return[] = "ICQ: ".$this->icq;
 		}
 		if( ! empty($this->skype))
 		{
-			if( ! empty($return))
-			{
-				$return.= $delimiter;
-			}
-			$return.= "Skype: ".$this->skype." <a href='skype:".$this->skype."?chat'>".html::image('templates/fifa/img/chat.png')."</a>";
+			$return[] = "Skype: ".$this->skype." <a href='skype:".$this->skype."?chat'>".html::image('templates/fifa/img/chat.png')."</a>";
+		}
+		if( ! empty($this->origin))
+		{
+			$return[] = "Origin: ".$this->origin;
 		}
 
-		return $return;
+		return implode($delimiter, $return);
 	}
 }

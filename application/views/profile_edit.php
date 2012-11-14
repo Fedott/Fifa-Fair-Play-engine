@@ -6,7 +6,7 @@
 	<ul>
 		<?foreach($errors as $error):?>
 		<li>
-			<?=print_r($error, 1)?>
+			<?=$error?>
 		</li>
 		<?endforeach;?>
 </ul>
@@ -50,6 +50,16 @@
 		<div>
 			<?=$user->input('skype');?>
 			<label for="field-skype">Только буквы литинского алфавита и цифры</label>
+		</div>
+	</li>
+	<li class="">
+		<label class="desc" for="field-origin">
+			Логин Origin
+			<span class="req">*</span>
+		</label>
+		<div>
+			<?=$user->input('origin');?>
+			<label for="field-origin">Логин origin, который так же является ником в Fifa</label>
 		</div>
 	</li>
 	<li class="">

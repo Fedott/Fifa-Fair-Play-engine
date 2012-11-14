@@ -74,6 +74,16 @@
 		</div>
 	</li>
 	<li class="">
+		<label class="desc" for="field-origin">
+			Логин Origin
+			<span class="req">*</span>
+		</label>
+		<div>
+			<?=$user->input('origin');?>
+			<label for="field-origin">Логин origin, который так же является ником в Fifa</label>
+		</div>
+	</li>
+	<li class="">
 		<label class="desc" for="icq">
 			Роли
 		</label>
@@ -82,7 +92,7 @@
 		</div>
 	</li>
 	<li>
-		<input type="submit" class="submit" value="Зарегистрироваться">
+		<input type="submit" class="submit" value="Сохранить изменения">
 	</li>
 </ul>
 <?=form::close();?>

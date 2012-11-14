@@ -28,7 +28,7 @@
 
 			if($this->auth->logged_in('login'))
 			{
-				Request::instance()->redirect();
+				Request::instance()->redirect('/');
 			}
 			if($_POST)
 			{
@@ -79,7 +79,7 @@
 
 			if($_POST)
 			{
-				$post = Arr::extract($_POST, array('username','email','icq', 'skype','password','password_confirm'));
+				$post = Arr::extract($_POST, array('username','email','icq', 'skype','origin','password','password_confirm'));
 				$user = Jelly::factory('user');
 
 				try
@@ -129,13 +129,14 @@
 				Request::instance()->redirect("login");
 			}
 
+			/** @var $user Model_User */
 			$user = Jelly::select('user', $this->user->id);
 			$errors = array();
 			if($_POST)
 			{
 				try
 				{
-					$user->set(arr::extract($_POST, array('icq', 'first_name', 'last_name', 'skype')));
+					$user->set(arr::extract($_POST, array('icq', 'first_name', 'last_name', 'skype', 'origin')));
 					if($_POST['password'])
 					{
 						$user->set(arr::extract($_POST, array('password', 'password_confirm')));

@@ -277,6 +277,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `skype` (`skype`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
+/*  13.11.12 */
+ALTER TABLE `users` ADD `origin` VARCHAR( 32 ) NULL DEFAULT NULL AFTER `skype` ,
+ADD UNIQUE (
+`origin`
+);
+
 CREATE TABLE IF NOT EXISTS `user_tokens` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
