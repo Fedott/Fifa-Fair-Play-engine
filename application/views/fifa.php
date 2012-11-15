@@ -71,6 +71,9 @@
 				<a href="http://twitter.com/fifafairplay_ru">
 					<?=html::image('templates/fifa/img/twitter.png', array('alt' => __("Мы в твиттере")));?>
 				</a>
+				<a href="http://vk.com/fifafairplay">
+					<?=html::image('templates/fifa/img/vk.png', array('alt' => __("Мы вконтакте")));?>
+				</a>
 			</div>
 			<div class="c">
 				Чемпионат "Красивый футбол!" &copy;
