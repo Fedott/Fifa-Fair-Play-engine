@@ -73,6 +73,7 @@
 				'email'		=> '',
 				'icq'		=> '',
 				'skype'     => '',
+				'origin'    => '',
 			);
 
 			$errors = array();
@@ -102,6 +103,10 @@
 							'user_icq'      => $user->icq,
 						)),
 						'sc' => Kohana::config('auth.sc'),
+						'other_fields' => serialize(array(
+							'pf_origin'        => $user->origin,
+							'pf_skype'         => $user->skype,
+						)),
 					);
 					Curl::post('http://'.$_SERVER['SERVER_NAME']."/forum/kohana_user_add.php", $data);
 					$this->auth->login($user, $post['password']);
