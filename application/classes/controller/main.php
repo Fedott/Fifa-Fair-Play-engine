@@ -151,6 +151,23 @@
 						$user->avatar = $_FILES['avatar'];
 					}
 					$user->save();
+
+					// Обновление информации на форуме
+					$data = array(
+						'row' => serialize(array(
+							'username'      => $user->username,
+							'user_email'    => $user->email,
+							'user_icq'      => $user->icq,
+						)),
+						'sc' => Kohana::config('auth.sc'),
+						'other_fields' => serialize(array(
+							'pf_origin'        => $user->origin,
+							'pf_skype'         => $user->skype,
+						)),
+					);
+					Curl::post('http://'.$_SERVER['SERVER_NAME']."/forum/kohana_user_update.php", $data);
+					// Конец обновления информации на форуме
+
 					MISC::set_apply_message(__("Данные профиля успешно изменены"));
 					Request::instance()->redirect("main/profile");
 				}
