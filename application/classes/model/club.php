@@ -1,5 +1,13 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
+/**
+ * @property $id
+ * @property $name
+ * @property $url
+ * @property $logo
+ * @property $players
+ * @property $lines
+ */
 class Model_Club extends Jelly_Model
 {
 	public static function initialize(Jelly_Meta $meta)

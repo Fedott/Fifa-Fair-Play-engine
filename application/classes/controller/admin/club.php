@@ -110,6 +110,7 @@
 		
 		public function action_parse_from_wiki($club_id)
 		{
+			/** @var $club Model_Club */
 			$club = Jelly::select("club", $club_id);
 			$errors = array();
 			$allow = array();
@@ -117,8 +118,11 @@
 			if($_POST)
 			{
 				include Kohana::find_file('vendor', 'phpQuery');
-				
+
 				$tables = phpQuery::newDocumentHTML($_POST['tables']);
+
+				/** @var $other_club Model_Club */
+				$other_club = Jelly::select('club')->where('name', '=', 'Other clubs')->limit(1)->execute();
 
 				$players_arr = array();
 				foreach ($tables->find("tr.vcard.agent span.fn") as $player)
@@ -140,16 +144,68 @@
 					$players_arr[] = $player_full_name;
 				}
 
-				foreach($players_arr as $player_arr)
+				foreach($club->players as $club_player)
+				{
+					/** @var $club_player Model_Player */
+					$club_player_isset = false;
+					foreach($players_arr as $key => $player_new_arr)
+					{
+						if(
+							$club_player->first_name == $player_new_arr['first_name']
+							AND $club_player->last_name == $player_new_arr['last_name']
+						)
+						{
+							$club_player_isset = true;
+							unset($players_arr[$key]);
+							break;
+						}
+					}
+					if( ! $club_player_isset)
+					{
+						$club_player->club = $other_club;
+						$club_player->save();
+					}
+				}
+
+				foreach($players_arr as $player_new_arr)
 				{
 					try
 					{
+						$isset_player_builder = Jelly::select('player');
+						if($player_new_arr['first_name'] === NULL)
+						{
+							$isset_player_builder->where('first_name', 'IN', array('', NULL));
+						}
+						else
+						{
+							$isset_player_builder->where('first_name', '=', $player_new_arr['first_name']);
+						}
+
+						/** @var $isset_player Jelly_Collection */
+						$isset_player = $isset_player_builder
+								->and_where('last_name', '=', $player_new_arr['last_name'])
+								->execute();
+						if($isset_player->count() == 1)
+						{
+							/** @var $moved_player Model_Player */
+							$moved_player = $isset_player->current();
+							$moved_player->club = $club;
+							$moved_player->save();
+							continue;
+						}
+						if($isset_player->count() > 1)
+						{
+							$errors[] = implode(' ', $player_new_arr) . " Есть более одного такого игрока";
+							continue;
+						}
+
+						/** @var $player Model_Player */
 						$player = Jelly::factory('player');
-						$player->set(array('last_name' => $player_arr['last_name'], 'first_name' => $player_arr['first_name'], 'club' => $club->id));
+						$player->set(array('last_name' => $player_new_arr['last_name'], 'first_name' => $player_new_arr['first_name'], 'club' => $club->id));
 						$player->save();
 						$allow[] = $player->player_name(false);
 					}
-					catch (Validate_Exception $exp)
+					catch (Exception $exp)
 					{
 						$errors[] = $player->player_name().": ".implode(",", $exp->array->errors('player'));
 					}
