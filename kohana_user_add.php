@@ -24,9 +24,9 @@ if($check_code != $sc)
 
 require "$phpbb_root_path". 'includes/functions_user.' . $phpEx;
 $row = unserialize(stripslashes($_POST['row']));
+$cp_data = unserialize(stripslashes($_POST['other_fields']));
 // Добавляем страндартные поля
 $row['user_type'] = USER_NORMAL;
 $row['group_id'] = 2;
-echo user_add($row);
+echo user_add($row, $cp_data);
 exit;
-?>
