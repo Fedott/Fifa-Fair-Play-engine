@@ -47,7 +47,7 @@ class Model_Pro_Player extends Jelly_Model
 		$count_date_players = Jelly::select('pro_player')->where('date', '=', $date)->execute();
 		if(count($count_date_players))
 		{
-			exit("Данные за это число уже собраны". PHP_EOL);
+			exit("Data for this day has already collected". PHP_EOL);
 		}
 
 		while(1)
@@ -57,7 +57,7 @@ class Model_Pro_Player extends Jelly_Model
 
 			if(trim($members_page->find("div#widgets")->text()) == 'There are no members to display')
 			{
-				echo "Ожидаем" . PHP_EOL;
+				echo "Waiting..." . PHP_EOL;
 				sleep(7);
 				continue;
 			}
@@ -107,7 +107,7 @@ class Model_Pro_Player extends Jelly_Model
 				$player->save();
 			}
 
-			echo "Собраны данные за ". date("d-m-Y", $date) . PHP_EOL;
+			echo "The data collected for ". date("d-m-Y", $date) . PHP_EOL;
 
 			break;
 		}

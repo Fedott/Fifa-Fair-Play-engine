@@ -127,6 +127,18 @@ Route::set('ajax', 'ajax(/<controller>(/<action>(/<id>)))')
 		'controller' => 'main',
 		'action'     => 'index',
 	));
+Route::set('pro_stats', 'pro(/<controller>(/<action>(/<start_date>(/<end_date>))))')
+	->defaults(array(
+		'directory'  => 'pro',
+		'controller' => 'main',
+		'action'     => 'index',
+	));
+Route::set('pro', 'pro(/<controller>(/<action>(/<id>)))')
+	->defaults(array(
+		'directory'  => 'pro',
+		'controller' => 'main',
+		'action'     => 'index',
+	));
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
 		'controller' => 'main',
