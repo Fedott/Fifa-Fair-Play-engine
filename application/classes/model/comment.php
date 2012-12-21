@@ -6,20 +6,20 @@ class Model_Comment extends Jelly_Model
 	{
 		$meta->load_with(array('author'))
 			->fields(array(
-				'id' => new Field_Primary,
-				'text' => new Field_Wysiwyg(array(
+				'id' => new Jelly_Field_Primary,
+				'text' => new Jelly_Field_Wysiwyg(array(
 					'rules' => array(
 						'not_empty' => array(TRUE)
 					)
 				)),
-				'date' => new Field_Integer(array(
+				'date' => new Jelly_Field_Integer(array(
 					'default' => time(),
 				)),
-				'author' => new Field_BelongsTo(array(
+				'author' => new Jelly_Field_BelongsTo(array(
 					'column' => 'author_id',
 					'foreign' => 'user.id',
 				)),
-				'match' => new Field_BelongsTo,
+				'match' => new Jelly_Field_BelongsTo,
 			));
 	}
 	

@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
 <h2><?=__("Новая тема");?></h2>
-<?=form::open();?>
+<?=form::open(Request::$current);?>
 <ul>
 	<li>
 		<?=form::label('field-title', __("Заголовок"), array('class' => 'desc'));?>

@@ -11,13 +11,13 @@
 		{	
 			if($tableid == NULL)
 			{
-				$count = Jelly::select('match')->count();
+				$count = Jelly::query('match')->count();
 				$tournament = Jelly::factory('table');
 			}
 			else
 			{
-				$tournament = Jelly::select('table', $tableid);
-				$count = Jelly::select('match')
+				$tournament = Jelly::query('table', $tableid);
+				$count = Jelly::query('match')
 						->tournament($tournament->id)
 						->count();
 			}
@@ -28,7 +28,7 @@
 
 			if($tournament->loaded())
 			{
-				$matches = Jelly::select('match')
+				$matches = Jelly::query('match')
 						->tournament($tournament->id)
 						->offset($pagination->offset)
 						->limit($pagination->items_per_page)
@@ -36,7 +36,7 @@
 			}
 			else
 			{
-				$matches = Jelly::select('match')
+				$matches = Jelly::query('match')
 						->offset($pagination->offset)
 						->limit($pagination->items_per_page)
 						->execute();
@@ -58,7 +58,7 @@
 
 			if(count($clubs_like))
 			{
-				$clubs = Jelly::select('club')
+				$clubs = Jelly::query('club')
 						->where("id", "IN", $clubs_like)
 						->execute();
 				foreach($clubs as $club)
@@ -69,7 +69,7 @@
 			
 			if(count($matches_ids))
 			{
-				$comments = Jelly::select('comment')
+				$comments = Jelly::query('comment')
 						->where('match_id', 'IN', $matches_ids)
 						->execute();
 				foreach($comments as $comment)
@@ -106,28 +106,28 @@
 			if(!$this->auth->logged_in('coach'))
 			{
 				MISC::set_error_message(__("У вас нет прав тренера"));
-				Request::instance()->redirect('');
+				Request::current()->redirect('');
 			}
-			if(!Jelly::select('line')->where('user_id', "=", $this->user->id)->and_where("table_id", "=", $tourn)->count())
+			if(!Jelly::query('line')->where('user_id', "=", $this->user->id)->and_where("table_id", "=", $tourn)->count())
 			{
 				MISC::set_error_message(__("Вы не являетесь тренером команды в этом турнире"));
-				Request::instance()->redirect('');
+				Request::current()->redirect('');
 			}
 			
-			$tournament = Jelly::select('table', $tourn);
+			$tournament = Jelly::query('table', $tourn);
 			// Проверяем активность и не законченность турнира
 			if($tournament->ended)
 			{
 				MISC::set_error_message(__("Регистрация матчей в турнире, :name, завершена. Турнир закончен.", array(':name' => $tournament->name)));
-				Request::instance()->redirect('tournament/view/'.$tournament->id);
+				Request::current()->redirect('tournament/view/'.$tournament->id);
 			}
 			if( ! $tournament->active)
 			{
 				MISC::set_error_message(__("Турнир, :name, в данный момент не активен", array(':name' => $tournament->name)));
-				Request::instance()->redirect('tournament/view/'.$tournament->id);
+				Request::current()->redirect('tournament/view/'.$tournament->id);
 			}
 
-			$myline = Jelly::select('line')
+			$myline = Jelly::query('line')
 					->where('table_id', "=", $tournament->id)
 					->and_where("user_id", "=", $this->user->id)
 					->limit(1)
@@ -136,7 +136,7 @@
 			$comment = Jelly::factory('comment');
 			$errors = array();
 			$my_players = array();
-			$mplayers = Jelly::select('player')
+			$mplayers = Jelly::query('player')
 					->select("*")
 					->select(array('SUM("goals.count")', 'goals_count'))
 					->where('player.club:foreign_key', '=', $myline->club->id)
@@ -219,7 +219,7 @@
 							$comment->save();
 						}
 
-						Request::instance()->redirect('match/view/'.$match->id);
+						Request::current()->redirect('match/view/'.$match->id);
 					}
 					else
 					{
@@ -233,19 +233,19 @@
 			}
 			elseif ( ! MISC::not_duplicate_send('register_match'))
 			{
-				$last_match = Jelly::select('match')
+				$last_match = Jelly::query('match')
 						->where('table_id', '=', $tournament->id)
 						->where('home_id', '=', $myline->id)
 						->limit(1)
 						->execute();
 
-				Request::instance()->redirect('match/view/'.$last_match->id);
+				Request::current()->redirect('match/view/'.$last_match->id);
 			}
 
 			// Клубы с которыми не сыграны все матчи в турнире
 			$clubs = array();
 			$max_matches = $tournament->matches;
-			$matches = Jelly::select('match')
+			$matches = Jelly::query('match')
 					->where("matches.table_id", "=", $tournament->id)
 					->where_open()
 					->where("home_id", "=", $myline->id)
@@ -284,7 +284,7 @@
 				}
 			}
 
-			$lines = Jelly::select('line')->where("id", "NOT IN", $skip_lines)->and_where('table_id', "=", $tournament->id)->execute();
+			$lines = Jelly::query('line')->where("id", "NOT IN", $skip_lines)->and_where('table_id', "=", $tournament->id)->execute();
 			$clubs = array('NULL' => 'Выберете команду соперника');
 			foreach($lines as $line)
 			{
@@ -310,11 +310,11 @@
 			if($line_id == "NULL")
 				exit;
 
-			$line = Jelly::select('line', $line_id);
+			$line = Jelly::query('line', $line_id);
 
 			$this->auto_render = FALSE;
 
-			$players = Jelly::select('player')
+			$players = Jelly::query('player')
 					->select("*")
 					->select(array('SUM("goals.count")', 'goals_count'))
 					->where("club_id", "=", $line->club->id)
@@ -338,20 +338,20 @@
 
 		public function action_view($mid)
 		{
-			$match = Jelly::select('match')
+			$match = Jelly::query('match')
 					->where("id", "=", $mid)
 					->limit(1)
 					->execute();
 			
-			$home_goals = Jelly::select('goal')
+			$home_goals = Jelly::query('goal')
 					->where("match_id", "=", $match->id)
 					->where("line_id", "=", $match->home->id)
 					->execute();
-			$away_goals = Jelly::select('goal')
+			$away_goals = Jelly::query('goal')
 					->where("match_id", "=", $match->id)
 					->where("line_id", "=", $match->away->id)
 					->execute();
-			$comments = Jelly::select('comment')
+			$comments = Jelly::query('comment')
 					->where("match_id", "=", $match->id)
 					->execute();
 			
@@ -381,7 +381,7 @@
 
 		public function action_confirm($mid)
 		{
-			$match = Jelly::select('match')
+			$match = Jelly::query('match')
 					->where("id", "=", $mid)
 					->limit(1)
 					->execute();
@@ -435,11 +435,11 @@
 				$away->save();
 				$match->confirm = 1;
 				$match->save();
-				Request::instance()->redirect('match/view/'.$match->id);
+				Request::current()->redirect('match/view/'.$match->id);
 			}
 
-			$home_goals = Jelly::select('goal')->where("match_id", "=", $match->id)->where("line_id", "=", $match->home->id)->execute();
-			$away_goals = Jelly::select('goal')->where("match_id", "=", $match->id)->where("line_id", "=", $match->away->id)->execute();
+			$home_goals = Jelly::query('goal')->where("match_id", "=", $match->id)->where("line_id", "=", $match->home->id)->execute();
+			$away_goals = Jelly::query('goal')->where("match_id", "=", $match->id)->where("line_id", "=", $match->away->id)->execute();
 
 			$view = new View('match_confirm');
 			$view->match = $match;
@@ -459,15 +459,15 @@
 			if(!$this->auth->logged_in('coach'))
 				throw new Kohana_Exception ("permitdenided");
 
-			$uncmatches = Jelly::select('match')
+			$uncmatches = Jelly::query('match')
 					->where('away.user_id', "=", $this->user->id)
 					->where("confirm", "=", 0)
 					->execute();
-			$uncymatches = Jelly::select('match')
+			$uncymatches = Jelly::query('match')
 					->where('home.user_id', "=", $this->user->id)
 					->where("confirm", "=", 0)
 					->execute();
-			$matches = Jelly::select('match')
+			$matches = Jelly::query('match')
 					->where_open()
 					->where('home.user_id', "=", $this->user->id)
 					->or_where("away.user_id", "=", $this->user->id)
@@ -488,20 +488,20 @@
 
 		public function action_delete($mid)
 		{
-			$match = Jelly::select('match', $mid);
+			$match = Jelly::query('match', $mid);
 			if($match->home->user->id != $this->user->id)
 			{
 				MISC::set_error_message(__("Вы не можете удалить матч, который вносили не вы"));
-				Request::instance()->redirect('match/my');
+				Request::current()->redirect('match/my');
 			}
 			if($match->confirm == TRUE)
 			{
 				MISC::set_error_message(__("Невозможно удалить матч, так как он уже подтверждён"));
-				Request::instance()->redirect('match/my');
+				Request::current()->redirect('match/my');
 			}
 
 			$match->delete();
 			MISC::set_apply_message(__("Матч успешно удалён"));
-			Request::instance()->redirect('match/my');
+			Request::current()->redirect('match/my');
 		}
 	}

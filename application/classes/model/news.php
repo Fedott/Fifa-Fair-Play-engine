@@ -7,25 +7,25 @@ class Model_News extends Jelly_Model
 		$meta->load_with(array('author'))
 			->sorting(array('date' => 'DESC'))
 			->fields(array(
-			'id' => new Field_Primary,
-			'title' => new Field_String(array(
+			'id' => new Jelly_Field_Primary,
+			'title' => new Jelly_Field_String(array(
 				'rules' => array(
 					'not_empty' => array(TRUE),
 				),
 			)),
-			'text' => new Field_Wysiwyg(array(
+			'text' => new Jelly_Field_Wysiwyg(array(
 				'rules' => array(
 					'not_empty' => array(TRUE),
 				)
 			)),
-			'link' => new Field_String,
-			'url' => new Field_Slug(array(
+			'link' => new Jelly_Field_String,
+			'url' => new Jelly_Field_Slug(array(
 				'unique' => TRUE,
 			)),
-			'date' => new Field_Integer(array(
+			'date' => new Jelly_Field_Integer(array(
 				'default' => time(),
 			)),
-			'author' => new Field_BelongsTo(array(
+			'author' => new Jelly_Field_BelongsTo(array(
 				'column' => 'author_id',
 				'foreign' => 'user.id',
 			)),

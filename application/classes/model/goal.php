@@ -6,12 +6,12 @@ class Model_Goal extends Jelly_Model
 	{
 		$meta->load_with(array('player'))
 			->fields(array(
-				'id' => new Field_Primary,
-				'match' => new Field_BelongsTo,
-				'player' => new Field_BelongsTo,
-				'table' => new Field_BelongsTo,
-				'line' => new Field_BelongsTo,
-				'count' => new Field_Integer,
+				'id' => new Jelly_Field_Primary,
+				'match' => new Jelly_Field_BelongsTo,
+				'player' => new Jelly_Field_BelongsTo,
+				'table' => new Jelly_Field_BelongsTo,
+				'line' => new Jelly_Field_BelongsTo,
+				'count' => new Jelly_Field_Integer,
 			));
 	}
 }

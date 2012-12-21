@@ -24,7 +24,7 @@
 </ul>
 </div>
 <?endif;?>
-<?=form::open()?>
+<?=form::open(Request::$current)?>
 <ul id="players">
 	<li class="">
 		<div class="input_left">

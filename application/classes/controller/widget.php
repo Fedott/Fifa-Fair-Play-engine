@@ -12,7 +12,7 @@
 			$matches_not_apply_opponent = 0;
 			if($auth->logged_in('coach'))
 			{
-				$lines = Jelly::select('line')
+				$lines = Jelly::query('line')
 						->where("user_id", "=", $user->id)
 						->where("_table:table.visible", "=", 1)
 						->execute();
@@ -64,11 +64,11 @@
 				$coach_menu->user = $user;
 
 				// Получаем инфу о неподтверждённых матчах
-				$matches_not_apply_my = Jelly::select('match')
+				$matches_not_apply_my = Jelly::query('match')
 						->where('away.user_id', "=", $user->id)
 						->where("confirm", "=", 0)
 						->count();
-				$matches_not_apply_opponent = Jelly::select('match')
+				$matches_not_apply_opponent = Jelly::query('match')
 						->where('home.user_id', "=", $user->id)
 						->where("confirm", "=", 0)
 						->count();
@@ -93,13 +93,13 @@
 			$username = Security::xss_clean($_POST['username']);
 			$password = Security::xss_clean($_POST['password']);
 			$check_string = $_POST['cs'];
-			$sc = Kohana::config('auth.sc');
+			$sc = Kohana::config('auth.php.sc');
 			if($sc != $check_string)
 			{
 				exit;
 			}
 
-			$user = Jelly::select("user")->where('username', '=', $username)->limit(1)->execute();
+			$user = Jelly::query("user")->where('username', '=', $username)->limit(1)->execute();
 			if(!$user->loaded())
 			{
 				echo 0;

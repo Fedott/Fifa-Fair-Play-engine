@@ -7,25 +7,25 @@ class Model_Match extends Jelly_Model
 		$meta->sorting(array('date' => 'desc'))
 			->load_with(array('table', 'home', 'away'))
 			->fields(array(
-				'id' => new Field_Primary,
-				'date' => new Field_Integer(array(
+				'id' => new Jelly_Field_Primary,
+				'date' => new Jelly_Field_Integer(array(
 					'default' => time(),
 				)),
-				'table' => new Field_BelongsTo,
-				'home' => new Field_BelongsTo(array(
+				'table' => new Jelly_Field_BelongsTo,
+				'home' => new Jelly_Field_BelongsTo(array(
 					'column' => 'home_id',
 					'foreign' => 'line.id',
 				)),
-				'away' => new Field_BelongsTo(array(
+				'away' => new Jelly_Field_BelongsTo(array(
 					'column' => 'away_id',
 					'foreign' => 'line.id',
 				)),
-				'home_goals' => new Field_Integer,
-				'away_goals' => new Field_Integer,
-				'confirm' => new Field_Boolean(array(
+				'home_goals' => new Jelly_Field_Integer,
+				'away_goals' => new Jelly_Field_Integer,
+				'confirm' => new Jelly_Field_Boolean(array(
 					'default' => 0,
 				)),
-				'comments' => new Field_HasMany(),
+				'comments' => new Jelly_Field_HasMany(),
 			));
 	}
 }

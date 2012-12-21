@@ -4,7 +4,7 @@ class Controller_Forum extends Controller_Template
 {
 	public function action_index()
 	{
-		$sections = Jelly::select('section')->execute();
+		$sections = Jelly::query('section')->execute();
 
 		$view = new View('forum/index');
 		$view->sections = $sections;
@@ -16,7 +16,7 @@ class Controller_Forum extends Controller_Template
 	
 	public function action_section($id )
 	{
-		$sections = array(0 => Jelly::select('section', $id));
+		$sections = array(0 => Jelly::query('section', $id));
 
 		$view = new View('forum/index');
 		$view->sections = $sections;
@@ -29,7 +29,7 @@ class Controller_Forum extends Controller_Template
 
 	public function action_view($id)
 	{
-		$forum = Jelly::select('forum', $id);
+		$forum = Jelly::query('forum', $id);
 
 		$view = new View('forum/forum_view');
 		$view->forum = $forum;
@@ -46,7 +46,7 @@ class Controller_Forum extends Controller_Template
 	{
 		$topic = Jelly::factory('topic');
 		$post = Jelly::factory('post');
-		$forum = Jelly::select('forum', $forum_id);
+		$forum = Jelly::query('forum', $forum_id);
 
 		$errors = array();
 
@@ -87,15 +87,15 @@ class Controller_Forum extends Controller_Template
 
 	public function action_topic_view($id)
 	{
-		$topic = Jelly::select('topic')->with('forum')->load($id);
-		$count_posts = Jelly::select('post')->by_topic($topic->id)->count();
+		$topic = Jelly::query('topic')->with('forum')->load($id);
+		$count_posts = Jelly::query('post')->by_topic($topic->id)->count();
 
 		$pagination = Pagination::factory(array(
 			'total_items' => $count_posts,
 			'group'       => 'forum',
 		));
 
-		$posts = Jelly::select('post')
+		$posts = Jelly::query('post')
 				->by_topic($topic->id)
 				->offset($pagination->offset)
 				->limit($pagination->items_per_page)
@@ -118,7 +118,7 @@ class Controller_Forum extends Controller_Template
 
 	public function action_topic_reply($topic_id)
 	{
-		$topic = Jelly::select('topic', $topic_id);
+		$topic = Jelly::query('topic', $topic_id);
 		$post = Jelly::factory('post');
 
 		$errors = array();
@@ -155,7 +155,7 @@ class Controller_Forum extends Controller_Template
 
 	public function action_test()
 	{
-		$post = Jelly::select('topic', 1);
+		$post = Jelly::query('topic', 1);
 		echo Kohana::debug($post->posts[$post->posts->count() - 1]);
 		exit;
 	}

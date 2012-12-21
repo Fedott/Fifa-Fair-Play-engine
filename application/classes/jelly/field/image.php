@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-	class Field_Image extends Field_File
+	class Jelly_Field_Image extends Jelly_Field_File
 	{
 		public $rules = array(
 			'Upload::type' => array(array('jpg','png','gif')),

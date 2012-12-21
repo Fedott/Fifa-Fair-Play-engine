@@ -9,7 +9,7 @@ class Controller_Category extends Controller_Template
 
 	public function action_list()
 	{
-		$categories = Jelly::select('category')->execute();
+		$categories = Jelly::query('category')->execute();
 
 		$view = new View('categories');
 		$view->categories = $categories;
@@ -20,7 +20,7 @@ class Controller_Category extends Controller_Template
 
 	public function action_view($id)
 	{
-		$category = Jelly::select('category', $id);
+		$category = Jelly::query('category', $id);
 
 		$view = new View('category');
 		$view->category = $category;

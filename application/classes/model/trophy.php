@@ -5,17 +5,17 @@
 		public static function initialize(Jelly_Meta $meta)
 		{
 			$meta->fields(array(
-				'id' => new Field_Primary,
-				'description' => new Field_String,
-				'line' => new Field_BelongsTo,
-				'user' => new Field_BelongsTo,
-				'club' => new Field_BelongsTo,
-				'table' => new Field_BelongsTo,
-				'image' => new Field_File(array(
+				'id' => new Jelly_Field_Primary,
+				'description' => new Jelly_Field_String,
+				'line' => new Jelly_Field_BelongsTo,
+				'user' => new Jelly_Field_BelongsTo,
+				'club' => new Jelly_Field_BelongsTo,
+				'table' => new Jelly_Field_BelongsTo,
+				'image' => new Jelly_Field_File(array(
 					'path' => 'media/trophy',
 				)),
-				'weight' => new Field_Integer,
-				'player' => new Field_BelongsTo,
+				'weight' => new Jelly_Field_Integer,
+				'player' => new Jelly_Field_BelongsTo,
 			));
 		}
 	}

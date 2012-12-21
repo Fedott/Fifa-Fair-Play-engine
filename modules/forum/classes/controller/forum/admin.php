@@ -12,7 +12,7 @@ class Controller_Forum_Admin extends Controller_Template
 
 	public function action_sections()
 	{
-		$sections = Jelly::select('section')->execute();
+		$sections = Jelly::query('section')->execute();
 		
 		$view = new View('forum/admin/sections');
 		$view->sections = $sections;
@@ -29,7 +29,7 @@ class Controller_Forum_Admin extends Controller_Template
 		if($id === NULL)
 			$section = Jelly::factory('section');
 		else
-			$section = Jelly::select('section', $id);
+			$section = Jelly::query('section', $id);
 
 		$errors = array();
 
@@ -64,7 +64,7 @@ class Controller_Forum_Admin extends Controller_Template
 
 	public function action_forums()
 	{
-		$forums = Jelly::select('forum')->execute();
+		$forums = Jelly::query('forum')->execute();
 
 		$view = new View('forum/admin/forums');
 		$view->forums = $forums;
@@ -81,7 +81,7 @@ class Controller_Forum_Admin extends Controller_Template
 		if($id === NULL)
 			$forum = Jelly::factory('forum');
 		else
-			$forum = Jelly::select('forum', $id);
+			$forum = Jelly::query('forum', $id);
 
 		$errors = array();
 

@@ -5,30 +5,30 @@ class Model_Table extends Jelly_Model
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->fields(array(
-			'id' => new Field_Primary,
-			'name' => new Field_String(array(
+			'id' => new Jelly_Field_Primary,
+			'name' => new Jelly_Field_String(array(
 				'rules' => array(
 					'not_empty' => array(TRUE),
 				),
 			)),
-			'url' => new Field_String(array(
+			'url' => new Jelly_Field_String(array(
 				'unique' => TRUE,
 			)),
-			'type' => new Field_Enum(array(
+			'type' => new Jelly_Field_Enum(array(
 				'choices' => array('friendly', 'official'),
 			)),
-			'season' => new Field_Integer,
-			'active' => new Field_Boolean(array(
+			'season' => new Jelly_Field_Integer,
+			'active' => new Jelly_Field_Boolean(array(
 				'default' => FALSE,
 			)),
-			'visible' => new Field_Boolean(array(
+			'visible' => new Jelly_Field_Boolean(array(
 				'default' => FALSE,
 			)),
-			'ended' => new Field_Boolean(array(
+			'ended' => new Jelly_Field_Boolean(array(
 				'default' => FALSE,
 			)),
-			'lines' => new Field_HasMany,
-			'matches' => new Field_Integer(array(
+			'lines' => new Jelly_Field_HasMany,
+			'matches' => new Jelly_Field_Integer(array(
 				'default' => 2,
 			)),
 		));

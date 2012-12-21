@@ -1,5 +1,5 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
-<?=form::open();?>
+<?=form::open(Request::$current);?>
 <ul>
 	<li>
 		<?=form::label('field-title', 'Заголовок', array('class' => 'desc'));?>

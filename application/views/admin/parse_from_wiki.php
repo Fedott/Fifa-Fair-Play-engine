@@ -24,7 +24,7 @@
 </ul>
 </div>
 <?endif;?>
-<?=form::open();?>
+<?=form::open(Request::$current);?>
 	<ul class="">
 		<li>
 			<?=form::textarea('tables', NULL, array('class' => 'textarea field max'));?>

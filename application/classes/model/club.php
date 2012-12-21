@@ -13,19 +13,19 @@ class Model_Club extends Jelly_Model
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->fields(array(
-			'id' => new Field_Primary,
-			'name' => new Field_String(array(
+			'id' => new Jelly_Field_Primary,
+			'name' => new Jelly_Field_String(array(
 				'unique' => TRUE,
 				'rules' => array(
 					'not_empty' => array(TRUE),
 				),
 			)),
-			'url' => new Field_String,
-			'logo' => new Field_File(array(
+			'url' => new Jelly_Field_String,
+			'logo' => new Jelly_Field_File(array(
 				'path' => 'media/logos',
 			)),
-			'players' => new Field_HasMany,
-			'lines' => new Field_HasMany,
+			'players' => new Jelly_Field_HasMany,
+			'lines' => new Jelly_Field_HasMany,
 		));
 	}
 

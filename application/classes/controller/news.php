@@ -9,12 +9,12 @@ class Controller_News extends Controller_Template
 
 	public function action_list()
 	{
-		$count = Jelly::select('news')->count();
+		$count = Jelly::query('news')->count();
 		$pagination = Pagination::factory(array(
 			'total_items' => $count,
 		));
 
-		$News = Jelly::select('news')
+		$News = Jelly::query('news')
 				->offset($pagination->offset)
 				->limit($pagination->items_per_page)
 				->execute();
@@ -30,7 +30,7 @@ class Controller_News extends Controller_Template
 
 	public function action_view($id)
 	{
-		$news = Jelly::select('news', $id);
+		$news = Jelly::query('news', $id);
 
 		$view = new View('news_view');
 		$view->news = $news;

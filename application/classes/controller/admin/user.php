@@ -9,13 +9,13 @@ class Controller_Admin_User extends Controller_Admin
 
 	public function action_list()
 	{
-		$count = Jelly::select('user')->count();
+		$count = Jelly::query('user')->count();
 
 		$pagination = Pagination::factory(array(
 			'total_items' => $count,
 		));
 
-		$users = Jelly::select('user')
+		$users = Jelly::query('user')
 				->offset($pagination->offset)
 				->limit($pagination->items_per_page)
 				->execute();
@@ -32,7 +32,7 @@ class Controller_Admin_User extends Controller_Admin
 
 	public function action_edit($id)
 	{
-		$user = Jelly::select('user', $id);
+		$user = Jelly::query('user', $id);
 		$errors = array();
 
 		if($_POST)
@@ -50,7 +50,7 @@ class Controller_Admin_User extends Controller_Admin
 				}
 				$user->save();
 				MISC::set_apply_message('Пользователь успешно изменён');
-				Request::instance()->redirect('admin/user/list');
+				Request::current()->redirect('admin/user/list');
 			}
 			catch (Validate_Exception $e)
 			{

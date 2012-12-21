@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
 <h2><?=$tournament->name?></h2>
-<?=Form::open();?>
+<?=Form::open(Request::$current);?>
 <ul>
 <?foreach ($clubs as $club):?>
 	<li>

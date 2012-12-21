@@ -12,7 +12,7 @@
 </div>
 <?endif;?>
 <h2>Регистрация матча</h2>
-<?=form::open();?>
+<?=form::open(Request::$current);?>
 <ul>
 	<li>
 		<label class="desc" for="away">

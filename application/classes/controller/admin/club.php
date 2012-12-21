@@ -9,7 +9,7 @@
 
 		public function action_list()
 		{
-			$clubs = Jelly::select('club')->execute();
+			$clubs = Jelly::query('club')->execute();
 
 			$view = new View('admin/clubs_list');
 			$view->clubs = $clubs;
@@ -25,7 +25,7 @@
 			if($cid === NULL)
 				$club = Jelly::factory ('club');
 			else
-				$club = Jelly::select('club', $cid);
+				$club = Jelly::query('club', $cid);
 			$errors = array();
 
 			if($_POST)
@@ -37,7 +37,7 @@
 					if(isset($_FILES))
 						$club->logo = $_FILES['logo'];
 					$club->save();
-					Request::instance()->redirect('admin/club/view/'.$club->id);
+					Request::current()->redirect('admin/club/view/'.$club->id);
 				}
 				catch (Validate_Exception $exp)
 				{
@@ -58,7 +58,7 @@
 
 		public function action_view($id)
 		{
-			$club = Jelly::select('club', $id);
+			$club = Jelly::query('club', $id);
 
 			$view = new View('admin/club_view');
 			$view->club = $club;
@@ -73,7 +73,7 @@
 		{
 			$errors = array();
 			$allow = array();
-			$club = Jelly::select('club', $cid);
+			$club = Jelly::query('club', $cid);
 
 			if($_POST)
 			{
@@ -111,7 +111,7 @@
 		public function action_parse_from_wiki($club_id)
 		{
 			/** @var $club Model_Club */
-			$club = Jelly::select("club", $club_id);
+			$club = Jelly::query("club", $club_id);
 			$errors = array();
 			$allow = array();
 			
@@ -122,7 +122,7 @@
 				$tables = phpQuery::newDocumentHTML($_POST['tables']);
 
 				/** @var $other_club Model_Club */
-				$other_club = Jelly::select('club')->where('name', '=', 'Other clubs')->limit(1)->execute();
+				$other_club = Jelly::query('club')->where('name', '=', 'Other clubs')->limit(1)->execute();
 
 				$players_arr = array();
 				foreach ($tables->find("tr.vcard.agent span.fn") as $player)
@@ -171,7 +171,7 @@
 				{
 					try
 					{
-						$isset_player_builder = Jelly::select('player');
+						$isset_player_builder = Jelly::query('player');
 						if($player_new_arr['first_name'] === NULL)
 						{
 							$isset_player_builder->where('first_name', 'IN', array('', NULL));

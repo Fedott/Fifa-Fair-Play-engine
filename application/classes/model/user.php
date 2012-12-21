@@ -5,7 +5,7 @@ class Model_User extends Model_Auth_User
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->fields(array(
-			'icq' => new Field_Integer(array(
+			'icq' => new Jelly_Field_Integer(array(
 				'unique' => TRUE,
 				'rules' => array(
 //					'min_length' => array(5),
@@ -14,7 +14,7 @@ class Model_User extends Model_Auth_User
 				'default' => NULL,
 				'null' => TRUE,
 			)),
-			'skype' => new Field_String(array(
+			'skype' => new Jelly_Field_String(array(
 				'unique' => TRUE,
 				'rules' => array(
 //					'min_length' => array(6),
@@ -23,7 +23,7 @@ class Model_User extends Model_Auth_User
 				'default' => NULL,
 				'null' => TRUE,
 			)),
-			'origin' => new Field_String(array(
+			'origin' => new Jelly_Field_String(array(
 				'unique' => TRUE,
 				'rules' => array(
 					'not_empty' => array(TRUE),
@@ -32,34 +32,34 @@ class Model_User extends Model_Auth_User
 				'null' => TRUE,
 				'default' => NULL,
 			)),
-			'email' => new Field_Email(array(
+			'email' => new Jelly_Field_Email(array(
 				'unique' => TRUE,
 				'rules' => array(
 					'not_empty' => array(TRUE),
 				),
 			)),
-			'last_name' => new Field_String(array(
+			'last_name' => new Jelly_Field_String(array(
 				'rules' => array(
 					'max_length' => array(30),
 				),
 			)),
-			'first_name' => new Field_String(array(
+			'first_name' => new Jelly_Field_String(array(
 				'rules' => array(
 					'max_length' => array(30),
 				),
 			)),
-			'avatar' => new Field_Image(array(
+			'avatar' => new Jelly_Field_Image(array(
 				'path' => 'media/avatars',
 				'resize' => TRUE,
 				'max_width' => 100,
 			)),
-			'posts' => new Field_Integer(array(
+			'posts' => new Jelly_Field_Integer(array(
 				'default' => 0,
 			)),
-			'topics' => new Field_Integer(array(
+			'topics' => new Jelly_Field_Integer(array(
 				'default' => 0,
 			)),
-			'matches' => new Field_Integer(array(
+			'matches' => new Jelly_Field_Integer(array(
 				'default' => 0,
 			))
 		));

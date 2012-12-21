@@ -4,7 +4,7 @@
 	{
 		public function action_index()
 		{
-			$tournaments = Jelly::select('table')->visible()->execute();
+			$tournaments = Jelly::query('table')->visible()->execute();
 			$view = new View('tournament');
 			$view->tournaments = $tournaments;
 
@@ -15,10 +15,10 @@
 
 		public function action_view($url)
 		{
-			$tournament = Jelly::select('table', $url);
+			$tournament = Jelly::query('table', $url);
 			if($this->user->loaded())
 			{
-				$my_line = Jelly::select('line')
+				$my_line = Jelly::query('line')
 						->where('table_id', "=", $tournament->id)
 						->and_where("user_id", "=", $this->user->id)
 						->limit(1)
@@ -46,7 +46,7 @@
 
 			if(!empty($players_like))
 			{
-				$players_goals = Jelly::select('player')
+				$players_goals = Jelly::query('player')
 						->with('club')
 						->where(":primary_key", "IN", $players_like)
 						->execute();
@@ -72,12 +72,12 @@
 
 		public function action_club($id)
 		{
-			$line = Jelly::select('line', $id);
+			$line = Jelly::query('line', $id);
 
 			$tournament = $line->table;
 			if($this->user->loaded())
 			{
-				$my_line = Jelly::select('line')
+				$my_line = Jelly::query('line')
 						->where('table_id', "=", $tournament->id)
 						->and_where("user_id", "=", $this->user->id)
 						->limit(1)
@@ -106,7 +106,7 @@
 
 			if(!empty($players_like))
 			{
-				$players_goals = Jelly::select('player')
+				$players_goals = Jelly::query('player')
 						->with('club')
 						->where(":primary_key", "IN", $players_like)
 						->execute();
@@ -118,11 +118,11 @@
 				}
 			}
 
-			$matches = Jelly::select('match')
+			$matches = Jelly::query('match')
 					->line($line->id)
 					->execute();
 
-			$matches_asc = Jelly::select('match')
+			$matches_asc = Jelly::query('match')
 					->line($line->id)
 					->order_by('date', 'asc')
 					->execute();

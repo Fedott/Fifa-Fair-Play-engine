@@ -4,12 +4,12 @@
 	{
 		public function action_index()
 		{
-			$count = Jelly::select('news')->count();
+			$count = Jelly::query('news')->count();
 			$pagination = Pagination::factory(array(
 				'total_items' => $count,
 			));
 
-			$News = Jelly::select('news')
+			$News = Jelly::query('news')
 					->offset($pagination->offset)
 					->limit($pagination->items_per_page)
 					->execute();
@@ -28,7 +28,7 @@
 
 			if($this->auth->logged_in('login'))
 			{
-				Request::instance()->redirect('/');
+				Request::current()->redirect('/');
 			}
 			if($_POST)
 			{
@@ -36,9 +36,10 @@
 				$password = $_POST['password'];
 				$remember = (isset($_POST['remember']))?TRUE:FALSE;
 
-				if($this->auth->login($username, $password, $remember))
+				$res = $this->auth->login($username, $password, $remember);
+				if($res)
 				{
-					Request::instance()->redirect('');
+					Request::current()->redirect('');
 				}
 				else
 				{
@@ -46,7 +47,7 @@
 				}
 			}
 
-			$view = new View('login');
+			$view = View::factory('login');
 			$view->errors = $errors;
 
 			$this->template->title = __('Авторизация пользователя');
@@ -57,7 +58,7 @@
 		public function action_logout()
 		{
 			$this->auth->logout();
-			Request::instance()->redirect('');
+			Request::current()->redirect('');
 		}
 
 		public function action_register()
@@ -66,7 +67,7 @@
 			if($this->auth->logged_in())
 			{
 				MISC::set_error_message(__("Вы уже авторизированы."));
-				Request::instance()->redirect('');
+				Request::current()->redirect('');
 			}
 			$form = array(
 				'username'	=> '',
@@ -102,7 +103,7 @@
 							'user_email'    => $user->email,
 							'user_icq'      => $user->icq,
 						)),
-						'sc' => Kohana::config('auth.sc'),
+						'sc' => Kohana::config('auth.php.sc'),
 						'other_fields' => serialize(array(
 							'pf_origin'        => $user->origin,
 							'pf_skype'         => $user->skype,
@@ -110,7 +111,7 @@
 					);
 					Curl::post('http://'.$_SERVER['SERVER_NAME']."/forum/kohana_user_add.php", $data);
 					$this->auth->login($user, $post['password']);
-					Request::instance()->redirect('');
+					Request::current()->redirect('');
 				}
 				catch (Validate_Exception $exp)
 				{
@@ -131,11 +132,11 @@
 			if(!$this->auth->logged_in())
 			{
 				MISC::set_error_message(__("Вы не авторизированы на сайте"));
-				Request::instance()->redirect("login");
+				Request::current()->redirect("login");
 			}
 
 			/** @var $user Model_User */
-			$user = Jelly::select('user', $this->user->id);
+			$user = Jelly::query('user', $this->user->id);
 			$errors = array();
 			if($_POST)
 			{
@@ -159,7 +160,7 @@
 							'user_email'    => $user->email,
 							'user_icq'      => $user->icq,
 						)),
-						'sc' => Kohana::config('auth.sc'),
+						'sc' => Kohana::config('auth.php.sc'),
 						'other_fields' => serialize(array(
 							'pf_origin'        => $user->origin,
 							'pf_skype'         => $user->skype,
@@ -169,7 +170,7 @@
 					// Конец обновления информации на форуме
 
 					MISC::set_apply_message(__("Данные профиля успешно изменены"));
-					Request::instance()->redirect("main/profile");
+					Request::current()->redirect("main/profile");
 				}
 				catch (Validate_Exception $exp)
 				{
@@ -193,25 +194,25 @@
 				if(!$this->auth->logged_in())
 				{
 					MISC::set_error_message("Вы не авторизированы на сайте");
-					Request::instance()->redirect("login");
+					Request::current()->redirect("login");
 				}
 
 				$id = $this->user->id;
 			}
 
-			$user = Jelly::select('user', $id);
+			$user = Jelly::query('user', $id);
 
 			if(!$user->loaded())
 			{
 				MISC::set_error_message(__("Такого пользователя не существует"));
-				Request::instance()->redirect('');
+				Request::current()->redirect('');
 			}
 
 			$coach = $user->has_role('coach');
 			if($coach)
 			{
 				$coach = array();
-				$coach['lines'] = Jelly::select('line')
+				$coach['lines'] = Jelly::query('line')
 						->by_user($user->id)
 						->execute();
 			}

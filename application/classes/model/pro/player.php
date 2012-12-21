@@ -44,7 +44,7 @@ class Model_Pro_Player extends Jelly_Model
 		// Расчитываем сегодняшную дату
 		$date = strtotime(date("d-m-Y"));
 
-		$count_date_players = Jelly::select('pro_player')->where('date', '=', $date)->execute();
+		$count_date_players = Jelly::query('pro_player')->where('date', '=', $date)->execute();
 		if(count($count_date_players))
 		{
 			exit("Data for this day has already collected". PHP_EOL);

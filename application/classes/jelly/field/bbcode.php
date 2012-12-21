@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-	class Field_Bbcode extends Field_Text
+	class Jelly_Field_Bbcode extends Jelly_Field_Text
 	{
 		public $xss_clean = TRUE;
 

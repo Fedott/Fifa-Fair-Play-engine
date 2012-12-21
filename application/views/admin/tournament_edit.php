@@ -11,7 +11,7 @@
 </ul>
 </div>
 <?endif;?>
-<?=form::open()?>
+<?=form::open(Request::$current)?>
 <ul>
 	<li class="">
 		<label class="desc" for="field-name">

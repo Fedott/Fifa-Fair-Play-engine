@@ -15,7 +15,7 @@ class Controller_Page_Admin extends Controller_Admin
 		if($id === NULL)
 			$page = Jelly::factory ('page');
 		else
-			$page = Jelly::select ('page', $id);
+			$page = Jelly::query ('page', $id);
 
 		$errors = array();
 
@@ -47,7 +47,7 @@ class Controller_Page_Admin extends Controller_Admin
 		if($id === NULL)
 			$category = Jelly::factory ('category');
 		else
-			$category = Jelly::select ('category', $id);
+			$category = Jelly::query ('category', $id);
 
 		$errors = array();
 

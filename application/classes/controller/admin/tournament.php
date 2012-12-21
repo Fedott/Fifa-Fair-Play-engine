@@ -9,7 +9,7 @@
 
 		public function action_listen()
 		{
-			$tournaments = Jelly::select('table')->execute();
+			$tournaments = Jelly::query('table')->execute();
 			$view = new View('admin/tournaments_list');
 			$view->tournaments = $tournaments;
 			$view->i = 1;
@@ -22,7 +22,7 @@
 
 		public function action_view($id)
 		{
-			$tournament = Jelly::select('table', $id);
+			$tournament = Jelly::query('table', $id);
 			$view = new View('admin/tournament_view');
 			$view->tournament = $tournament;
 
@@ -37,7 +37,7 @@
 			if($id === NULL)
 				$tournament = Jelly::factory ('table');
 			else
-				$tournament = Jelly::select('table', $id);
+				$tournament = Jelly::query('table', $id);
 			$errors = array();
 
 			if($_POST)
@@ -47,7 +47,7 @@
 					$tournament->set(Arr::extract($_POST, array('name', 'active', 'type', 'visible', 'ended', 'matches')));
 					$tournament->url = URL::string_to_url($tournament->name);
 					$tournament->save();
-					Request::instance()->redirect('admin/tournament/view/'.$tournament->id);
+					Request::current()->redirect('admin/tournament/view/'.$tournament->id);
 
 				} catch (Validate_Exception $exp) {
 					$errors = $exp->array->errors('tournament_edit');
@@ -67,7 +67,7 @@
 
 		public function action_edit_lines($tid)
 		{
-			$tournament = Jelly::select('table', $tid);
+			$tournament = Jelly::query('table', $tid);
 
 			if($_POST)
 			{
@@ -79,7 +79,7 @@
 					$line->save();
 				}
 
-				Request::instance()->redirect('admin/tournament/view/'.$tournament->id);
+				Request::current()->redirect('admin/tournament/view/'.$tournament->id);
 			}
 
 			$club_in_tournament = array();
@@ -89,13 +89,13 @@
 			}
 			if(count($club_in_tournament))
 			{
-				$clubs = Jelly::select('club')
+				$clubs = Jelly::query('club')
 						->where('id', 'NOT IN', $club_in_tournament)
 						->execute();
 			}
 			else
 			{
-				$clubs = Jelly::select('club')
+				$clubs = Jelly::query('club')
 						->execute();
 			}
 
@@ -113,21 +113,21 @@
 		public function action_line_delete($id)
 		{
 			/** @var $line Model_Line */
-			$line = Jelly::select('line', $id);
+			$line = Jelly::query('line', $id);
 			if($line->drawn + $line->lose + $line->win == 0)
 			{
 				$line->delete();
 				MISC::set_apply_message('Команда успешно удалена из турнира');
-				Request::instance()->redirect(Request::$referrer);
+				Request::current()->redirect(Request::$referrer);
 			}
 
 			MISC::set_error_message('Команда не может быть удалена из турнира, атк ак у неё имеються сыгранные матчи');
-			Request::instance()->redirect(Request::$referrer);
+			Request::current()->redirect(Request::$referrer);
 		}
 
 		public function action_line_view($lid)
 		{
-			$line = Jelly::select('line', $lid);
+			$line = Jelly::query('line', $lid);
 
 			$view = new View('admin/line_view');
 			$view->line = $line;
@@ -141,13 +141,13 @@
 
 		public function action_line_coach($lid)
 		{
-			$line = Jelly::select('line', $lid);
+			$line = Jelly::query('line', $lid);
 
 			if($_POST)
 			{
 				$line->user = $_POST['user_id'];
 				$line->save();
-				Request::instance()->redirect('admin/tournament/view/'.$line->table->id);
+				Request::current()->redirect('admin/tournament/view/'.$line->table->id);
 			}
 
 			$users_in_tournament = array();
@@ -159,14 +159,14 @@
 
 			if(count($users_in_tournament))
 			{
-				$users = Jelly::select('user')
+				$users = Jelly::query('user')
 						->where('id', '=', $line->user->id)
 						->or_where('id', 'NOT IN', $users_in_tournament)
 						->execute();
 			}
 			else
 			{
-				$users = Jelly::select('user')
+				$users = Jelly::query('user')
 						->execute();
 			}
 
@@ -193,7 +193,7 @@
 			if($id == NULL)
 				$trophy = Jelly::factory('trophy');
 			else
-				$trophy = Jelly::select ('trophy', $id);
+				$trophy = Jelly::query ('trophy', $id);
 
 			$errors = array();
 
@@ -205,7 +205,7 @@
 					if(isset($_FILES))
 						$trophy->image = $_FILES['image'];
 					$trophy->save();
-					Request::instance()->redirect('admin/tournament/');
+					Request::current()->redirect('admin/tournament/');
 				}
 				catch (Validate_Exception $exp)
 				{

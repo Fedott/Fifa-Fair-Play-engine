@@ -16,7 +16,7 @@
 			if($id === NULL)
 				$player = Jelly::factory('player');
 			else
-				$player = Jelly::select ('player', $id);
+				$player = Jelly::query ('player', $id);
 
 			$errors = array();
 
@@ -26,7 +26,7 @@
 				{
 					$player->set(arr::extract($_POST, array('first_name', 'last_name', 'year_of_birth', 'club')));
 					$player->save();
-					Request::instance()->redirect('admin/club/view/'.$player->club->id);
+					Request::current()->redirect('admin/club/view/'.$player->club->id);
 				}
 				catch (Validate_Exception $exp)
 				{

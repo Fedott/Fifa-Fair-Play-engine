@@ -11,7 +11,7 @@
 
 			if(!$this->auth->logged_in('admin'))
 			{
-				Request::instance()->redirect('main');
+				Request::current()->redirect('main');
 			}
 
 			parent::before();

@@ -9,7 +9,7 @@ class Controller_Ajax_Comment extends Controller_Template
 		if( ! $this->auth->logged_in())
 		{
 			misc::set_error_message("Авторизируйтесь что бы добавлять комментарии");
-			Request::instance()->redirect('match/view/'.arr::get($_POST, 'match_id'));
+			Request::current()->redirect('match/view/'.arr::get($_POST, 'match_id'));
 		}
 		if($_POST)
 		{

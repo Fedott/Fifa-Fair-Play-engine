@@ -7,7 +7,7 @@ class Controller_Admin_News extends Controller_Admin
 		if($id === NULL)
 			$news = Jelly::factory('news');
 		else
-			$news = Jelly::select('news', $id);
+			$news = Jelly::query('news', $id);
 
 		$errors = array();
 
@@ -19,7 +19,7 @@ class Controller_Admin_News extends Controller_Admin
 				$news->author = $this->user->id;
 				$news->save();
 				MISC::set_apply_message("Новость успешно создана");
-				Request::instance()->redirect('news/view/'.$news->url);
+				Request::current()->redirect('news/view/'.$news->url);
 			}
 			catch (Validate_Exception $e)
 			{

@@ -18,7 +18,7 @@ class Controller_Pro_Club extends Controller_Template
 		$start = $this->request->param('start_date', date('d-m-Y', strtotime('monday previous week')));
 		$end = $this->request->param('end_date', date('d-m-Y', strtotime("monday this week")));
 
-		$pro_players = Jelly::select("pro_player")
+		$pro_players = Jelly::query("pro_player")
 				->where('date', '<=', strtotime($end))
 				->and_where('date', '>=', strtotime($start))
 				->execute();

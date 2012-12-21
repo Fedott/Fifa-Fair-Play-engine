@@ -12,15 +12,15 @@
 		public static function initialize(Jelly_Meta $meta)
 		{
 			$meta->fields(array(
-				'id' => new Field_Primary,
-				'first_name' => new Field_String,
-				'last_name' => new Field_String(array(
+				'id' => new Jelly_Field_Primary,
+				'first_name' => new Jelly_Field_String,
+				'last_name' => new Jelly_Field_String(array(
 					'rules' => array(
 						'not_empty' => array(TRUE),
 					),
 				)),
-				'club' => new Field_BelongsTo,
-				'year_of_birth' => new Field_Integer(array(
+				'club' => new Jelly_Field_BelongsTo,
+				'year_of_birth' => new Jelly_Field_Integer(array(
 					'default' => 0,
 				)),
 			));
