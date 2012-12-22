@@ -14,7 +14,7 @@
 			{
 				$lines = Jelly::query('line')
 						->where("user_id", "=", $user->id)
-						->where("_table:table.visible", "=", 1)
+						->where("lines:table.visible", "=", 1)
 						->execute();
 
 				$tables = array();
@@ -65,11 +65,11 @@
 
 				// Получаем инфу о неподтверждённых матчах
 				$matches_not_apply_my = Jelly::query('match')
-						->where('away.user_id', "=", $user->id)
+						->where('matches:away.user_id', "=", $user->id)
 						->where("confirm", "=", 0)
 						->count();
 				$matches_not_apply_opponent = Jelly::query('match')
-						->where('home.user_id', "=", $user->id)
+						->where('matches:home.user_id', "=", $user->id)
 						->where("confirm", "=", 0)
 						->count();
 			}

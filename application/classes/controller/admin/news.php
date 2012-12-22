@@ -7,7 +7,7 @@ class Controller_Admin_News extends Controller_Admin
 		if($id === NULL)
 			$news = Jelly::factory('news');
 		else
-			$news = Jelly::query('news', $id);
+			$news = Jelly::query('news', $id)->execute();
 
 		$errors = array();
 

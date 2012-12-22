@@ -15,7 +15,7 @@
 
 		public function action_view($url)
 		{
-			$tournament = Jelly::query('table', $url);
+			$tournament = Jelly::query('table', $url)->execute();
 			if($this->user->loaded())
 			{
 				$my_line = Jelly::query('line')
@@ -72,7 +72,7 @@
 
 		public function action_club($id)
 		{
-			$line = Jelly::query('line', $id);
+			$line = Jelly::query('line', $id)->execute();
 
 			$tournament = $line->table;
 			if($this->user->loaded())

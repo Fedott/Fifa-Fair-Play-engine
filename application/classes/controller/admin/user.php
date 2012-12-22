@@ -32,7 +32,7 @@ class Controller_Admin_User extends Controller_Admin
 
 	public function action_edit($id)
 	{
-		$user = Jelly::query('user', $id);
+		$user = Jelly::query('user', $id)->execute();
 		$errors = array();
 
 		if($_POST)

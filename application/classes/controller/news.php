@@ -30,7 +30,7 @@ class Controller_News extends Controller_Template
 
 	public function action_view($id)
 	{
-		$news = Jelly::query('news', $id);
+		$news = Jelly::query('news', $id)->execute();
 
 		$view = new View('news_view');
 		$view->news = $news;

@@ -29,7 +29,7 @@ class Controller_Forum extends Controller_Template
 
 	public function action_view($id)
 	{
-		$forum = Jelly::query('forum', $id);
+		$forum = Jelly::query('forum', $id)->execute();
 
 		$view = new View('forum/forum_view');
 		$view->forum = $forum;
@@ -46,7 +46,7 @@ class Controller_Forum extends Controller_Template
 	{
 		$topic = Jelly::factory('topic');
 		$post = Jelly::factory('post');
-		$forum = Jelly::query('forum', $forum_id);
+		$forum = Jelly::query('forum', $forum_id)->execute();
 
 		$errors = array();
 
@@ -118,7 +118,7 @@ class Controller_Forum extends Controller_Template
 
 	public function action_topic_reply($topic_id)
 	{
-		$topic = Jelly::query('topic', $topic_id);
+		$topic = Jelly::query('topic', $topic_id)->execute();
 		$post = Jelly::factory('post');
 
 		$errors = array();

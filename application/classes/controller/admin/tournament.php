@@ -22,7 +22,7 @@
 
 		public function action_view($id)
 		{
-			$tournament = Jelly::query('table', $id);
+			$tournament = Jelly::query('table', $id)->execute();
 			$view = new View('admin/tournament_view');
 			$view->tournament = $tournament;
 
@@ -37,7 +37,7 @@
 			if($id === NULL)
 				$tournament = Jelly::factory ('table');
 			else
-				$tournament = Jelly::query('table', $id);
+				$tournament = Jelly::query('table', $id)->execute();
 			$errors = array();
 
 			if($_POST)
@@ -67,7 +67,7 @@
 
 		public function action_edit_lines($tid)
 		{
-			$tournament = Jelly::query('table', $tid);
+			$tournament = Jelly::query('table', $tid)->execute();
 
 			if($_POST)
 			{
@@ -113,7 +113,7 @@
 		public function action_line_delete($id)
 		{
 			/** @var $line Model_Line */
-			$line = Jelly::query('line', $id);
+			$line = Jelly::query('line', $id)->execute();
 			if($line->drawn + $line->lose + $line->win == 0)
 			{
 				$line->delete();
@@ -127,7 +127,7 @@
 
 		public function action_line_view($lid)
 		{
-			$line = Jelly::query('line', $lid);
+			$line = Jelly::query('line', $lid)->execute();
 
 			$view = new View('admin/line_view');
 			$view->line = $line;
@@ -141,7 +141,7 @@
 
 		public function action_line_coach($lid)
 		{
-			$line = Jelly::query('line', $lid);
+			$line = Jelly::query('line', $lid)->execute();
 
 			if($_POST)
 			{

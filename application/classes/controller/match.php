@@ -16,7 +16,7 @@
 			}
 			else
 			{
-				$tournament = Jelly::query('table', $tableid);
+				$tournament = Jelly::query('table', $tableid)->execute();
 				$count = Jelly::query('match')
 						->tournament($tournament->id)
 						->count();
@@ -114,7 +114,7 @@
 				Request::current()->redirect('');
 			}
 			
-			$tournament = Jelly::query('table', $tourn);
+			$tournament = Jelly::query('table', $tourn)->execute();
 			// Проверяем активность и не законченность турнира
 			if($tournament->ended)
 			{
@@ -310,7 +310,7 @@
 			if($line_id == "NULL")
 				exit;
 
-			$line = Jelly::query('line', $line_id);
+			$line = Jelly::query('line', $line_id)->execute();
 
 			$this->auto_render = FALSE;
 
@@ -488,7 +488,7 @@
 
 		public function action_delete($mid)
 		{
-			$match = Jelly::query('match', $mid);
+			$match = Jelly::query('match', $mid)->execute();
 			if($match->home->user->id != $this->user->id)
 			{
 				MISC::set_error_message(__("Вы не можете удалить матч, который вносили не вы"));

@@ -29,7 +29,7 @@ class Controller_Forum_Admin extends Controller_Template
 		if($id === NULL)
 			$section = Jelly::factory('section');
 		else
-			$section = Jelly::query('section', $id);
+			$section = Jelly::query('section', $id)->execute();
 
 		$errors = array();
 
@@ -81,7 +81,7 @@ class Controller_Forum_Admin extends Controller_Template
 		if($id === NULL)
 			$forum = Jelly::factory('forum');
 		else
-			$forum = Jelly::query('forum', $id);
+			$forum = Jelly::query('forum', $id)->execute();
 
 		$errors = array();
 

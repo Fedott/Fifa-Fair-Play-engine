@@ -107,7 +107,7 @@ Kohana::modules(array(
 	'pagination' => MODPATH.'pagination', // Paging of results
 	'jelly'      => MODPATH.'jelly',      // Улучшеный ОРМ
 	'jelly-auth' => MODPATH.'jelly-auth', // Драйвер Jelly для Auth
-	'auth'       => MODPATH.'auth',       // Basic authentication
+	'auth'       => MODPATH.'auth-old',   // Basic authentication Версия 3.0.8 Для совместимости с базой пользователей
 	'userguide'  => MODPATH.'userguide',  // Модуль свтроенной доки
 	'image'      => MODPATH.'image',      // Модуль работы с изображениями
 	'purifier'   => MODPATH.'purifier',   // Модуль HTML Purifier

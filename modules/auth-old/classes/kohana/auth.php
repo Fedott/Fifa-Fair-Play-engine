@@ -5,10 +5,10 @@
  *
  * @package    Kohana/Auth
  * @author     Kohana Team
- * @copyright  (c) 2007-2010 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) 2007-2009 Kohana Team
+ * @license    http://kohanaphp.com/license.html
  */
-abstract class Auth {
+abstract class Kohana_Auth {
 
 	// Auth instances
 	protected static $_instance;
@@ -38,6 +38,16 @@ abstract class Auth {
 		}
 
 		return Auth::$_instance;
+	}
+
+	/**
+	 * Create an instance of Auth.
+	 *
+	 * @return  Auth
+	 */
+	public static function factory($config = array())
+	{
+		return new Auth($config);
 	}
 
 	protected $_session;

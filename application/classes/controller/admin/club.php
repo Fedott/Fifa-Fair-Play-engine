@@ -25,7 +25,7 @@
 			if($cid === NULL)
 				$club = Jelly::factory ('club');
 			else
-				$club = Jelly::query('club', $cid);
+				$club = Jelly::query('club', $cid)->execute();
 			$errors = array();
 
 			if($_POST)
@@ -58,7 +58,7 @@
 
 		public function action_view($id)
 		{
-			$club = Jelly::query('club', $id);
+			$club = Jelly::query('club', $id)->execute();
 
 			$view = new View('admin/club_view');
 			$view->club = $club;
@@ -73,7 +73,7 @@
 		{
 			$errors = array();
 			$allow = array();
-			$club = Jelly::query('club', $cid);
+			$club = Jelly::query('club', $cid)->execute();
 
 			if($_POST)
 			{
@@ -111,7 +111,7 @@
 		public function action_parse_from_wiki($club_id)
 		{
 			/** @var $club Model_Club */
-			$club = Jelly::query("club", $club_id);
+			$club = Jelly::query("club", $club_id)->execute();
 			$errors = array();
 			$allow = array();
 			

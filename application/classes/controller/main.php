@@ -200,7 +200,7 @@
 				$id = $this->user->id;
 			}
 
-			$user = Jelly::query('user', $id);
+			$user = Jelly::query('user', $id)->execute();
 
 			if(!$user->loaded())
 			{

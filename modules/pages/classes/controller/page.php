@@ -4,7 +4,7 @@ class Controller_Page extends Controller_Template
 {
 	public function action_view($id)
 	{
-		$page = Jelly::query('page', $id);
+		$page = Jelly::query('page', $id)->execute();
 
 		$view = new View('page');
 		$view->page = $page;
