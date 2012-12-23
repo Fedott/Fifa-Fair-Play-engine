@@ -105,6 +105,7 @@ Kohana::$config->attach(new Config_File);
 Kohana::modules(array(
 	'database'   => MODPATH.'database',   // Database access
 	'pagination' => MODPATH.'pagination', // Paging of results
+	'jelly-form' => MODPATH.'jelly-form', // Модуль генерации форм для jelly
 	'jelly'      => MODPATH.'jelly',      // Улучшеный ОРМ
 	'jelly-auth' => MODPATH.'jelly-auth', // Драйвер Jelly для Auth
 	'auth'       => MODPATH.'auth-old',   // Basic authentication Версия 3.0.8 Для совместимости с базой пользователей

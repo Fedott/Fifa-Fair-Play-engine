@@ -31,3 +31,6 @@
 [submodule "modules/captcha"]
 	path = modules/captcha
 	url = http://github.com/kolanos/kohana-captcha.git
+[submodule "modules/jelly-form"]
+	path = modules/jelly-form
+	url = https://github.com/Fedott/jelly-form.git
