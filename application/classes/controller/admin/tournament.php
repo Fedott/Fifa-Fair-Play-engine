@@ -193,7 +193,7 @@
 			if($id == NULL)
 				$trophy = Jelly::factory('trophy');
 			else
-				$trophy = Jelly::query ('trophy', $id);
+				$trophy = Jelly::query('trophy', $id)->execute();
 
 			$errors = array();
 

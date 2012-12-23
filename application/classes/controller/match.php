@@ -137,13 +137,7 @@
 			$errors = array();
 			$my_players = array();
 			$mplayers = Jelly::query('player')
-					->select("*")
-					->select(array('SUM("goals.count")', 'goals_count'))
-					->where('player.club:foreign_key', '=', $myline->club->id)
-					->order_by('goals_count', 'DESC')
-					->order_by('last_name')
-					->join('goals', 'LEFT OUTER')->on('player:primary_key', '=', 'goals.player_id')
-					->group_by('players.id')
+					->order_by_goals($myline->club->id)
 					->execute();
 			
 			foreach($mplayers as $my_player)
@@ -315,13 +309,7 @@
 			$this->auto_render = FALSE;
 
 			$players = Jelly::query('player')
-					->select("*")
-					->select(array('SUM("goals.count")', 'goals_count'))
-					->where("club_id", "=", $line->club->id)
-					->order_by('goals_count', 'DESC')
-					->order_by('last_name')
-					->join('goals', 'LEFT OUTER')->on('player:primary_key', '=', 'goals.player_id')
-					->group_by('players.id')
+					->order_by_goals($line->club->id)
 					->execute();
 			$players_arr = array();
 			foreach($players as $player)

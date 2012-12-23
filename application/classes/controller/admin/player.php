@@ -16,7 +16,7 @@
 			if($id === NULL)
 				$player = Jelly::factory('player');
 			else
-				$player = Jelly::query ('player', $id);
+				$player = Jelly::query ('player', $id)->execute();
 
 			$errors = array();
 
