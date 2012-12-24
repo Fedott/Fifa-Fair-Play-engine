@@ -28,7 +28,7 @@ class Controller_Page_Admin extends Controller_Admin
 				$page->save();
 				Request::instance()->redirect('page/view/'.$page->id);
 			}
-			catch (Validate_Exception $e)
+			catch (Validation_Exception $e)
 			{
 				$errors = $e->array->errors('page_edit');
 			}
@@ -59,7 +59,7 @@ class Controller_Page_Admin extends Controller_Admin
 				$category->save();
 				Request::instance()->redirect('category/view/'.$category->id);
 			}
-			catch (Validate_Exception $e)
+			catch (Validation_Exception $e)
 			{
 				$errors = $e->array->errors('category_edit');
 			}

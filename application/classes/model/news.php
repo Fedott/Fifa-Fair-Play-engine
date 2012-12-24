@@ -10,12 +10,12 @@ class Model_News extends Jelly_Model
 			'id' => new Jelly_Field_Primary,
 			'title' => new Jelly_Field_String(array(
 				'rules' => array(
-					'not_empty' => array(TRUE),
+					array('not_empty'),
 				),
 			)),
 			'text' => new Jelly_Field_Wysiwyg(array(
 				'rules' => array(
-					'not_empty' => array(TRUE),
+					array('not_empty'),
 				)
 			)),
 			'link' => new Jelly_Field_String,

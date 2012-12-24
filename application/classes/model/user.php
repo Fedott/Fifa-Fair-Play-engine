@@ -9,7 +9,7 @@ class Model_User extends Model_Auth_User
 				'unique' => TRUE,
 				'rules' => array(
 //					'min_length' => array(5),
-					'max_length' => array(10),
+					array('max_length', array(':value', 10)),
 				),
 				'default' => NULL,
 				'null' => TRUE,
@@ -18,7 +18,7 @@ class Model_User extends Model_Auth_User
 				'unique' => TRUE,
 				'rules' => array(
 //					'min_length' => array(6),
-					'max_length' => array(32),
+                    array('max_length', array(':value', 32)),
 				),
 				'default' => NULL,
 				'null' => TRUE,
@@ -26,8 +26,8 @@ class Model_User extends Model_Auth_User
 			'origin' => new Jelly_Field_String(array(
 				'unique' => TRUE,
 				'rules' => array(
-					'not_empty' => array(TRUE),
-					'max_length' => array(32),
+					array('not_empty'),
+                    array('max_length', array(':value', 32)),
 				),
 				'null' => TRUE,
 				'default' => NULL,
@@ -35,17 +35,17 @@ class Model_User extends Model_Auth_User
 			'email' => new Jelly_Field_Email(array(
 				'unique' => TRUE,
 				'rules' => array(
-					'not_empty' => array(TRUE),
+                    array('not_empty'),
 				),
 			)),
 			'last_name' => new Jelly_Field_String(array(
 				'rules' => array(
-					'max_length' => array(30),
+                    array('max_length', array(':value', 30)),
 				),
 			)),
 			'first_name' => new Jelly_Field_String(array(
 				'rules' => array(
-					'max_length' => array(30),
+                    array('max_length', array(':value', 30)),
 				),
 			)),
 			'avatar' => new Jelly_Field_Image(array(

@@ -9,7 +9,7 @@ class Model_Comment extends Jelly_Model
 				'id' => new Jelly_Field_Primary,
 				'text' => new Jelly_Field_Wysiwyg(array(
 					'rules' => array(
-						'not_empty' => array(TRUE)
+						array('not_empty')
 					)
 				)),
 				'date' => new Jelly_Field_Integer(array(

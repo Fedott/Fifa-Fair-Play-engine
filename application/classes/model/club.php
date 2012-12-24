@@ -17,7 +17,7 @@ class Model_Club extends Jelly_Model
 			'name' => new Jelly_Field_String(array(
 				'unique' => TRUE,
 				'rules' => array(
-					'not_empty' => array(TRUE),
+					array('not_empty'),
 				),
 			)),
 			'url' => new Jelly_Field_String,

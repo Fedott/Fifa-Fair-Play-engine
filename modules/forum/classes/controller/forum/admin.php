@@ -41,7 +41,7 @@ class Controller_Forum_Admin extends Controller_Template
 				$section->save();
 				Request::instance()->redirect('forum/admin/sections');
 			}
-			catch (Validate_Exception $e)
+			catch (Validation_Exception $e)
 			{
 				$errors = $e->array->errors('sections');
 			}
@@ -93,7 +93,7 @@ class Controller_Forum_Admin extends Controller_Template
 				$forum->save();
 				Request::instance()->redirect('forum/admin/forums');
 			}
-			catch (Validate_Exception $e)
+			catch (Validation_Exception $e)
 			{
 				$errors = $e->array->errors('forums');
 			}

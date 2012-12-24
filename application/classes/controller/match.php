@@ -220,7 +220,7 @@
 						$errors[] = __('Количество забитых мячей не соответствует указанным бомбардирам');
 					}
 				}
-				catch (Validate_Exception $exp)
+				catch (Validation_Exception $exp)
 				{
 					$errors = $exp->array->errors('match');
 				}

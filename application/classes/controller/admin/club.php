@@ -39,7 +39,7 @@
 					$club->save();
 					Request::current()->redirect('admin/club/view/'.$club->id);
 				}
-				catch (Validate_Exception $exp)
+				catch (Validation_Exception $exp)
 				{
 					$errors = $exp->array->errors('club');
 				}
@@ -88,7 +88,7 @@
 							$player->save();
 							$allow[] = $player->player_name(false);
 						}
-						catch (Validate_Exception $exp)
+						catch (Validation_Exception $exp)
 						{
 							$errors[] = $player->player_name().": ".implode(",", $exp->array->errors('player'));
 						}

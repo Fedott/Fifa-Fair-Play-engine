@@ -16,7 +16,7 @@
 				'first_name' => new Jelly_Field_String,
 				'last_name' => new Jelly_Field_String(array(
 					'rules' => array(
-						'not_empty' => array(TRUE),
+						array('not_empty'),
 					),
 				)),
 				'club' => new Jelly_Field_BelongsTo,

@@ -49,7 +49,7 @@
 					$tournament->save();
 					Request::current()->redirect('admin/tournament/view/'.$tournament->id);
 
-				} catch (Validate_Exception $exp) {
+				} catch (Validation_Exception $exp) {
 					$errors = $exp->array->errors('tournament_edit');
 				}
 			}
@@ -207,7 +207,7 @@
 					$trophy->save();
 					Request::current()->redirect('admin/tournament/');
 				}
-				catch (Validate_Exception $exp)
+				catch (Validation_Exception $exp)
 				{
 					$errors = $exp->array->errors('trophy');
 				}

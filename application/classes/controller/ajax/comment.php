@@ -33,7 +33,7 @@ class Controller_Ajax_Comment extends Controller_Template
 					),
 				);
 			}
-			catch (Validate_Exception $exp)
+			catch (Validation_Exception $exp)
 			{
 				$errors = $exp->array->errors('comment_errors');
 				

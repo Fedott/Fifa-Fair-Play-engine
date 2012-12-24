@@ -21,7 +21,7 @@ class Controller_Admin_News extends Controller_Admin
 				MISC::set_apply_message("Новость успешно создана");
 				Request::current()->redirect('news/view/'.$news->url);
 			}
-			catch (Validate_Exception $e)
+			catch (Validation_Exception $e)
 			{
 				$errors = $e->array->errors('news_edit');
 			}

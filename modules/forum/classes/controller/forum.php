@@ -66,7 +66,7 @@ class Controller_Forum extends Controller_Template
 				$post->save();
 				Request::instance()->redirect('forum/topic/view/'.$topic->id);
 			}
-			catch (Validate_Exception $exp)
+			catch (Validation_Exception $exp)
 			{
 				$errors = $exp->array->errors('topic');
 			}
@@ -134,7 +134,7 @@ class Controller_Forum extends Controller_Template
 				$post->save();
 				Request::instance()->redirect('forum/topic/view/'.$topic->id.'?postid='.$post->id.'#post'.$post->id);
 			}
-			catch (Validate_Exception $exp)
+			catch (Validation_Exception $exp)
 			{
 				$errors = $exp->array->errors('topic');
 			}

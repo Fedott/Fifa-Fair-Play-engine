@@ -8,7 +8,7 @@ class Model_Table extends Jelly_Model
 			'id' => new Jelly_Field_Primary,
 			'name' => new Jelly_Field_String(array(
 				'rules' => array(
-					'not_empty' => array(TRUE),
+					array('not_empty'),
 				),
 			)),
 			'url' => new Jelly_Field_String(array(

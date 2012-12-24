@@ -30,7 +30,7 @@
 	url = http://github.com/AlexKupreev/kohana-curl.git
 [submodule "modules/captcha"]
 	path = modules/captcha
-	url = http://github.com/kolanos/kohana-captcha.git
+	url = https://github.com/liaosankai/kohana-captcha.git
 [submodule "modules/jelly-form"]
 	path = modules/jelly-form
 	url = https://github.com/Fedott/jelly-form.git

@@ -15,29 +15,29 @@ class Model_Auth_User extends Jelly_Model
 			'username' => new Jelly_Field_String(array(
 				'unique' => TRUE,
 				'rules' => array(
-						'not_empty' => NULL,
-						'max_length' => array(32),
-						'min_length' => array(3),
-						'regex' => array('/^[\pL_.-]+$/ui')
+						array('not_empty'),
+						array('max_length', array(':value', 32)),
+						array('min_length', array(':value', 3)),
+						array('regex', array(':value', '/^[\pL_.-]+$/ui'))
 					)
 				)),
 			'password' => new Jelly_Field_Password(array(
 				'hash_with' => array(Auth::instance(), 'hash_password'),
 				'rules' => array(
-					'not_empty' => NULL,
-					'max_length' => array(50),
-					'min_length' => array(6)
+                    array('not_empty'),
+                    array('max_length', array(':value', 50)),
+                    array('min_length', array(':value', 6)),
 				)
 			)),
 			'password_confirm' => new Jelly_Field_Password(array(
 				'in_db' => FALSE,
 				'callbacks' => array(
-					'matches' => array('Model_Auth_User', '_check_password_matches')
+                    array(array(':model', '_check_password_matches'), array(':validate', ':field')),
 				),
 				'rules' => array(
-					'not_empty' => NULL,
-					'max_length' => array(50),
-					'min_length' => array(6)
+                    array('not_empty'),
+                    array('max_length', array(':value', 50)),
+                    array('min_length', array(':value', 6)),
 				)
 			)),
 			'email' => new Jelly_Field_Email(array(

@@ -52,7 +52,7 @@ class Controller_Admin_User extends Controller_Admin
 				MISC::set_apply_message('Пользователь успешно изменён');
 				Request::current()->redirect('admin/user/list');
 			}
-			catch (Validate_Exception $e)
+			catch (Validation_Exception $e)
 			{
 				$errors = $e->array->errors('register_form');
 			}

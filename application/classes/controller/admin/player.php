@@ -28,7 +28,7 @@
 					$player->save();
 					Request::current()->redirect('admin/club/view/'.$player->club->id);
 				}
-				catch (Validate_Exception $exp)
+				catch (Validation_Exception $exp)
 				{
 					$errors = $exp->array->errors('player');
 				}
