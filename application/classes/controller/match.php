@@ -220,9 +220,9 @@
 						$errors[] = __('Количество забитых мячей не соответствует указанным бомбардирам');
 					}
 				}
-				catch (Validation_Exception $exp)
+				catch (Jelly_Validation_Exception $exp)
 				{
-					$errors = $exp->array->errors('match');
+					$errors = $exp->errors();
 				}
 			}
 			elseif ( ! MISC::not_duplicate_send('register_match'))

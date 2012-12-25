@@ -2,10 +2,7 @@
 
 	class Jelly_Field_Image extends Jelly_Field_File
 	{
-		public $rules = array(
-			'Upload::type' => array(array('jpg','png','gif')),
-			'Upload::size' => array('500K'),
-		);
+		public $rules = array();
 
 		public $resize = FALSE;
 		public $max_width = NULL;

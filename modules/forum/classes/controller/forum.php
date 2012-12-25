@@ -66,9 +66,9 @@ class Controller_Forum extends Controller_Template
 				$post->save();
 				Request::instance()->redirect('forum/topic/view/'.$topic->id);
 			}
-			catch (Validation_Exception $exp)
+			catch (Jelly_Validation_Exception $exp)
 			{
-				$errors = $exp->array->errors('topic');
+				$errors = $exp->errors();
 			}
 		}
 
@@ -134,9 +134,9 @@ class Controller_Forum extends Controller_Template
 				$post->save();
 				Request::instance()->redirect('forum/topic/view/'.$topic->id.'?postid='.$post->id.'#post'.$post->id);
 			}
-			catch (Validation_Exception $exp)
+			catch (Jelly_Validation_Exception $exp)
 			{
-				$errors = $exp->array->errors('topic');
+				$errors = $exp->errors();
 			}
 		}
 

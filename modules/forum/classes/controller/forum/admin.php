@@ -41,9 +41,9 @@ class Controller_Forum_Admin extends Controller_Template
 				$section->save();
 				Request::instance()->redirect('forum/admin/sections');
 			}
-			catch (Validation_Exception $e)
+			catch (Jelly_Validation_Exception $e)
 			{
-				$errors = $e->array->errors('sections');
+				$errors = $e->errors();
 			}
 		}
 
@@ -93,9 +93,9 @@ class Controller_Forum_Admin extends Controller_Template
 				$forum->save();
 				Request::instance()->redirect('forum/admin/forums');
 			}
-			catch (Validation_Exception $e)
+			catch (Jelly_Validation_Exception $e)
 			{
-				$errors = $e->array->errors('forums');
+				$errors = $e->errors();
 			}
 		}
 

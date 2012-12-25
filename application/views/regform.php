@@ -4,6 +4,7 @@
 <div class="errors">
 	Вы допустили следующие ошибки:
 	<ul>
+		<?php var_dump($errors);exit;?>
 		<?foreach($errors as $error):?>
 		<li>
 			<?=$error?>

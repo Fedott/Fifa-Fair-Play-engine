@@ -49,8 +49,8 @@
 					$tournament->save();
 					Request::current()->redirect('admin/tournament/view/'.$tournament->id);
 
-				} catch (Validation_Exception $exp) {
-					$errors = $exp->array->errors('tournament_edit');
+				} catch (Jelly_Validation_Exception $exp) {
+					$errors = $exp->errors();
 				}
 			}
 
@@ -207,9 +207,9 @@
 					$trophy->save();
 					Request::current()->redirect('admin/tournament/');
 				}
-				catch (Validation_Exception $exp)
+				catch (Jelly_Validation_Exception $exp)
 				{
-					$errors = $exp->array->errors('trophy');
+					$errors = $exp->errors();
 				}
 			}
 

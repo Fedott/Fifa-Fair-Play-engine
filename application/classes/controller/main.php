@@ -93,7 +93,7 @@
 							->rule('chelovechnost', 'not_empty');
 					if( ! $cv->check())
 					{
-						throw new Validation_Exception($cv, 'Bad captcha');
+						throw new Jelly_Validation_Exception('user', $cv, 'Bad captcha');
 					}
 					$user->add('roles', 1);
 					$user->save();
@@ -113,10 +113,10 @@
 					$this->auth->login($user, $post['password']);
 					Request::current()->redirect('');
 				}
-				catch (Validation_Exception $exp)
+				catch (Jelly_Validation_Exception $exp)
 				{
 					$form = $post;
-					$errors = $exp->array->errors('register_form');
+					$errors = $exp->errors();
 				}
 			}
 
@@ -172,9 +172,9 @@
 					MISC::set_apply_message(__("Данные профиля успешно изменены"));
 					Request::current()->redirect("main/profile");
 				}
-				catch (Validation_Exception $exp)
+				catch (Jelly_Validation_Exception $exp)
 				{
-					$errors = $exp->array->errors('register_form');
+					$errors = $exp->errors();
 				}
 			}
 

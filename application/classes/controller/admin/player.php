@@ -28,9 +28,9 @@
 					$player->save();
 					Request::current()->redirect('admin/club/view/'.$player->club->id);
 				}
-				catch (Validation_Exception $exp)
+				catch (Jelly_Validation_Exception $exp)
 				{
-					$errors = $exp->array->errors('player');
+					$errors = $exp->errors();
 				}
 			}
 

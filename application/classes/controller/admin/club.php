@@ -39,9 +39,9 @@
 					$club->save();
 					Request::current()->redirect('admin/club/view/'.$club->id);
 				}
-				catch (Validation_Exception $exp)
+				catch (Jelly_Validation_Exception $exp)
 				{
-					$errors = $exp->array->errors('club');
+					$errors = $exp->errors();
 				}
 			}
 
@@ -88,9 +88,9 @@
 							$player->save();
 							$allow[] = $player->player_name(false);
 						}
-						catch (Validation_Exception $exp)
+						catch (Jelly_Validation_Exception $exp)
 						{
-							$errors[] = $player->player_name().": ".implode(",", $exp->array->errors('player'));
+							$errors[] = $player->player_name().": ".implode(",", $exp->errors());
 						}
 					}
 				}
@@ -207,7 +207,7 @@
 					}
 					catch (Exception $exp)
 					{
-						$errors[] = $player->player_name().": ".implode(",", $exp->array->errors('player'));
+						$errors[] = $player->player_name().": ".implode(",", $exp->errors());
 					}
 				}
 			}

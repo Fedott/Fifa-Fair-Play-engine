@@ -33,9 +33,9 @@ class Controller_Ajax_Comment extends Controller_Template
 					),
 				);
 			}
-			catch (Validation_Exception $exp)
+			catch (Jelly_Validation_Exception $exp)
 			{
-				$errors = $exp->array->errors('comment_errors');
+				$errors = $exp->errors();
 				
 				$return = array(
 					'complete' => false,
