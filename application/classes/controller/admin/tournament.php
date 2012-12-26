@@ -185,7 +185,114 @@
 			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".
 					HTML::anchor('admin/tournament', 'Управление турнирами')." > ".
 					HTML::anchor('admin/tournament/view/'.$line->table->id, 'Турнир '.$line->table->name)." > ".
-					HTML::anchor('admin/tournament/line_view/'.$line->club->id, 'Команда '.$line->club->name)." > ";
+					HTML::anchor('admin/tournament/line_view/'.$line->id, 'Команда '.$line->club->name)." > ";
+		}
+
+		public function action_line_matches($line_id)
+		{
+			$line = Jelly::select('line', $line_id);
+
+			$matches_asc = Jelly::select('match')
+				->line($line->id)
+				->order_by('date', 'asc')
+				->execute();
+
+			$played_matches = array();
+			foreach ($matches_asc as $match)
+			{
+				if($match->home->id == $line->id)
+				{
+					if(!isset($played_matches[$match->away->id]['count']))
+						$played_matches[$match->away->id]['count'] = 1;
+					else
+						$played_matches[$match->away->id]['count']++;
+					$played_matches[$match->away->id][$played_matches[$match->away->id]['count']] = $match;
+				}
+				else
+				{
+					if(!isset($played_matches[$match->home->id]['count']))
+						$played_matches[$match->home->id]['count'] = 1;
+					else
+						$played_matches[$match->home->id]['count']++;
+					$played_matches[$match->home->id][$played_matches[$match->home->id]['count']] = $match;
+				}
+			}
+
+			$view = View::factory('admin/line_matches');
+			$view->line = $line;
+			$view->played_matches = $played_matches;
+
+			$this->template->title = __('Матчи');
+			$this->template->content = $view;
+			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".
+				HTML::anchor('admin/tournament', 'Управление турнирами')." > ".
+				HTML::anchor('admin/tournament/view/'.$line->table->id, 'Турнир '.$line->table->name)." > ".
+				HTML::anchor('admin/tournament/line_view/'.$line->id, 'Команда '.$line->club->name)." > ";
+		}
+
+		public function action_line_new_tech_lose($home_id, $away_id)
+		{
+			/** @var $line Model_Line */
+			/** @var $home Model_Line */
+			$line = $home = Jelly::select('line', $home_id);
+			/** @var $away Model_Line */
+			$away = Jelly::select('line', $away_id);
+			/** @var $comment Model_Comment */
+			$comment = Jelly::factory('comment');
+
+			if($_POST)
+			{
+				try
+				{
+					$comment->set(arr::extract($_POST, array('text')));
+					$comment->validate();
+
+					/** @var $match Model_Match */
+					$match = Jelly::factory('match');
+					$match->home = $home;
+					$match->away = $away;
+					$match->home_goals = 0;
+					$match->away_goals = 3;
+					$match->confirm = true;
+					$match->table = $home->table;
+					$match->save();
+
+					// Засчитываем поражение домашней команде
+					$home->lose++;
+					$home->passed_goals += 3;
+					$home->save();
+
+					// Засчитываем победу команде гостей
+					$away->win++;
+					$away->points += 3;
+					$away->goals += 3;
+					$away->save();
+
+					$comment->text = "Техническое поражение.<br/>Причина:<br/>" . $comment->text;
+					$comment->match = $match;
+					$comment->author = $this->user;
+					$comment->save();
+
+					MISC::set_apply_message('Техническое поражение засчитано');
+					Request::instance()->redirect('admin/tournament/line_matches/'.$line->id);
+				}
+				catch (Validate_Exception $exp) {
+					$errors = $exp->array->errors('new_tech_lose');
+				}
+			}
+
+			$view = View::factory('admin/line_new_tech_lose');
+			$view->home = $home;
+			$view->away = $away;
+			$view->comment = $comment;
+
+			$this->template->title = __('Назначение технического поражения');
+			$this->template->content = $view;
+			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".
+				HTML::anchor('admin/tournament', 'Управление турнирами')." > ".
+				HTML::anchor('admin/tournament/view/'.$line->table->id, 'Турнир '.$line->table->name)." > ".
+				HTML::anchor('admin/tournament/line_view/'.$line->id, 'Команда '.$line->club->name)." > ".
+				HTML::anchor('admin/tournament/line_matches/'.$line->club->id, 'Матчи ') .' > ';
 		}
 
 		public function action_trophy_edit($id = NULL)

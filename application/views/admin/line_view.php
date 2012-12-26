@@ -10,6 +10,9 @@
 		<?=html::anchor('admin/tournament/line_coach/'.$line->id, 'Сменить управляющего командой');?>
 	</li>
 	<li>
+		<?=html::anchor('admin/tournament/line_matches/'.$line->id, 'Матчи');?>
+	</li>
+	<li>
 		<?=html::anchor('admin/tournament/line_trophy/'.$line->id, 'Назначить трофей');?>
 	</li>
 </ul>

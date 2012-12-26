@@ -1,5 +1,8 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
+	/**
+	 * @property $user
+	 */
 	class Controller_Template extends Kohana_Controller_Template
 	{
 		public $template = 'fifa';

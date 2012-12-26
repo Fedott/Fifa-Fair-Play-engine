@@ -1,5 +1,12 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
+/**
+ * @property $id
+ * @property $text
+ * @property $date
+ * @property $author
+ * @property $match
+ */
 class Model_Comment extends Jelly_Model
 {
 	public static function initialize(Jelly_Meta $meta)

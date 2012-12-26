@@ -115,7 +115,7 @@ Route::set('widget', 'widget/<action>(/<param1>(/<param2>(/<param3>)))')
 		->defaults(array(
 			'controller' => 'widget',
 		));
-Route::set('admin', 'admin(/<controller>(/<action>(/<id>)))')
+Route::set('admin', 'admin(/<controller>(/<action>(/<id>(/<other_id>))))')
 	->defaults(array(
 		'directory'  => 'admin',
 		'controller' => 'main',
