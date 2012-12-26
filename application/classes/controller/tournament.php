@@ -90,7 +90,6 @@
 					->select(array('SUM("count")', 'goals'))
 					->from('goals')
 					->group_by('player_id')
-					->limit(10)
 					->order_by('goals', 'DESC')
 					->where('table_id', "=", $tournament->id)
 					->where("line_id", "=", $line->id)
