@@ -538,6 +538,13 @@ ul.match_commnets p.comment_text {
 }
 
 /**
+ * Страница регистрации матча
+ */
+a.add_goal_select_home {
+	cursor: pointer;
+}
+
+/**
  * Страница команды в турнире
  */
 table.season_info {
