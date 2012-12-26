@@ -25,9 +25,7 @@
 </head>
 <body>
 	<div id="center">
-		<div id="head" onClick="window.location='/'" style="cursor:pointer">
-			
-		</div>
+		<a id="head" href="<?=URL::base();?>"></a>
 <!--		<div id="menu">
 			<div id="menu_left"></div>
 			<div id="menu_center">

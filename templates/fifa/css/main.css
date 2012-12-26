@@ -19,6 +19,7 @@ body {
 #head {
 	height: 150px;
 	background: url('../img/logo.jpg');
+	display: block;
 }
 
 #menu {
