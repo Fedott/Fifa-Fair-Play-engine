@@ -351,6 +351,11 @@
 					->where("match_id", "=", $match->id)
 					->where("line_id", "=", $match->away->id)
 					->execute();
+			$other_matches = Jelly::select('match')
+				->and_where('home_id', 'IN', array($match->home->id, $match->away->id))
+				->and_where('away_id', 'IN', array($match->home->id, $match->away->id))
+				->and_where('id', '!=', $match->id)
+				->execute();
 			$comments = Jelly::select('comment')
 					->where("match_id", "=", $match->id)
 					->execute();
@@ -366,11 +371,12 @@
 				);
 			}
 
-			$view = new View("match_view");
+			$view = View::factory("match_view");
 			$view->home_goals = $home_goals;
 			$view->away_goals = $away_goals;
 			$view->match = $match;
 			$view->comments = $comments_array;
+			$view->other_matches = $other_matches;
 
 			$this->template->title = __('Просмотр матча');
 			$this->template->content = $view;

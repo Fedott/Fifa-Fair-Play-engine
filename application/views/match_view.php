@@ -106,6 +106,22 @@ jQuery( function($) {
 	</tbody>
 </table>
 
+
+<?if($other_matches->count()):?>
+	<div class="other_matches">
+		Другие матчи команд:<br/>
+		<?foreach($other_matches as $omatch):?>
+		<?=$omatch->home->club->name;?>
+		<a href="<?=URL::site('match/view/'.$omatch->id);?>">
+		<?=$omatch->home_goals;?>
+		-
+		<?=$omatch->away_goals;?></a>
+		<?=$omatch->away->club->name;?>
+		<br/>
+		<?endforeach;?>
+	</div>
+<?endif;?>
+
 <div class="comments">
 	<h4>Комментарии к матчу:</h4>
 	

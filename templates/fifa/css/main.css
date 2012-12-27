@@ -482,6 +482,15 @@ ul.home_goals {
 	text-align: right;
 }
 
+.other_matches {
+	text-align: center;
+	font-size: 12px;
+	margin: 5px;
+}
+
+/**
+ * Коментарии на странице матча
+ */
 div.comment {
 	clear: left;
 	background-color: #F7FFF4;
