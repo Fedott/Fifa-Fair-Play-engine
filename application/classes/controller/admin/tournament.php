@@ -254,21 +254,11 @@
 					$match->away = $away;
 					$match->home_goals = 0;
 					$match->away_goals = 3;
-					$match->confirm = true;
 					$match->table = $home->table;
 					$match->tech = true;
 					$match->save();
 
-					// Засчитываем поражение домашней команде
-					$home->lose++;
-					$home->passed_goals += 3;
-					$home->save();
-
-					// Засчитываем победу команде гостей
-					$away->win++;
-					$away->points += 3;
-					$away->goals += 3;
-					$away->save();
+					$match->commit();
 
 					$comment->text = "Техническое поражение.<br/>Причина:<br/>" . $comment->text;
 					$comment->match = $match;

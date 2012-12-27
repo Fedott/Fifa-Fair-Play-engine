@@ -381,6 +381,7 @@
 
 		public function action_confirm($mid)
 		{
+			/** @var $match Model_Match */
 			$match = Jelly::select('match')
 					->where("id", "=", $mid)
 					->limit(1)
@@ -404,37 +405,7 @@
 					$comment->save();
 				}
 
-				$home = $match->home;
-				$away = $match->away;
-				$home->goals += $match->home_goals;
-				$away->goals += $match->away_goals;
-				$home->passed_goals += $match->away_goals;
-				$away->passed_goals += $match->home_goals;
-				if($match->home_goals == $match->away_goals)
-				{
-					$home->points += 1;
-					$away->points += 1;
-					$home->drawn++;
-					$away->drawn++;
-				}
-				elseif ($match->home_goals > $match->away_goals)
-				{
-					$home->points += 3;
-					$home->win++;
-					$away->lose++;
-				}
-				elseif ($match->home_goals < $match->away_goals)
-				{
-					$away->points += 3;
-					$home->lose++;
-					$away->win++;
-				}
-				$home->games++;
-				$away->games++;
-				$home->save();
-				$away->save();
-				$match->confirm = 1;
-				$match->save();
+				$match->commit();
 				Request::instance()->redirect('match/view/'.$match->id);
 			}
 
