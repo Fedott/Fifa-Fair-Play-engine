@@ -465,6 +465,7 @@
 
 		public function action_delete($mid)
 		{
+			/** @var $match Model_Match */
 			$match = Jelly::select('match', $mid);
 			if($match->home->user->id != $this->user->id)
 			{

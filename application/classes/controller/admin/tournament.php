@@ -288,6 +288,45 @@
 				HTML::anchor('admin/tournament/line_matches/'.$line->club->id, 'Матчи ') .' > ';
 		}
 
+		public function action_line_delete_force($line_id)
+		{
+			/** @var $line Model_Line */
+			$line = Jelly::select('line', $line_id);
+
+			if( ! $line->loaded())
+				throw new Kohana_Request_Exception('Страница не найдена', array($line_id), 404);
+
+			if($_POST)
+			{
+				$matches = Jelly::select('match')
+					->line($line->id)
+					->execute();
+
+				/** @var $match Model_Match */
+				foreach($matches as $match)
+				{
+					$match->as_array();
+					$match->rollback();
+					$match->delete();
+				}
+
+				$table_id = $line->table->id;
+				$line->delete();
+				MISC::set_apply_message('Команда успешно выпилена из турнира. Все результаты игр анулированы');
+				Request::instance()->redirect('admin/tournament/view/'.$table_id);
+			}
+
+			$view = View::factory('admin/line_delete_force');
+			$view->line = $line;
+
+			$this->template->title = __("Полное удаление команды из турнира");
+			$this->template->content = $view;
+			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".
+				HTML::anchor('admin/tournament', 'Управление турнирами')." > ".
+				HTML::anchor('admin/tournament/view/'.$line->table->id, 'Турнир '.$line->table->name)." > ".
+				HTML::anchor('admin/tournament/line_view/'.$line->id, 'Команда '.$line->club->name)." > ";
+		}
+
 		public function action_trophy_edit($id = NULL)
 		{
 			if($id == NULL)

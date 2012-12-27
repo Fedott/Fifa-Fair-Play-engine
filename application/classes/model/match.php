@@ -101,9 +101,63 @@ class Model_Match extends Jelly_Model
 
 		$this->confirm = true;
 
-		$this->save();
 		$home->save();
 		$away->save();
+		$this->save();
+
+		return true;
+	}
+
+	public function rollback()
+	{
+		if( ! $this->confirm)
+			return false;
+
+
+		/** @var $home Model_Line */
+		$home = Jelly::select('line', $this->home->id);
+		/** @var $away Model_Line */
+		$away = Jelly::select('line', $this->away->id);
+
+		// Начисляем очки и меняем количестви побед/поражений/ничьих
+		if($this->home_goals == $this->away_goals)
+		{
+			$home->points -= 1;
+			$away->points -= 1;
+
+			$home->drawn--;
+			$away->drawn--;
+		}
+		else if($this->home_goals > $this->away_goals)
+		{
+			$home->points -= 3;
+
+			$home->win--;
+			$away->lose--;
+		}
+		else if($this->home_goals < $this->away_goals)
+		{
+			$away->points -= 3;
+
+			$home->lose--;
+			$away->win--;
+		}
+
+		// Меняем статистику по забитым/пропущеным
+		$home->goals -= $this->home_goals;
+		$home->passed_goals -= $this->away_goals;
+		$away->goals -= $this->away_goals;
+		$away->passed_goals -= $this->home_goals;
+
+		// Увеличиваем количество сыгранных игр
+		$away->games--;
+		$home->games--;
+
+		$this->confirm = false;
+
+		$home->save();
+		$away->save();
+		$this->save();
 
 		return true;
 	}

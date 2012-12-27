@@ -15,4 +15,7 @@
 	<li>
 		<?=html::anchor('admin/tournament/line_trophy/'.$line->id, 'Назначить трофей');?>
 	</li>
+	<li>
+		<?=html::anchor('admin/tournament/line_delete_force/'.$line->id, 'Удалать команду вместе с результатами', array('class' => 'red'));?>
+	</li>
 </ul>
