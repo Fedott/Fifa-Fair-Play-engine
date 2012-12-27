@@ -9,6 +9,7 @@
  * @property $home_goals
  * @property $away_goals
  * @property $confirm
+ * @property $tech
  * @property $comments
  */
 class Model_Match extends Jelly_Model
@@ -34,6 +35,9 @@ class Model_Match extends Jelly_Model
 				'home_goals' => new Field_Integer,
 				'away_goals' => new Field_Integer,
 				'confirm' => new Field_Boolean(array(
+					'default' => 0,
+				)),
+				'tech' => Jelly::field('boolean', array(
 					'default' => 0,
 				)),
 				'comments' => new Field_HasMany(),

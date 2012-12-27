@@ -572,6 +572,10 @@ p.not_play,
 	color: red;
 }
 
+p.tech_match {
+	color: red;
+}
+
 .popup_profile {
 	position: absolute;
 	display: none;

@@ -94,6 +94,7 @@ CREATE TABLE IF NOT EXISTS `matches` (
   `home_goals` int(11) unsigned NOT NULL,
   `away_goals` int(11) unsigned NOT NULL,
   `confirm` tinyint(1) NOT NULL,
+  `tech` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 DROP TRIGGER IF EXISTS `increment_count_matches`;

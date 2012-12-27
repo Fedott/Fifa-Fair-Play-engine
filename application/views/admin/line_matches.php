@@ -33,17 +33,15 @@
 			<?for($i = 1; $i <= $line->table->matches; $i++):?>
 			<td>
 				<?if(arr::path($played_matches, $ll->id.".count", 0) >= $i):?>
-					<p class="play">Сыгран (<?php
-						if (($played_matches[$ll->id][$i]->home->id == $line->id AND $played_matches[$ll->id][$i]->home_goals > $played_matches[$ll->id][$i]->away_goals) OR ($played_matches[$ll->id][$i]->home->id != $line->id AND $played_matches[$ll->id][$i]->home_goals < $played_matches[$ll->id][$i]->away_goals))
-						{
-							echo "<font class='green'>".$played_matches[$ll->id][$i]->home_goals." - ".$played_matches[$ll->id][$i]->away_goals."</font>";
-						}
-						else
-						{
-							echo "<font class='red'>".$played_matches[$ll->id][$i]->home_goals." - ".$played_matches[$ll->id][$i]->away_goals."</font>";
-						}
-						?>)
-					</p>
+					<?if($played_matches[$ll->id][$i]->tech):?>
+						<p class="tech_match">
+							Технический (<?=$played_matches[$ll->id][$i]->home_goals." - ".$played_matches[$ll->id][$i]->away_goals;?>)
+						</p>
+					<?else:?>
+						<p class="play">
+							Сыгран (<?=$played_matches[$ll->id][$i]->home_goals." - ".$played_matches[$ll->id][$i]->away_goals;?>)
+						</p>
+					<?endif;?>
 				<?else:?>
 					<p class="not_play"><?=html::anchor('admin/tournament/line_new_tech_lose/'.$line->id.'/'.$ll->id, 'Тех поражение');?></p>
 				<?endif;?>

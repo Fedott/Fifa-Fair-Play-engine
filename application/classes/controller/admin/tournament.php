@@ -239,6 +239,7 @@
 			$away = Jelly::select('line', $away_id);
 			/** @var $comment Model_Comment */
 			$comment = Jelly::factory('comment');
+			$errors = array();
 
 			if($_POST)
 			{
@@ -255,6 +256,7 @@
 					$match->away_goals = 3;
 					$match->confirm = true;
 					$match->table = $home->table;
+					$match->tech = true;
 					$match->save();
 
 					// Засчитываем поражение домашней команде
@@ -285,6 +287,7 @@
 			$view->home = $home;
 			$view->away = $away;
 			$view->comment = $comment;
+			$view->errors = $errors;
 
 			$this->template->title = __('Назначение технического поражения');
 			$this->template->content = $view;
