@@ -106,6 +106,15 @@ jQuery( function($) {
 	</tbody>
 </table>
 
+<?if(count($match->videos)):?>
+	<div class="match_videos">
+		Видео матча:<br />
+		<?foreach($match->videos as $video):?>
+			<?=HTML::anchor('http://youtu.be/'.$video->youtube_key, $video->title);?><br />
+		<?endforeach;?>
+	</div>
+<?endif;?>
+
 
 <?if($other_matches->count()):?>
 	<div class="other_matches">

@@ -482,4 +482,49 @@
 			MISC::set_apply_message(__("Матч успешно удалён"));
 			Request::instance()->redirect('match/my');
 		}
+
+		public function action_video_upload($match_id)
+		{
+
+			$errors = array();
+
+			/** @var $video Model_Video */
+			$video = Jelly::factory('video');
+			/** @var $match Model_Match */
+			$match = Jelly::select('match', $match_id);
+
+			if($_POST AND isset($_FILES))
+			{
+				$video->title = arr::get($_POST, 'title');
+				$video->description = arr::get($_POST, 'description');
+				$video->match = $match;
+				$youtube_title = "КФ: ".$video->title;
+				$youtube_description = "КФ, Матч: ".$match->home->club->name." ".$match->home_goals." - ".$match->away_goals." ".$match->away->club->name;
+				$youtube_description.= "\n".$video->description."\n";
+				$youtube_description.= "Чемпионат красивый футбол http://fifafairplay.ru";
+				if($video->youtube_upload($_FILES['video']['tmp_name'], $youtube_title, $youtube_description, $_FILES['video']['name']))
+				{
+					$video->save();
+					MISC::set_apply_message('Видео успешно загружено');
+					Request::instance()->redirect('match/view/'.$match->id);
+				}
+			}
+
+			$view = View::factory('video_upload');
+			$view->errors = $errors;
+			$view->video = $video;
+			$view->match = $match;
+
+			$this->template->title = 'Загрузка видео к матчу';
+			$this->template->content = $view;
+		}
+
+		public function action_video_show($video_id)
+		{
+			/** @var $video Model_video */
+			$video = Jelly::select('video', $video_id);
+
+			$this->template->title = $video->title;
+			$this->template->content = $video->frame_code();
+		}
 	}
