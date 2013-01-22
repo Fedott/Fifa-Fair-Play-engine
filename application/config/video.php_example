@@ -1,0 +1,11 @@
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+
+return array
+(
+	'youtube' => array(
+		'login' => 'login@gmail.com',
+		'password' => 'password',
+		'dev_key' => 'API_KEY',
+		'app_id' => 'app_id',
+	),
+);
