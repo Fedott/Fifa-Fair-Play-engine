@@ -488,6 +488,12 @@ ul.home_goals {
 	margin: 5px;
 }
 
+.match_videos {
+	background-color: mintcream;
+	font-size: 14px;
+	text-align: center;
+}
+
 /**
  * Коментарии на странице матча
  */

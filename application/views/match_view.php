@@ -29,6 +29,11 @@ jQuery( function($) {
 			}
 		};
 		$("#comment_add_form").ajaxForm(options);
+
+		$("a.youtube").YouTubePopup({
+			autoplay: 0,
+			clickOutsideClose: true
+		});
 	});
 })
 </script>
@@ -110,13 +115,16 @@ jQuery( function($) {
 	<div class="match_videos">
 		Видео матча:<br />
 		<?foreach($match->videos as $video):?>
-			<?=HTML::anchor('http://youtu.be/'.$video->youtube_key, $video->title);?><br />
+			<?=HTML::anchor('http://youtu.be/'.$video->youtube_key, $video->title, array('class' => 'youtube', 'title' => HTML::chars($video->description), 'rel' => $video->youtube_key));?><br />
 		<?endforeach;?>
 	</div>
 <?endif;?>
 
+<?if($user->id == $match->home->user_id() OR $user->id == $match->away->user_id() OR $auth->logged_in('admin')):?>
+	<?=HTML::anchor('match/video_upload/'.$match->id, 'Добавить видео к матчу');?>
+<?endif;?>
 
-<?if($other_matches->count()):?>
+	<?if($other_matches->count()):?>
 	<div class="other_matches">
 		Другие матчи команд:<br/>
 		<?foreach($other_matches as $omatch):?>
@@ -136,7 +144,7 @@ jQuery( function($) {
 	
 </div>
 <img id="comment_add_loadbar" src="/templates/fifa/img/ajax_load_bar.gif" style="display: none;"/>
-<?if(Auth::instance()->logged_in()):?>
+<?if($auth->logged_in()):?>
 	<?=form::open('ajax/comment/add', array('id' => 'comment_add_form'));?>
 		<h4>Добавить комментарий</h4>
 		<?php echo Form::textarea('comment_text', '', array(

@@ -377,6 +377,8 @@
 			$view->match = $match;
 			$view->comments = $comments_array;
 			$view->other_matches = $other_matches;
+			$view->auth = $this->auth;
+			$view->user = $this->user;
 
 			$this->template->title = __('Просмотр матча');
 			$this->template->content = $view;
@@ -485,8 +487,11 @@
 
 		public function action_video_upload($match_id)
 		{
-
 			$errors = array();
+			$form = array(
+				'title' => '',
+				'description' => '',
+			);
 
 			/** @var $video Model_Video */
 			$video = Jelly::factory('video');
@@ -495,18 +500,28 @@
 
 			if($_POST AND isset($_FILES))
 			{
-				$video->title = arr::get($_POST, 'title');
-				$video->description = arr::get($_POST, 'description');
-				$video->match = $match;
-				$youtube_title = "КФ: ".$video->title;
-				$youtube_description = "КФ, Матч: ".$match->home->club->name." ".$match->home_goals." - ".$match->away_goals." ".$match->away->club->name;
-				$youtube_description.= "\n".$video->description."\n";
-				$youtube_description.= "Чемпионат красивый футбол http://fifafairplay.ru";
-				if($video->youtube_upload($_FILES['video']['tmp_name'], $youtube_title, $youtube_description, $_FILES['video']['name']))
+				try
 				{
-					$video->save();
-					MISC::set_apply_message('Видео успешно загружено');
-					Request::instance()->redirect('match/view/'.$match->id);
+					$video->title = arr::get($_POST, 'title');
+					$video->description = arr::get($_POST, 'description');
+					$video->match = $match;
+					$youtube_title = "КФ: ".$video->title;
+					$youtube_description = "КФ, турнир: ".$match->table->title;
+					$youtube_description.= "Матч: ".$match->home->club->name." ".$match->home_goals." - ".$match->away_goals." ".$match->away->club->name;
+					$youtube_description.= "\n".$video->description."\n";
+					$youtube_description.= "Чемпионат красивый футбол http://fifafairplay.ru";
+					$video->validate();
+					if($video->youtube_upload($_FILES['video']['tmp_name'], $youtube_title, $youtube_description, $_FILES['video']['name']))
+					{
+						$video->save();
+						MISC::set_apply_message('Видео успешно загружено');
+						Request::instance()->redirect('match/view/'.$match->id);
+					}
+				}
+				catch (Validate_Exception $e)
+				{
+					$errors = $e->array->errors('video_upload');
+					$form = $video->as_array('title', 'description');
 				}
 			}
 
@@ -514,6 +529,7 @@
 			$view->errors = $errors;
 			$view->video = $video;
 			$view->match = $match;
+			$view->form = $form;
 
 			$this->template->title = 'Загрузка видео к матчу';
 			$this->template->content = $view;

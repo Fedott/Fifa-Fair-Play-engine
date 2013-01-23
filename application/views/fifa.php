@@ -10,17 +10,21 @@
 	<meta name="description" Content="Чемпионат Красивый футбол сайт где проводится чемпионат по игре FIFA Soccer. Сдесь в этом чемпионате играют только в красивый футбол, без багов, без задротства. Чемпионат создан для получения удовольствия от игры в футбол на виртуальных полях.">
 
 	<?=HTML::style('templates/fifa/css/reset.css');?>
+	<?=HTML::style('http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.3/themes/redmond/jquery-ui.css');?>
 	<?=HTML::style('templates/fifa/css/main.css');?>
 	<?=HTML::style('templates/fifa/css/form.css');?>
 	<?=HTML::style('templates/fifa/css/forum.css');?>
 	<?=HTML::style('templates/fifa/js/jwysiwyg/jquery.wysiwyg.css');?>
+
 	<?=HTML::script('templates/fifa/js/jquery.js');?>
+	<?=HTML::script('templates/fifa/js/jquery-ui.js');?>
 	<?=HTML::script('templates/fifa/js/jquery.listen.js');?>
 	<?=HTML::script('templates/fifa/js/jquery.corner.js');?>
 	<?=HTML::script('templates/fifa/js/jquery.popup.js');?>
 	<?=HTML::script('templates/fifa/js/jquery.form.js');?>
 	<?=HTML::script('templates/fifa/js/jquery.tmpl.js');?>
 	<?=HTML::script('templates/fifa/js/jwysiwyg/jquery.wysiwyg.js');?>
+	<?=HTML::script('templates/fifa/js/jquery.youtubepopup.js');?>
 	<?=HTML::script('templates/fifa/js/main.js');?>
 </head>
 <body>

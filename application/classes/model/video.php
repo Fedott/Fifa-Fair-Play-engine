@@ -16,8 +16,18 @@ class Model_Video extends Jelly_Model
 		$meta->fields(array(
 			'id' => Jelly::field('primary'),
 			'youtube_key' => Jelly::field('string'),
-			'title' => Jelly::field('string'),
-			'description' => Jelly::field('string'),
+			'title' => Jelly::field('string', array(
+				'rules' => array(
+					'not_empty' => array(TRUE),
+					'max_length' => array(255),
+					'min_length' => array(3),
+				),
+			)),
+			'description' => Jelly::field('string', array(
+				'rules' => array(
+					'max_length' => array(255),
+				),
+			)),
 			'match' => Jelly::field('BelongsTo'),
 		));
 	}
@@ -79,12 +89,18 @@ class Model_Video extends Jelly_Model
 		}
 		catch (Zend_Gdata_App_HttpException $e)
 		{
-			echo $e->getRawResponseBody();
+			$e->getRawResponseBody();
+			$validation = Validate::factory(array('video'));
+			$validation->error('video', $e->getRawResponseBody());
+			throw new Validate_Exception($validation);
 			return FALSE;
 		}
 		catch (Zend_Gdata_App_Exception $e)
 		{
 			echo $e->getMessage();
+			$validation = Validate::factory(array('video'));
+			$validation->error('video', $e->getMessage());
+			throw new Validate_Exception($validation);
 			return FALSE;
 		}
 
