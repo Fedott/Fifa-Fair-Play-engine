@@ -448,7 +448,10 @@
 		public function action_my()
 		{
 			if(!$this->auth->logged_in('coach'))
-				throw new Kohana_Exception ("permitdenided");
+			{
+				MISC::set_error_message('Что бы просмотреть список ваших матчей вам необходимо авторизироваться');
+				$this->request->redirect('login');
+			}
 
 			$uncmatches = Jelly::select('match')
 					->where('away.user_id', "=", $this->user->id)

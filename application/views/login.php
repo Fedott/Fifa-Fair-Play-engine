@@ -1,5 +1,5 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
-<h2>Регистрация</h2>
+<h2>Авторизация</h2>
 <?if($errors):?>
 <div class="errors">
 	Вы допустили следующие ошибки:
