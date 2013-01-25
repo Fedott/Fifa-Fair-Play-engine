@@ -487,16 +487,26 @@
 
 		public function action_video_upload($match_id)
 		{
+			/** @var $video Model_Video */
+			$video = Jelly::factory('video');
+			/** @var $match Model_Match */
+			$match = Jelly::select('match', $match_id);
+
+			if( ! $this->auth->logged_in())
+			{
+				MISC::set_error_message('Что бы добавить видео к матчу вам необходимо авторизоваться');
+				Request::instance()->redirect('match/view/'.$match_id);
+			}
+			if( ! ($this->user->id == $match->home->user_id() OR $this->user->id == $match->away->user_id() ) AND ! $this->auth->logged_in('admin'))
+			{
+				MISC::set_error_message('У вас нет прав для добавления видео. Видео можно добавлять, только к своим матчам.');
+				Request::instance()->redirect('match/view/'.$match_id);
+			}
 			$errors = array();
 			$form = array(
 				'title' => '',
 				'description' => '',
 			);
-
-			/** @var $video Model_Video */
-			$video = Jelly::factory('video');
-			/** @var $match Model_Match */
-			$match = Jelly::select('match', $match_id);
 
 			if($_POST AND isset($_FILES))
 			{
