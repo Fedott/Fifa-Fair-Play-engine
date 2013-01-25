@@ -543,6 +543,10 @@
 
 			$this->template->title = 'Загрузка видео к матчу';
 			$this->template->content = $view;
+			$this->template->breadcrumb = HTML::anchor('', 'Главная')." > "
+				.HTML::anchor('tournament', __('Турниры'))." > "
+				.HTML::anchor('tournament/view/'.$match->table->id, $match->table->name)." > "
+				.HTML::anchor('match/view/'.$match->id, "Матч: ".$match->home->club->name." ".$match->home_goals." - ".$match->away_goals." ".$match->away->club->name)." > ";
 		}
 
 		public function action_video_show($video_id)

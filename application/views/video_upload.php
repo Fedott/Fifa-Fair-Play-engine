@@ -38,6 +38,8 @@
 		</label>
 		<div>
 			<input class="field text medium" type="file" name="video" id="video">
+			<input type="hidden" name="MAX_FILE_SIZE" value="104857600" />
+			<label for="description">До <b>100</b> мегабайт</label>
 		</div>
 	</li>
 	<li>
