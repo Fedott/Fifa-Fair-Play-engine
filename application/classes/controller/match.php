@@ -49,6 +49,7 @@
 			$clubs_arr = array();
 			$matches_ids = array();
 			$comments_arr = array();
+			$videos_ids = array();
 			foreach($matches as $match)
 			{
 				$clubs_like[$match->home->club_id()] = $match->home->club_id();
@@ -76,6 +77,16 @@
 				{
 					$comments_arr[$comment->match_id()][] = $comment;
 				}
+
+				/** @var $videos Jelly_Collection */
+				$videos = Jelly::select('video')
+						->where('match_id', 'IN', $matches_ids)
+						->execute();
+
+				foreach($videos as $video)
+				{
+					$videos_ids[$video->match_id()] = $video->id;
+				}
 			}
 
 			$view = new View('matches_list');
@@ -85,6 +96,7 @@
 			$view->user = $this->user;
 			$view->clubs_arr = $clubs_arr;
 			$view->comments_arr = $comments_arr;
+			$view->videos_ids = $videos_ids;
 
 			if($tournament->loaded())
 			{

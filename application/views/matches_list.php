@@ -17,6 +17,7 @@
 				<th>Ком</th>
 				<th>Дата</th>
 				<th>Под</th>
+				<th>Др</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -54,6 +55,11 @@
 				</td>
 				<td><?=MISC::get_human_date($match->date);?></td>
 				<td><?=($match->confirm)?'<p class="green">'.__("Да").'</p>':'<p class="red">'.__("Нет").'</p>';?></td>
+				<td class="center">
+					<?if(isset($videos_ids[$match->id])):?>
+						<img src="/templates/fifa/img/video.png" title="Есть видео">
+					<?endif;?>
+				</td>
 			</tr>
 		<?endforeach;?>
 		</tbody>

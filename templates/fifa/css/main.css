@@ -16,6 +16,10 @@ body {
 	padding: 0px 19px;
 }
 
+.center {
+	text-align: center;
+}
+
 #head {
 	height: 150px;
 	background: url('../img/logo.jpg');

@@ -114,4 +114,9 @@ class Model_Video extends Jelly_Model
 	{
 		return '<iframe width="560" height="315" src="http://www.youtube.com/embed/'.$this->youtube_key.'" frameborder="0" allowfullscreen></iframe>';
 	}
+
+	public function match_id()
+	{
+		return ($this->loaded())?$this->_original['match']:FALSE;
+	}
 }
