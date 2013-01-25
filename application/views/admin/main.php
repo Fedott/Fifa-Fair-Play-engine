@@ -10,3 +10,5 @@
 <?=html::anchor('admin/news/', 'Управление новостями');?>
 <br>
 <?=html::anchor('admin/user/', 'Управление пользователями');?>
+<br>
+<?=html::anchor('admin/video/', 'Управление видео');?>
