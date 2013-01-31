@@ -4,19 +4,47 @@
 	{
 		public function action_index()
 		{
-			$count = Jelly::select('news')->count();
-			$pagination = Pagination::factory(array(
-				'total_items' => $count,
-			));
-
-			$News = Jelly::select('news')
-					->offset($pagination->offset)
-					->limit($pagination->items_per_page)
+			/** @var $table Model_Table */
+			$table = Jelly::select('table')->limit(1)->visible()->execute();
+			$last_matches = Jelly::select('match')
+					->where('table', '=', $table->id)
+					->limit(10)
 					->execute();
 
-			$view = new View('news_list');
-			$view->News = $News;
-			$view->pagination = $pagination;
+			// TODO:: Переписать к чертям. А то быдлокод
+			$res = DB::select_array(array('goals.player_id', 'goals.line_id'))
+						->select(array('SUM("count")', 'goals'))
+						->from('goals')
+						->group_by('player_id')
+						->limit(10)
+						->order_by('goals', 'DESC')
+						->where('table_id', "=", $table->id)
+						->execute();
+			$goleodors = array();
+			$players_like = array();
+			foreach ($res as $row)
+			{
+				$players_like[] = $row['player_id'];
+				$goleodors[$row['player_id']] = array('player_id' => $row['player_id'], 'goals' => $row['goals'], 'line_id' => $row['line_id']);
+			}
+
+			if(!empty($players_like))
+			{
+				$players_goals = Jelly::select('player')
+						->with('club')
+						->where(":primary_key", "IN", $players_like)
+						->execute();
+
+				foreach($players_goals as $player)
+				{
+					$goleodors[$player->id]['player'] = $player;
+				}
+			}
+
+			$view = View::factory('main');
+			$view->table = $table;
+			$view->last_matches = $last_matches;
+			$view->goleodors = $goleodors;
 
 			$this->template->title = __('Главная');
 			$this->template->content = $view;

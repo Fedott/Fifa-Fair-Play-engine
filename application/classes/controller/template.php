@@ -5,7 +5,7 @@
 	 */
 	class Controller_Template extends Kohana_Controller_Template
 	{
-		public $template = 'fifa';
+		public $template = 'ux';
 
 		public function before()
 		{
