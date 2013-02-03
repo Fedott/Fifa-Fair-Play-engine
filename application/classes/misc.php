@@ -18,6 +18,11 @@
 //			return date('d M Y H:i', $date);
 		}
 
+		public static function get_human_short_date($timestamp = NULL)
+		{
+			return strftime('%e %b', $timestamp);
+		}
+
 		public static function set_error_message($text)
 		{
 			Session::instance()->set('error_message', $text);

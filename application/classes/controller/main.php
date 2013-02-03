@@ -11,6 +11,17 @@
 					->limit(10)
 					->execute();
 
+			if($this->user->loaded())
+			{
+				$my_line = Jelly::select('line')
+						->where('table_id', "=", $table->id)
+						->and_where("user_id", "=", $this->user->id)
+						->limit(1)
+						->execute();
+			}
+			else
+				$my_line = Jelly::factory ('line');
+
 			// TODO:: Переписать к чертям. А то быдлокод
 			$res = DB::select_array(array('goals.player_id', 'goals.line_id'))
 						->select(array('SUM("count")', 'goals'))
@@ -45,6 +56,7 @@
 			$view->table = $table;
 			$view->last_matches = $last_matches;
 			$view->goleodors = $goleodors;
+			$view->my_line = $my_line;
 
 			$this->template->title = __('Главная');
 			$this->template->content = $view;
