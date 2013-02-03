@@ -151,7 +151,7 @@ jQuery( function($) {
 				'id' => 'field-comment_text',
 				'rows' => 8,
 				'cols' => 40,
-				'class' => 'textarea field wysiwyg max',
+				'class' => 'textarea field wysiwyg input-xxlarge',
 			));
 		?>
 		<?=form::hidden('match_id', $match->id);?>

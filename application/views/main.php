@@ -12,7 +12,7 @@
 					<?php if($pos >= 10) {break;}?>
 					<tr class="<?=($line->id == $my_line->id)?"info":'';?>">
 						<td><?=++$pos;?></td>
-						<td><?=HTML::anchor('tournament/line/'.$line->id, $line->club->name);?></td>
+						<td><?=HTML::anchor('tournament/club/'.$line->id, $line->club->name);?></td>
 						<td><?=$line->points;?></td>
 						<td><?=$line->goals;?> - <?=$line->passed_goals;?></td>
 					</tr>
@@ -48,6 +48,7 @@
 					<tr class="<?=($goleodor['line_id'] == $my_line->id)?'info':'';?>">
 						<td><?=$i++;?></td>
 						<td><?=$goleodor['player']->player_name(false);?></td>
+						<td><?=HTML::anchor('tournament/club/'.$goleodor['player']->club->id, $goleodor['player']->club->name);?></td>
 						<td><?=$goleodor['goals'];?></td>
 					</tr>
 				<?php endforeach;?>
