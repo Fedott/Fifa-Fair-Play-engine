@@ -87,12 +87,7 @@ jQuery( function($) {
 		});
 
 		// Включем везде где надо визуальный редактор
-		$('.wysiwyg').wysiwyg({
-			controls : {
-				html : {visible : true}
-			},
-			css : '/templates/fifa/css/wysiwyg.css'
-		});
+		$('.wysiwyg').wysihtml5();
 
 
 		// Всплывающие подсказки

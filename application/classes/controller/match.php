@@ -376,7 +376,7 @@
 			foreach($comments as $comment)
 			{
 				$comments_array[] = array(
-					'avatar_url' => url::site($comment->author->get_avatar()),
+					'avatar_url' => $comment->author->get_avatar(),
 					'username'   => $comment->author->username,
 					'date'       => misc::get_human_date($comment->date),
 					'text'       => $comment->text,

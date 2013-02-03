@@ -71,11 +71,11 @@ class Model_User extends Model_Auth_User
 	{
 		if(!empty($this->avatar))
 		{
-			return 'media/avatars/'.$this->avatar;
+			return URL::base().'media/avatars/'.$this->avatar;
 		}
 		else
 		{
-			return 'media/avatars/noava.jpg';
+			return 'http://www.gravatar.com/avatar/'.md5(strtolower($this->email)).'?d=wavatar';
 		}
 	}
 

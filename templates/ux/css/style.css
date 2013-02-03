@@ -5,3 +5,7 @@
 .right, td.right {
 	text-align: right;
 }
+
+.input-xxxlarge {
+	width: 570px;
+}
