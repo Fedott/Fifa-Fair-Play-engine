@@ -1,5 +1,10 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
+	/**
+	 * Class Controller_Admin
+	 * @property Auth $auth
+	 * @property Model_User $user
+	 */
 	abstract class Controller_Admin extends Controller_Template
 	{
 		public function before()

@@ -52,6 +52,24 @@
 				}
 			}
 
+			$lines_arr = array();
+			/** @var $lines Jelly_Collection */
+			$lines = Jelly::select('line')->where('table_id', '=', $table->id)->execute();
+			$my_line_in = false;
+			for($i = 1; count($lines_arr) < 10; $i++)
+			{
+				$line = $lines[$i - 1];
+				if($i < 10 OR $my_line_in OR ($i > 9 AND $line->id == $my_line->id))
+				{
+					$lines_arr[$i] = $line;
+				}
+
+				if($line->id == $my_line->id)
+				{
+					$my_line_in = true;
+				}
+			}
+
 			$view = View::factory('main');
 			$view->table = $table;
 			$view->last_matches = $last_matches;

@@ -2,8 +2,6 @@
 
 	class Controller_Admin_Main extends Controller_Admin
 	{
-		public $template = 'fifa';
-
 		public function before()
 		{
 			$this->auth = Auth::instance();

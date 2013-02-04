@@ -1,5 +1,18 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
+/**
+ * Class Model_Table
+ * @property $id
+ * @property $name
+ * @property $url
+ * @property $type
+ * @property $season
+ * @property $active
+ * @property $visible
+ * @property $ended
+ * @property Jelly_Collection $lines
+ * @property $matches
+ */
 class Model_Table extends Jelly_Model
 {
 	public static function initialize(Jelly_Meta $meta)
