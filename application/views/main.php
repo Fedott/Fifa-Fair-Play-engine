@@ -8,10 +8,9 @@
 	<div class="span6">
 		<table class="table table-hover table-condensed">
 			<tbody>
-				<?php foreach($table->lines as $pos => $line):?>
-					<?php if($pos >= 10) {break;}?>
+				<?php foreach($lines as $pos => $line):?>
 					<tr class="<?=($line->id == $my_line->id)?"info":'';?>">
-						<td><?=++$pos;?></td>
+						<td><?=$pos;?></td>
 						<td><?=HTML::anchor('tournament/club/'.$line->id, $line->club->name);?></td>
 						<td><?=$line->points;?></td>
 						<td><?=$line->goals;?> - <?=$line->passed_goals;?></td>

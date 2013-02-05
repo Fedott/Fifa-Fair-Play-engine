@@ -71,6 +71,8 @@ class Controller_Admin_User extends Controller_Admin
 
 	public function action_login($user_id)
 	{
-		$this->auth;
+		$user = Jelly::select('user', $user_id);
+		$this->auth->force_login($user);
+		Request::instance()->redirect('/');
 	}
 }

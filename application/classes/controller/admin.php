@@ -2,7 +2,7 @@
 
 	/**
 	 * Class Controller_Admin
-	 * @property Auth $auth
+	 * @property Auth_Jelly $auth
 	 * @property Model_User $user
 	 */
 	abstract class Controller_Admin extends Controller_Template
