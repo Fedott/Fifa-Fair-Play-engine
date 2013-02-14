@@ -7,6 +7,9 @@
 <div class="row-fluid">
 	<div class="span6">
 		<table class="table table-hover table-condensed">
+			<caption>
+				<h4>Таблица</h4>
+			</caption>
 			<tbody>
 				<?php foreach($lines as $pos => $line):?>
 					<tr class="<?=($line->id == $my_line->id)?"info":'';?>">
@@ -17,10 +20,19 @@
 					</tr>
 				<?php endforeach;?>
 			</tbody>
+			<tfoot>
+				<tr>
+					<th/>
+					<th colspan="3"><?=HTML::anchor('tournament/view/'.$table->url, 'Полная таблица', array('class' => 'muted'));?></th>
+				</tr>
+			</tfoot>
 		</table>
 	</div>
 	<div class="span6">
 		<table class="table table-hover table-condensed">
+			<caption>
+				<h4>Матчи</h4>
+			</caption>
 			<tbody>
 				<?php foreach($last_matches as $match):?>
 					<tr>
@@ -32,6 +44,12 @@
 					</tr>
 				<?php endforeach;?>
 			</tbody>
+			<tfoot>
+			<tr>
+				<th/>
+				<th colspan="3"><?=HTML::anchor('match/list/'.$table->url, 'Все матчи', array('class' => 'muted'));?></th>
+			</tr>
+			</tfoot>
 		</table>
 	</div>
 </div>
