@@ -33,4 +33,9 @@ class Model_Table extends Jelly_Model
 			)),
 		));
 	}
+
+	public function make_schedule()
+	{
+		
+	}
 }

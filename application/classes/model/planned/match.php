@@ -2,15 +2,14 @@
 
 /**
  * @property $id
- * @property $date
- * @property $table
- * @property $home Model_Line
- * @property $away Model_Line
+ * @property Model_Table $table
+ * @property Model_Line $home
+ * @property Model_Line $away
  * @property $home_goals
  * @property $away_goals
- * @property $confirm
- * @property $tech
- * @property $comments
+ * @property $round
+ * @property $available
+ * @property $available_after
  */
 class Model_Match extends Jelly_Model
 {
