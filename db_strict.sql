@@ -127,6 +127,9 @@ CREATE TABLE IF NOT EXISTS `planned_matches` (
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
+ALTER TABLE `planned_matches` ADD `played` BOOLEAN DEFAULT 0,
+ADD `match_id` INT( 11 ) UNSIGNED ZEROFILL NULL;
+
 
 CREATE TABLE IF NOT EXISTS `news` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -326,6 +329,16 @@ CREATE TABLE IF NOT EXISTS `pro_players` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `nick` (`nick`,`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `videos` (
+	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+	`youtube_key` varchar(100) NOT NULL,
+	`title` varchar(255) NOT NULL,
+	`description` varchar(255) NOT NULL,
+	`match_id` int(10) unsigned NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 
 ALTER TABLE `comments`

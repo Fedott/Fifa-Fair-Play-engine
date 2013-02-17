@@ -10,13 +10,14 @@
  * @property $round
  * @property $available
  * @property $available_after
+ * @property $played
+ * @property Model_Match $match
  */
 class Model_Planned_Match extends Jelly_Model
 {
 	public static function initialize(Jelly_Meta $meta)
 	{
-		$meta->sorting(array('date' => 'desc'))
-			->load_with(array('table', 'home', 'away'))
+		$meta->load_with(array('table', 'home', 'away', 'match'))
 			->fields(array(
 				'id' => new Field_Primary,
 				'table' => new Field_BelongsTo,
@@ -33,6 +34,10 @@ class Model_Planned_Match extends Jelly_Model
 					'default' => false,
 				)),
 				'available_after' => Jelly::field('integer'),
+				'played' => Jelly::field('boolean', array(
+					'default' => FALSE,
+				)),
+				'match' => Jelly::field('belongsto'),
 			));
 	}
 }

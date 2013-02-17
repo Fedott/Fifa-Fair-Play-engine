@@ -42,6 +42,7 @@ class Model_Match extends Jelly_Model
 				)),
 				'comments' => new Field_HasMany(),
 				'videos' => Jelly::field('hasmany'),
+				'planned_match' => Jelly::field('hasone'),
 			));
 	}
 
