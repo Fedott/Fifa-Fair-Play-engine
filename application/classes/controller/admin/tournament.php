@@ -362,4 +362,13 @@
 					HTML::anchor('admin/tournament', 'Управление турнирами')." > ".
 					HTML::anchor('admin/tournament/view/'.$trophy->table->id, 'Турнир '.$trophy->table->name)." > ";
 		}
+
+		public function action_make_schedule($table_id)
+		{
+			/** @var $table Model_Table */
+			$table = Jelly::select('table', $table_id);
+			$matches = $table->make_schedule();
+			var_dump($matches);
+			exit;
+		}
 	}

@@ -11,7 +11,7 @@
  * @property $available
  * @property $available_after
  */
-class Model_Match extends Jelly_Model
+class Model_Planned_Match extends Jelly_Model
 {
 	public static function initialize(Jelly_Meta $meta)
 	{
@@ -29,7 +29,9 @@ class Model_Match extends Jelly_Model
 					'foreign' => 'line.id',
 				)),
 				'round' => Jelly::field('int'),
-				'available' => Jelly::field('boolean'),
+				'available' => Jelly::field('boolean', array(
+					'default' => false,
+				)),
 				'available_after' => Jelly::field('int'),
 			));
 	}
