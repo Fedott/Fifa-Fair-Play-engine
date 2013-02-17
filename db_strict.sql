@@ -115,6 +115,19 @@ END
 //
 DELIMITER ;
 
+
+CREATE TABLE IF NOT EXISTS `planned_matches` (
+	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`table_id` int(11) unsigned NOT NULL,
+	`home_id` int(11) unsigned DEFAULT NULL,
+	`away_id` int(11) unsigned DEFAULT NULL,
+	`round` int(11) unsigned NOT NULL,
+	`available_after` int(11) unsigned DEFAULT NULL,
+	`available` tinyint(1) NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+
 CREATE TABLE IF NOT EXISTS `news` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,

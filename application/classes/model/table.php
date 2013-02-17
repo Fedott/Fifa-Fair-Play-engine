@@ -12,6 +12,7 @@
  * @property $ended
  * @property Jelly_Collection $lines
  * @property $matches
+ * @property $scheduled
  */
 class Model_Table extends Jelly_Model
 {
@@ -50,7 +51,7 @@ class Model_Table extends Jelly_Model
 		));
 	}
 
-	public function make_schedule()
+	public function make_schedule($save = FALSE)
 	{
 		$matches = array();
 		$rounds = count($this->lines) * $this->matches - $this->matches;
@@ -74,7 +75,7 @@ class Model_Table extends Jelly_Model
 						}
 						if($this->_check_exists_planned_match($matches[$circle], $home_club, $away_club))
 						{
-							$matches[$circle][$round] = array('home' => $home_club, 'away' => $away_club);
+							$matches[$circle][$round][] = array('home' => $home_club, 'away' => $away_club);
 							$found = true;
 							unset($clubs[array_search($home_club, $clubs)]);
 							unset($clubs[array_search($away_club, $clubs)]);
@@ -84,7 +85,7 @@ class Model_Table extends Jelly_Model
 			}
 		}
 
-		return $this->_create_planned_matches($matches);
+		return $this->_create_planned_matches($matches, $save);
 	}
 
 	protected function _create_planned_matches($matches, $save = FALSE)

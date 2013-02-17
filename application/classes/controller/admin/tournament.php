@@ -367,8 +367,20 @@
 		{
 			/** @var $table Model_Table */
 			$table = Jelly::select('table', $table_id);
-			$matches = $table->make_schedule();
-			var_dump($matches);
-			exit;
+			if( ! $table->scheduled)
+			{
+				MISC::set_error_message('Этот турнир проводиться без расписания');
+				$this->request->redirect('admin/tournament/view/'.$table->id);
+			}
+			if(Jelly::select('planned_matches')->where('table_id', '=', $table->id)->count())
+			{
+				MISC::set_error_message('Расписание для этого турнира уже существует');
+				$this->request->redirect('admin/tournament/view/'.$table->id);
+			}
+
+			$table->make_schedule(TRUE);
+
+			MISC::set_apply_message('Расписание успешно сгенерированно');
+			$this->request->redirect('admin/tournament/view/'.$table->id);
 		}
 	}
