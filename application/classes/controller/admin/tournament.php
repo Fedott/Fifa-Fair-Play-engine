@@ -44,7 +44,7 @@
 			{
 				try
 				{
-					$tournament->set(Arr::extract($_POST, array('name', 'active', 'type', 'visible', 'ended', 'matches')));
+					$tournament->set(Arr::extract($_POST, array('name', 'active', 'type', 'visible', 'ended', 'matches', 'scheduled')));
 					$tournament->url = URL::string_to_url($tournament->name);
 					$tournament->save();
 					Request::instance()->redirect('admin/tournament/view/'.$tournament->id);

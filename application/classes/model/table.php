@@ -44,12 +44,14 @@ class Model_Table extends Jelly_Model
 			'matches' => new Field_Integer(array(
 				'default' => 2,
 			)),
+			'scheduled' => new Field_Boolean(array(
+				'default' => FALSE,
+			)),
 		));
 	}
 
 	public function make_schedule()
 	{
-		$scheduled = array();
 		$matches = array();
 		$rounds = count($this->lines) * $this->matches - $this->matches;
 		$circle_rounds = $rounds / $this->matches;

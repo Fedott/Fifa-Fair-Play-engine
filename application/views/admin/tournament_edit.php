@@ -40,6 +40,14 @@
 		</div>
 	</li>
 	<li>
+		<label class="desc" for="field-scheduled">
+			<?=__('С расписанием');?>
+		</label>
+		<div>
+			<?=$tournament->input('scheduled');?>
+		</div>
+	</li>
+	<li>
 		<label class="desc" for="field-active">
 			<?=__('Активировать');?>
 		</label>

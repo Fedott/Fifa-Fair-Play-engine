@@ -28,11 +28,11 @@ class Model_Planned_Match extends Jelly_Model
 					'column' => 'away_id',
 					'foreign' => 'line.id',
 				)),
-				'round' => Jelly::field('int'),
+				'round' => Jelly::field('integer'),
 				'available' => Jelly::field('boolean', array(
 					'default' => false,
 				)),
-				'available_after' => Jelly::field('int'),
+				'available_after' => Jelly::field('integer'),
 			));
 	}
 }

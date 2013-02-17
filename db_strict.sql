@@ -212,6 +212,9 @@ CREATE TABLE IF NOT EXISTS `tables` (
   UNIQUE KEY `url` (`url`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
+/* 17.02.13 */
+ALTER TABLE `tables` ADD `scheduled` tinyint(1) NOT NULL;
+
 CREATE TABLE IF NOT EXISTS `topics` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
