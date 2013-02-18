@@ -60,37 +60,26 @@ class Model_Table extends Jelly_Model
 		for($circle = 0; $circle < $this->matches; $circle++)
 		{
 			$matches[$circle] = array();
-			$circle_last_team = array();
-			for($round = 0; $round < $circle_rounds; $round++)
+
+			$clubs = $this->lines->as_array(NULL, 'id');
+
+			for ($ihome = 0; $ihome < count($clubs); $ihome++)
 			{
-				$clubs = $this->lines->as_array(NULL, 'id');
-
-				shuffle($clubs);
-
-				while(count($clubs) > 1)
+				for($iaway = $ihome + 1; $iaway < count($clubs); $iaway++)
 				{
-					$home_club = array_pop($clubs);
-					$club_for_home = $clubs;
-					$found = false;
-					while ( ! $found)
-					{
-						$away_club = array_pop($club_for_home);
-						if($away_club == NULL)
-						{
-							$circle_last_team[] = $home_club;
-							break;
-						}
-						if($this->_check_exists_planned_match($matches[$circle], $home_club, $away_club))
-						{
-							$matches[$circle][$round][] = array('home' => $home_club, 'away' => $away_club);
-							$found = true;
-							unset($clubs[array_search($away_club, $clubs)]);
-						}
-					}
+					$matches[$circle][] = array('home' => $clubs[$ihome], 'away' => $clubs[$iaway]);
 				}
 			}
-			var_dump($circle_last_team);
+			shuffle($matches[$circle]);
+			$shuffle = function($a)
+			{
+				shuffle($a);
+				return $a;
+			};
+			$matches[$circle] = array_map($shuffle, $matches[$circle]);
 		}
+
+		var_dump($matches);exit;
 
 		return $this->_create_planned_matches($matches, $save);
 	}
