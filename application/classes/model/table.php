@@ -53,36 +53,43 @@ class Model_Table extends Jelly_Model
 
 	public function make_schedule($save = FALSE)
 	{
+		ini_set('max_execution_time', 120);
 		$matches = array();
 		$rounds = count($this->lines) * $this->matches - $this->matches;
 		$circle_rounds = $rounds / $this->matches;
 		for($circle = 0; $circle < $this->matches; $circle++)
 		{
 			$matches[$circle] = array();
+			$circle_last_team = array();
 			for($round = 0; $round < $circle_rounds; $round++)
 			{
 				$clubs = $this->lines->as_array(NULL, 'id');
+
+				shuffle($clubs);
+
 				while(count($clubs) > 1)
 				{
+					$home_club = array_pop($clubs);
+					$club_for_home = $clubs;
 					$found = false;
 					while ( ! $found)
 					{
-						$home_club = $clubs[array_rand($clubs)];
-						$away_club = $home_club;
-						while($away_club == $home_club)
+						$away_club = array_pop($club_for_home);
+						if($away_club == NULL)
 						{
-							$away_club = $clubs[array_rand($clubs)];
+							$circle_last_team[] = $home_club;
+							break;
 						}
 						if($this->_check_exists_planned_match($matches[$circle], $home_club, $away_club))
 						{
 							$matches[$circle][$round][] = array('home' => $home_club, 'away' => $away_club);
 							$found = true;
-							unset($clubs[array_search($home_club, $clubs)]);
 							unset($clubs[array_search($away_club, $clubs)]);
 						}
 					}
 				}
 			}
+			var_dump($circle_last_team);
 		}
 
 		return $this->_create_planned_matches($matches, $save);
@@ -100,7 +107,7 @@ class Model_Table extends Jelly_Model
 					/** @var $match_object Model_Planned_Match */
 					$match_object = Jelly::factory('planned_match', $match);
 					$match_object->table = $this;
-					$match_object->round = $round + 1;
+					$match_object->round = ($round + 1) + ($circle * count($circle_matches));
 					$objects[] = $match_object;
 
 					if($save)
@@ -116,11 +123,15 @@ class Model_Table extends Jelly_Model
 
 	protected function _check_exists_planned_match($matches, $home, $away)
 	{
-		$arr1 = array('home' => $home, 'away' => $away);
-		$arr2 = array('home' => $away, 'away' => $home);
-		if(in_array($arr1, $matches) OR in_array($arr2, $matches))
+		foreach($matches as $round)
 		{
-			return false;
+			foreach($round as $match)
+			{
+				if(($match['home'] == $home AND $match['away'] == $away) OR ($match['away'] == $home AND $match['home'] == $away))
+				{
+					return false;
+				}
+			}
 		}
 
 		return true;
