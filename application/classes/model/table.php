@@ -55,31 +55,53 @@ class Model_Table extends Jelly_Model
 	{
 		ini_set('max_execution_time', 120);
 		$matches = array();
-		$rounds = count($this->lines) * $this->matches - $this->matches;
-		$circle_rounds = $rounds / $this->matches;
+		$circle_matches = array();
 		for($circle = 0; $circle < $this->matches; $circle++)
 		{
 			$matches[$circle] = array();
 
 			$clubs = $this->lines->as_array(NULL, 'id');
-
-			for ($ihome = 0; $ihome < count($clubs); $ihome++)
+			$extra_command = false;
+			if(count($clubs) % 2)
 			{
-				for($iaway = $ihome + 1; $iaway < count($clubs); $iaway++)
-				{
-					$matches[$circle][] = array('home' => $clubs[$ihome], 'away' => $clubs[$iaway]);
-				}
+				$clubs[] = -1;
+				$extra_command = true;
 			}
-			shuffle($matches[$circle]);
-			$shuffle = function($a)
-			{
-				shuffle($a);
-				return $a;
-			};
-			$matches[$circle] = array_map($shuffle, $matches[$circle]);
-		}
+			$circle_rounds = count($clubs) - 1;
 
-		var_dump($matches);exit;
+			shuffle($clubs);
+
+			$half = count($clubs) / 2;
+
+			$clubs_first_half = $clubs;
+			$clubs_second_half = array_reverse(array_splice($clubs_first_half, $half));
+			$first_club = array_shift($clubs_first_half);
+
+			for($round = 0; $round < $circle_rounds; $round++)
+			{
+				if($round)
+				{
+					$tmp = array_shift($clubs_first_half);
+					array_push($clubs_first_half, array_shift($clubs_second_half));
+					array_unshift($clubs_second_half, $tmp);
+				}
+				array_unshift($clubs_first_half, $first_club);
+				for($i = 0; $i < count($clubs_first_half); $i++)
+				{
+					$matches[$circle][$round][] = array('home' => $clubs_first_half[$i], 'away' => $clubs_second_half[$i]);
+					$circle_matches[$clubs_first_half[$i]][$clubs_second_half[$i]] = 1;
+					$circle_matches[$clubs_second_half[$i]][$clubs_first_half[$i]] = 1;
+				}
+				array_shift($clubs_first_half);
+			}
+
+			if($extra_command)
+			{
+				var_dump($circle_rounds, $matches);
+				$matches[$circle] = $this->_clear_extra_command($matches[$circle]);
+				var_dump($matches);exit;
+			}
+		}
 
 		return $this->_create_planned_matches($matches, $save);
 	}
@@ -110,19 +132,19 @@ class Model_Table extends Jelly_Model
 		return $objects;
 	}
 
-	protected function _check_exists_planned_match($matches, $home, $away)
+	protected function _clear_extra_command($matches)
 	{
-		foreach($matches as $round)
+		foreach($matches as $key => $round)
 		{
-			foreach($round as $match)
+			foreach($round as $key_match => $match)
 			{
-				if(($match['home'] == $home AND $match['away'] == $away) OR ($match['away'] == $home AND $match['home'] == $away))
+				if($match['home'] == -1 OR $match['away'] == -1)
 				{
-					return false;
+					unset($matches[$key][$key_match]);
 				}
 			}
 		}
 
-		return true;
+		return $matches;
 	}
 }

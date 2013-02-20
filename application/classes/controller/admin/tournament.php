@@ -380,8 +380,6 @@
 
 			$table->make_schedule(TRUE);
 
-			exit;
-
 			MISC::set_apply_message('Расписание успешно сгенерированно');
 			$this->request->redirect('admin/tournament/view/'.$table->id);
 		}
