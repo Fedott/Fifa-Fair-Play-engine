@@ -97,9 +97,7 @@ class Model_Table extends Jelly_Model
 
 			if($extra_command)
 			{
-				var_dump($circle_rounds, $matches);
 				$matches[$circle] = $this->_clear_extra_command($matches[$circle]);
-				var_dump($matches);exit;
 			}
 		}
 
