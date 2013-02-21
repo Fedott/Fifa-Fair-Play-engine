@@ -48,6 +48,7 @@ class Model_Table extends Jelly_Model
 			'scheduled' => new Field_Boolean(array(
 				'default' => FALSE,
 			)),
+			'planned_matches' => Jelly::field('hasmany'),
 		));
 	}
 

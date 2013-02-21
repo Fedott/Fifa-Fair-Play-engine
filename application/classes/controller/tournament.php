@@ -70,6 +70,38 @@
 					.HTML::anchor('tournament', __("Турниры"))." > ";
 		}
 
+		public function action_schedule($table_id)
+		{
+			/** @var $table Model_Table */
+			$table = Jelly::select('table', $table_id);
+			if( ! $table->loaded() OR ! $table->scheduled)
+			{
+				MISC::set_error_message('Для этого турнира нет расписаня');
+				$this->request->redirect('/');
+			}
+
+			if($this->user->loaded())
+			{
+				$my_line = Jelly::select('line')
+					->where('table_id', "=", $table->id)
+					->and_where("user_id", "=", $this->user->id)
+					->limit(1)
+					->execute();
+			}
+			else
+				$my_line = Jelly::factory ('line');
+
+			$view = View::factory('schedule_view');
+			$view->table = $table;
+			$view->my_line = $my_line;
+
+			$this->template->title = __("Расписание турнира: :name", array(":name" => $table->name));
+			$this->template->content = $view;
+			$this->template->breadcrumb = HTML::anchor('', __("Главная"))." > "
+				.HTML::anchor('tournament', __("Турниры"))." > "
+				.HTML::anchor('tournament/view/'.$table->url, __(":name", array(':name' => $table->name)))." > ";
+		}
+
 		public function action_club($id)
 		{
 			$line = Jelly::select('line', $id);
