@@ -91,9 +91,16 @@
 			else
 				$my_line = Jelly::factory ('line');
 
+			$rounds = array();
+			foreach($table->planned_matches as $match)
+			{
+				$rounds[$match->round][] = $match;
+			}
+
 			$view = View::factory('schedule_view');
 			$view->table = $table;
 			$view->my_line = $my_line;
+			$view->rounds = $rounds;
 
 			$this->template->title = __("Расписание");
 			$this->template->content = $view;
