@@ -59,6 +59,10 @@
 <p>Ещё не забито ни одного гола</p>
 <?endif;?>
 <?=html::anchor('match/list/'.$tournament->url, 'Матчи в рамках турнира');?>
+<?php if($tournament->scheduled):?>
+	<br />
+	<?=html::anchor('tournament/schedule/'.$tournament->id, 'Расписание');?>
+<?php endif;?>
 <?if($uchastie AND $tournament->active):?>
 	<hr>
 	<?=html::anchor('match/reg/'.$tournament->id, 'Зарегистрировать матч');?>

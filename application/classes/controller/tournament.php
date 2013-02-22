@@ -95,7 +95,7 @@
 			$view->table = $table;
 			$view->my_line = $my_line;
 
-			$this->template->title = __("Расписание турнира: :name", array(":name" => $table->name));
+			$this->template->title = __("Расписание");
 			$this->template->content = $view;
 			$this->template->breadcrumb = HTML::anchor('', __("Главная"))." > "
 				.HTML::anchor('tournament', __("Турниры"))." > "

@@ -83,7 +83,7 @@ class Model_Table extends Jelly_Model
 				if($round)
 				{
 					$tmp = array_shift($clubs_first_half);
-					array_push($clubs_first_half, array_shift($clubs_second_half));
+					array_push($clubs_first_half, array_pop($clubs_second_half));
 					array_unshift($clubs_second_half, $tmp);
 				}
 				array_unshift($clubs_first_half, $first_club);
@@ -95,6 +95,8 @@ class Model_Table extends Jelly_Model
 				}
 				array_shift($clubs_first_half);
 			}
+
+//			var_dump($matches, $circle_matches);exit;
 
 			if($extra_command)
 			{
