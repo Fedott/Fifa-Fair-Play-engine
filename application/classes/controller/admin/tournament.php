@@ -383,4 +383,33 @@
 			MISC::set_apply_message('Расписание успешно сгенерированно');
 			$this->request->redirect('admin/tournament/view/'.$table->id);
 		}
+
+		public function action_open_tours($table_id, $tour)
+		{
+
+			/** @var $table Model_Table */
+			$table = Jelly::select('table', $table_id);
+			if( ! $table->scheduled)
+			{
+				MISC::set_error_message('Этот турнир проводиться без расписания');
+				$this->request->redirect('admin/tournament/view/'.$table->id);
+			}
+
+			if(Validate::numeric($tour))
+			{
+				Jelly::update('planned_match')
+					->where('table', '=', $table->id)
+					->where('round', '<=', $tour)
+					->set(array('available' => true))
+					->execute();
+
+				MISC::set_apply_message("Туры по $tour помечены как активные");
+			}
+			else
+			{
+				MISC::set_error_message('Номер тура должен быть числом');
+			}
+
+			$this->request->redirect('admin/tournament/view/'.$table->id);
+		}
 	}
