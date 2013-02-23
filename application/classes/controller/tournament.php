@@ -76,7 +76,7 @@
 			$table = Jelly::select('table', $table_id);
 			if( ! $table->loaded() OR ! $table->scheduled)
 			{
-				MISC::set_error_message('Для этого турнира нет расписаня');
+				MISC::set_error_message('Для этого турнира нет расписания');
 				$this->request->redirect('/');
 			}
 
@@ -113,6 +113,7 @@
 		{
 			$line = Jelly::select('line', $id);
 
+			/** @var $tournament Model_Table */
 			$tournament = $line->table;
 			if($this->user->loaded())
 			{
@@ -160,29 +161,40 @@
 					->line($line->id)
 					->execute();
 
-			$matches_asc = Jelly::select('match')
-					->line($line->id)
-					->order_by('date', 'asc')
-					->execute();
-			
-			$played_matches = array();
-			foreach ($matches_asc as $match)
+			$schedule = false;
+			$played_matches = false;
+			if($tournament->scheduled)
 			{
-				if($match->home->id == $line->id)
+				$schedule = Jelly::select('planned_match')
+					->line($line->id)
+					->execute();
+			}
+			else
+			{
+				$matches_asc = Jelly::select('match')
+						->line($line->id)
+						->order_by('date', 'asc')
+						->execute();
+
+				$played_matches = array();
+				foreach ($matches_asc as $match)
 				{
-					if(!isset($played_matches[$match->away->id]['count']))
-						$played_matches[$match->away->id]['count'] = 1;
+					if($match->home->id == $line->id)
+					{
+						if(!isset($played_matches[$match->away->id]['count']))
+							$played_matches[$match->away->id]['count'] = 1;
+						else
+							$played_matches[$match->away->id]['count']++;
+						$played_matches[$match->away->id][$played_matches[$match->away->id]['count']] = $match;
+					}
 					else
-						$played_matches[$match->away->id]['count']++;
-					$played_matches[$match->away->id][$played_matches[$match->away->id]['count']] = $match;
-				}
-				else
-				{
-					if(!isset($played_matches[$match->home->id]['count']))
-						$played_matches[$match->home->id]['count'] = 1;
-					else
-						$played_matches[$match->home->id]['count']++;
-					$played_matches[$match->home->id][$played_matches[$match->home->id]['count']] = $match;
+					{
+						if(!isset($played_matches[$match->home->id]['count']))
+							$played_matches[$match->home->id]['count'] = 1;
+						else
+							$played_matches[$match->home->id]['count']++;
+						$played_matches[$match->home->id][$played_matches[$match->home->id]['count']] = $match;
+					}
 				}
 			}
 
@@ -202,6 +214,7 @@
 			$view->user = $this->user;
 			$view->my_line = $my_line;
 			$view->clubs_arr = $clubs_arr;
+			$view->schedule = $schedule;
 
 			$this->template->title = __("Клуб: :name", array(":name" => $line->club->name));
 			$this->template->content = $view;

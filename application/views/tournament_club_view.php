@@ -82,58 +82,92 @@
 	</tbody>
 </table>
 
-<h4>Сыгранные/не сыгранные матчи</h4>
-<table class="matches" cellpadding="3" cellspacing="1">
-	<thead>
-		<tr>
-			<th>Команда</th>
-			<?for($i = 1; $i <= $tournament->matches; $i++):?>
-			<th>Круг <?=$i;?></th>
-			<?endfor;?>
-		</tr>
-	</thead>
-	<tbody>
-		<?text::alternate();?>
-		<?foreach($tournament->lines as $ll):?>
-			<?if($ll->id != $line->id):?>
-			<tr class="<?=text::alternate('nechet', 'chet')?> <?=($ll->id == $my_line->id)?'my_team':'';?>">
-				<td class="">
-					<div class="club_info_in_profile">
-						<?=html::anchor('tournament/club/'.$ll->id, $ll->club->name);?>
-						<?=html::image('templates/fifa/img/profile_info.png', array('class' => 'popup_profile_trigger'));?>
-						<div class="popup_profile">
-							<strong><?=$ll->club->name;?></strong>
-							<br>
-							<?if($ll->user->loaded()):?>
-								<?=__("Тренер: ").$ll->user->username;?>
-								<br>
-								<?=$ll->user->get_im("<br/>");?>
-							<?else:?>
-								У команды нет тренера
-							<?endif;?>
-						</div>
-					</div>
-				</td>
+<?php if($schedule):?>
+	<h4>Расписание игр команды</h4>
+	<table class="matches table">
+		<thead>
+			<tr>
+				<th>Хозяева</th>
+				<th>Статус</th>
+				<th>Гости</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach($schedule as $match):?>
+				<tr class="<?=text::alternate('nechet', 'chet')?> <?=(($line->id != $my_line->id) AND (($match->away->id == $my_line->id) OR ($match->home->id == $my_line->id)))?' my_team':'';?>">
+					<td>
+						<?=html::anchor('/tournament/club/'.$match->home->id, $clubs_arr[$match->home->club_id()]->name);?>
+					</td>
+					<td class="center">
+						<?php if($match->played):?>
+							<span class="green">Сыгран </span>(<?=html::anchor('match/view/'.$match->match->id, $match->match->home_goals." - ".$match->match->away_goals);?>)
+						<?php elseif($match->available):?>
+							Скоро будет сыгран
+						<?php else:?>
+							<span class="gray">Не сыгран</span>
+						<?php endif;?>
+					</td>
+					<td>
+						<?=html::anchor('/tournament/club/'.$match->away->id, $clubs_arr[$match->away->club_id()]->name);?>
+					</td>
+				</tr>
+			<?php endforeach;?>
+		</tbody>
+	</table>
+<?php else:?>
+	<h4>Сыгранные/не сыгранные матчи</h4>
+	<table class="matches" cellpadding="3" cellspacing="1">
+		<thead>
+			<tr>
+				<th>Команда</th>
 				<?for($i = 1; $i <= $tournament->matches; $i++):?>
-				<td>
-					<?if(arr::path($played_matches, $ll->id.".count", 0) >= $i):?>
-						<p class="play">Сыгран (<?php
-							if (($played_matches[$ll->id][$i]->home->id == $line->id AND $played_matches[$ll->id][$i]->home_goals > $played_matches[$ll->id][$i]->away_goals) OR ($played_matches[$ll->id][$i]->home->id != $line->id AND $played_matches[$ll->id][$i]->home_goals < $played_matches[$ll->id][$i]->away_goals))
-							{
-								echo "<font class='green'>".$played_matches[$ll->id][$i]->home_goals." - ".$played_matches[$ll->id][$i]->away_goals."</font>";
-							}
-							else
-							{
-								echo "<font class='red'>".$played_matches[$ll->id][$i]->home_goals." - ".$played_matches[$ll->id][$i]->away_goals."</font>";
-							}
-						?>)</p>
-					<?else:?>
-						<p class="not_play">Не сыгран</p>
-					<?endif;?>
-				</td>
+				<th>Круг <?=$i;?></th>
 				<?endfor;?>
 			</tr>
-			<?endif;?>
-		<?endforeach;?>
-	</tbody>
-</table>
+		</thead>
+		<tbody>
+			<?text::alternate();?>
+			<?foreach($tournament->lines as $ll):?>
+				<?if($ll->id != $line->id):?>
+				<tr class="<?=text::alternate('nechet', 'chet')?> <?=($ll->id == $my_line->id)?'my_team':'';?>">
+					<td class="">
+						<div class="club_info_in_profile">
+							<?=html::anchor('tournament/club/'.$ll->id, $ll->club->name);?>
+							<?=html::image('templates/fifa/img/profile_info.png', array('class' => 'popup_profile_trigger'));?>
+							<div class="popup_profile">
+								<strong><?=$ll->club->name;?></strong>
+								<br>
+								<?if($ll->user->loaded()):?>
+									<?=__("Тренер: ").$ll->user->username;?>
+									<br>
+									<?=$ll->user->get_im("<br/>");?>
+								<?else:?>
+									У команды нет тренера
+								<?endif;?>
+							</div>
+						</div>
+					</td>
+					<?for($i = 1; $i <= $tournament->matches; $i++):?>
+					<td>
+						<?if(arr::path($played_matches, $ll->id.".count", 0) >= $i):?>
+							<p class="play">Сыгран (<?php
+								if (($played_matches[$ll->id][$i]->home->id == $line->id AND $played_matches[$ll->id][$i]->home_goals > $played_matches[$ll->id][$i]->away_goals) OR ($played_matches[$ll->id][$i]->home->id != $line->id AND $played_matches[$ll->id][$i]->home_goals < $played_matches[$ll->id][$i]->away_goals))
+								{
+									echo "<font class='green'>".$played_matches[$ll->id][$i]->home_goals." - ".$played_matches[$ll->id][$i]->away_goals."</font>";
+								}
+								else
+								{
+									echo "<font class='red'>".$played_matches[$ll->id][$i]->home_goals." - ".$played_matches[$ll->id][$i]->away_goals."</font>";
+								}
+							?>)</p>
+						<?else:?>
+							<p class="not_play">Не сыгран</p>
+						<?endif;?>
+					</td>
+					<?endfor;?>
+				</tr>
+				<?endif;?>
+			<?endforeach;?>
+		</tbody>
+	</table>
+<?php endif;?>
