@@ -16,6 +16,11 @@
 				<td>
 					<?=($match->match->id())?HTML::anchor('match/view/'.$match->match->id(), 'Сыгран'):"Не сыгран";?>
 				</td>
+                <?php if($auth->logged_in('admin') AND ! $match->availible):?>
+                    <td>
+                        <?=HTML::anchor('admin/tournament/active_match/'.$table->id.'/'.$match->id, 'Активировать');?>
+                    </td>
+                <?php endif;?>
 			</tr>
 		<?php endforeach;?>
 	<?php endforeach;?>
