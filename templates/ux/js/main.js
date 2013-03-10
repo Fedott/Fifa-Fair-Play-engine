@@ -55,7 +55,7 @@ jQuery( function($) {
 				$(this).hide();
 		});
 
-		jQuery.bind("click", ".add_goal_select_away", function(){
+		$(document).on("click", ".add_goal_select_away", function(){
 			var $showed = $(".player_select_away:first");
 			tmp_i = 1;
 			while($showed.css('display') != 'none')

@@ -6,9 +6,15 @@
 	text-align: right;
 }
 
-.input-xxxlarge {
+.input-xxxlarge, .wysiwyg {
 	width: 570px;
 }
+
+.input-micro {
+	width: 20px;
+}
+
+
 
 table caption h4 {
 	padding-bottom: 8px;
