@@ -586,6 +586,10 @@ p.play,
 	color: green;
 }
 
+.gray {
+    color: darkgray;
+}
+
 p.not_play,
 .red {
 	color: red;

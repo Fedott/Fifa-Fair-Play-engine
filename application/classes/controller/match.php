@@ -215,6 +215,30 @@
 					{
 						MISC::duplicate_send_time_set('register_match');
 						$match->save();
+						if($tournament->scheduled)
+						{
+							/** @var $planned_match Model_Planned_Match */
+							$planned_match = Jelly::select('planned_match')
+								->where_open()
+									->where_open()
+										->where('home', '=', $match->home->id())
+										->or_where('away', '=', $match->away->id())
+									->where_close()
+									->or_where_open()
+										->where('home', '=', $match->away->id())
+										->or_where('away', '=', $match->home->id())
+									->or_where_close()
+								->where_close()
+								->and_where('table', '=', $tournament->id)
+								->and_where('available', '=', true)
+								->and_where('played', '=', false)
+								->limit(1)
+								->execute();
+
+							$planned_match->played = true;
+							$planned_match->match = $match;
+							$planned_match->save();
+						}
 						foreach($home_goals as $goal)
 						{
 							$goal->match = $match->id;
@@ -246,57 +270,17 @@
 			elseif ( ! MISC::not_duplicate_send('register_match'))
 			{
 				$last_match = Jelly::select('match')
-						->where('table_id', '=', $tournament->id)
-						->where('home_id', '=', $myline->id)
+						->where('table', '=', $tournament->id)
+						->where('home', '=', $myline->id)
 						->limit(1)
 						->execute();
 
 				Request::instance()->redirect('match/view/'.$last_match->id);
 			}
 
-			// Клубы с которыми не сыграны все матчи в турнире
-			$clubs = array();
-			$max_matches = $tournament->matches;
-			$matches = Jelly::select('match')
-					->where("matches.table_id", "=", $tournament->id)
-					->where_open()
-					->where("home_id", "=", $myline->id)
-					->or_where("away_id", "=", $myline->id)
-					->where_close()
-					->execute();
-			$skip_lines = array($myline->id);
-			$count_matches_tmp = array();
-			foreach ($matches as $mmatch)
-			{
-				if($mmatch->home->id == $myline->id)
-				{
-					if(isset($count_matches_tmp[$mmatch->away->id]))
-					{
-						$count_matches_tmp[$mmatch->away->id]++;
-						if($count_matches_tmp[$mmatch->away->id] == $max_matches)
-						{
-							$skip_lines[] = $mmatch->away->id;
-						}
-					}
-					else
-						$count_matches_tmp[$mmatch->away->id] = 1;
-				}
-				else
-				{
-					if(isset($count_matches_tmp[$mmatch->home->id]))
-					{
-						$count_matches_tmp[$mmatch->home->id]++;
-						if($count_matches_tmp[$mmatch->home->id] == $max_matches)
-						{
-							$skip_lines[] = $mmatch->home->id;
-						}
-					}
-					else
-						$count_matches_tmp[$mmatch->home->id] = 1;
-				}
-			}
+			$lines = $this->_avalible_play_matches($tournament, $myline);
 
-			$lines = Jelly::select('line')->where("id", "NOT IN", $skip_lines)->and_where('table_id', "=", $tournament->id)->execute();
+
 			$clubs = array('NULL' => 'Выберете команду соперника');
 			foreach($lines as $line)
 			{
@@ -315,6 +299,88 @@
 			$this->template->breadcrumb = HTML::anchor('', 'Главная')." > "
 					.HTML::anchor('tournament', "Турниры")." > "
 					.HTML::anchor('tournament/view/'.$tournament->id, $tournament->name)." > ";
+		}
+
+		/**
+		 * @param Model_Table $tournament
+		 * @param Model_Line $my_line
+		 * @return Jelly_Collection
+		 */
+		protected function _avalible_play_matches($tournament, $my_line)
+		{
+			if($tournament->scheduled)
+			{
+				$matches = Jelly::select('planned_match')
+					->where_open()
+					->where('home', '=', $my_line->id)
+					->or_where('away', '=', $my_line->id)
+					->where_close()
+					->and_where('table', '=', $tournament->id)
+					->and_where('available', '=', true)
+					->and_where('played', '=', false)
+					->execute();
+
+				$lines = array();
+				/** @var $match Model_Match */
+				foreach($matches as $match)
+				{
+					if($match->home->id == $my_line->id)
+					{
+						$lines[] = $match->away;
+					}
+					else if($match->away->id == $my_line->id)
+					{
+						$lines[] = $match->home;
+					}
+				}
+			}
+			else
+			{
+				// Клубы с которыми не сыграны все матчи в турнире
+				$max_matches = $tournament->matches;
+				$matches = Jelly::select('match')
+					->where("matches.table_id", "=", $tournament->id)
+					->where_open()
+					->where("home_id", "=", $my_line->id)
+					->or_where("away_id", "=", $my_line->id)
+					->where_close()
+					->execute();
+				$skip_lines = array($my_line->id);
+				$count_matches_tmp = array();
+				foreach ($matches as $match)
+				{
+					if ($match->home->id == $my_line->id)
+					{
+						if (isset($count_matches_tmp[$match->away->id]))
+						{
+							$count_matches_tmp[$match->away->id]++;
+							if ($count_matches_tmp[$match->away->id] == $max_matches)
+							{
+								$skip_lines[] = $match->away->id;
+							}
+						}
+						else
+							$count_matches_tmp[$match->away->id] = 1;
+					}
+					else
+					{
+						if (isset($count_matches_tmp[$match->home->id]))
+						{
+							$count_matches_tmp[$match->home->id]++;
+							if ($count_matches_tmp[$match->home->id] == $max_matches)
+							{
+								$skip_lines[] = $match->home->id;
+							}
+						}
+						else
+							$count_matches_tmp[$match->home->id] = 1;
+					}
+				}
+
+				$lines = Jelly::select('line')->where("id", "NOT IN", $skip_lines)->and_where('table_id', "=", $tournament->id)->execute();
+			}
+
+			return $lines;
 		}
 
 		public function action_get_away_club_players($line_id)
@@ -523,7 +589,7 @@
 				'description' => '',
 			);
 
-			if($_POST AND isset($_FILES))
+			if($_POST)
 			{
 				try
 				{
@@ -536,7 +602,28 @@
 					$youtube_description.= "\n".$video->description."\n";
 					$youtube_description.= "Чемпионат красивый футбол http://fifafairplay.ru";
 					$video->validate();
-					if($video->youtube_upload($_FILES['video']['tmp_name'], $youtube_title, $youtube_description, $_FILES['video']['name']))
+					$video_file = false;
+					$video_filename = false;
+					if(isset($_FILES))
+					{
+						$video_file = arr::path($_FILES, 'video.tmp_name'); //$_FILES['video']['tmp_name'];
+						$video_filename = arr::path($_FILES, 'video.name'); //$_FILES['video']['name'];
+					}
+					if( ! $video_file)
+					{
+						$video_url = arr::get($_POST, 'video_url');
+						if($video_url)
+						{
+							$video_file = $video->eaworld_download($video->eaworld_parse($video_url));
+							if($video_file)
+								$video_filename = basename($video_file) . ".flv";
+						}
+						if( ! $video_file)
+						{
+							$errors[] = "Не указан видео файл или неверная ссылка на видео";
+						}
+					}
+					if(empty($errors) AND $video->youtube_upload($video_file, $youtube_title, $youtube_description, $video_filename))
 					{
 						$video->save();
 						MISC::set_apply_message('Видео успешно загружено');

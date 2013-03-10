@@ -42,6 +42,7 @@ class Model_Match extends Jelly_Model
 				)),
 				'comments' => new Field_HasMany(),
 				'videos' => Jelly::field('hasmany'),
+				'planned_match' => Jelly::field('hasone'),
 			));
 	}
 
@@ -162,4 +163,18 @@ class Model_Match extends Jelly_Model
 
 		return true;
 	}
+
+	public function delete($key = NULL)
+	{
+		if($this->planned_match)
+		{
+			$this->planned_match->played = false;
+			$this->planned_match->match = NULL;
+			$this->planned_match->save();
+		}
+
+		return parent::delete($key);
+	}
+
+
 }

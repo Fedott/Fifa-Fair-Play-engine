@@ -42,6 +42,14 @@
 			<label for="description">До <b>100</b> мегабайт</label>
 		</div>
 	</li>
+	<li class="">
+		<label class="desc" for="video_url">
+			Url видео на сайте EA
+		</label>
+		<div>
+			<input class="field text medium" type="text" name="video_url" id="video_url">
+		</div>
+	</li>
 	<li>
 		<input type="submit" class="submit" value="Загрузить">
 	</li>

@@ -44,7 +44,7 @@
 			{
 				try
 				{
-					$tournament->set(Arr::extract($_POST, array('name', 'active', 'type', 'visible', 'ended', 'matches')));
+					$tournament->set(Arr::extract($_POST, array('name', 'active', 'type', 'visible', 'ended', 'matches', 'scheduled')));
 					$tournament->url = URL::string_to_url($tournament->name);
 					$tournament->save();
 					Request::instance()->redirect('admin/tournament/view/'.$tournament->id);
@@ -361,5 +361,55 @@
 			$this->template->breadcrumb = HTML::anchor('admin', 'Админка')." > ".
 					HTML::anchor('admin/tournament', 'Управление турнирами')." > ".
 					HTML::anchor('admin/tournament/view/'.$trophy->table->id, 'Турнир '.$trophy->table->name)." > ";
+		}
+
+		public function action_make_schedule($table_id)
+		{
+			/** @var $table Model_Table */
+			$table = Jelly::select('table', $table_id);
+			if( ! $table->scheduled)
+			{
+				MISC::set_error_message('Этот турнир проводиться без расписания');
+				$this->request->redirect('admin/tournament/view/'.$table->id);
+			}
+			if(Jelly::select('planned_matches')->where('table_id', '=', $table->id)->count())
+			{
+				MISC::set_error_message('Расписание для этого турнира уже существует');
+				$this->request->redirect('admin/tournament/view/'.$table->id);
+			}
+
+			$table->make_schedule(TRUE);
+
+			MISC::set_apply_message('Расписание успешно сгенерированно');
+			$this->request->redirect('admin/tournament/view/'.$table->id);
+		}
+
+		public function action_open_tours($table_id, $tour)
+		{
+
+			/** @var $table Model_Table */
+			$table = Jelly::select('table', $table_id);
+			if( ! $table->scheduled)
+			{
+				MISC::set_error_message('Этот турнир проводиться без расписания');
+				$this->request->redirect('admin/tournament/view/'.$table->id);
+			}
+
+			if(Validate::numeric($tour))
+			{
+				Jelly::update('planned_match')
+					->where('table', '=', $table->id)
+					->where('round', '<=', $tour)
+					->set(array('available' => true))
+					->execute();
+
+				MISC::set_apply_message("Туры по $tour помечены как активные");
+			}
+			else
+			{
+				MISC::set_error_message('Номер тура должен быть числом');
+			}
+
+			$this->request->redirect('admin/tournament/view/'.$table->id);
 		}
 	}

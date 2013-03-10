@@ -20,5 +20,9 @@
 <?endif?>
 <hr>
 <?=html::anchor('admin/tournament/edit/'.$tournament->id, 'Редактировать')?>
+<?php if($tournament->scheduled):?>
+	<br/>
+	<?=html::anchor('admin/tournament/make_schedule/'.$tournament->id, 'Сгенерировать расписание');?>
+<?php endif;?>
 <br>
 <?=html::anchor('admin/tournament/edit_lines/'.$tournament->id, 'Добавить команды')?>

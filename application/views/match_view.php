@@ -65,6 +65,11 @@ jQuery( function($) {
 				<div class="match_date">
 					<?=misc::get_human_date($match->date);?>
 				</div>
+				<?php if($match->planned_match):?>
+					<div class='match_tournament'>
+						Матч <?=$match->planned_match->round;?> тура
+					</div>
+				<?php endif;?>
 				<table class="match_teams">
 					<tr>
 						<td class="match_team_home"><?=$match->home->club->name;?></td>
