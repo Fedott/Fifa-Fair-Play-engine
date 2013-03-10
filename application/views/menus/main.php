@@ -16,6 +16,22 @@
 				<li>
 					<?=HTML::anchor('forum', 'Форум');?>
 				</li>
+				<?php if($auth->logged_in("admin")):?>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							Администрирование
+							<b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">
+							<li><?=HTML::anchor('admin/club', 'Клубы');?></li>
+							<li><?=HTML::anchor('admin/player', 'Игроки');?></li>
+							<li><?=HTML::anchor('admin/tournament', 'Турниры');?></li>
+							<li><?=HTML::anchor('admin/page', 'Страницы');?></li>
+							<li><?=HTML::anchor('admin/news', 'Новости');?></li>
+							<li><?=HTML::anchor('admin/user', 'Пользователи');?></li>
+						</ul>
+					</li>
+				<?php endif;?>
 			</ul>
 			<ul class="nav pull-right">
 				<?php if($auth->logged_in()):?>

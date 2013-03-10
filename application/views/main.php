@@ -1,27 +1,38 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.'); ?>
 <div class="row-fluid">
 	<div class="offset2 span8 center">
-		<h3><?=$table->name;?></h3>
+		<h3><?=HTML::anchor('tournament/'.$table->url, $table->name);?></h3>
 	</div>
 </div>
 <div class="row-fluid">
 	<div class="span6">
 		<table class="table table-hover table-condensed">
+			<caption>
+				<h4>Таблица</h4>
+			</caption>
 			<tbody>
-				<?php foreach($table->lines as $pos => $line):?>
-					<?php if($pos >= 10) {break;}?>
+				<?php foreach($lines as $pos => $line):?>
 					<tr class="<?=($line->id == $my_line->id)?"info":'';?>">
-						<td><?=++$pos;?></td>
+						<td><?=$pos;?></td>
 						<td><?=HTML::anchor('tournament/club/'.$line->id, $line->club->name);?></td>
 						<td><?=$line->points;?></td>
 						<td><?=$line->goals;?> - <?=$line->passed_goals;?></td>
 					</tr>
 				<?php endforeach;?>
 			</tbody>
+			<tfoot>
+				<tr>
+					<th/>
+					<th colspan="3"><?=HTML::anchor('tournament/view/'.$table->url, 'Полная таблица', array('class' => 'muted'));?></th>
+				</tr>
+			</tfoot>
 		</table>
 	</div>
 	<div class="span6">
 		<table class="table table-hover table-condensed">
+			<caption>
+				<h4>Матчи</h4>
+			</caption>
 			<tbody>
 				<?php foreach($last_matches as $match):?>
 					<tr>
@@ -33,6 +44,12 @@
 					</tr>
 				<?php endforeach;?>
 			</tbody>
+			<tfoot>
+			<tr>
+				<th/>
+				<th colspan="3"><?=HTML::anchor('match/list/'.$table->url, 'Все матчи', array('class' => 'muted'));?></th>
+			</tr>
+			</tfoot>
 		</table>
 	</div>
 </div>

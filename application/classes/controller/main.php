@@ -52,11 +52,33 @@
 				}
 			}
 
+			$lines_arr = array();
+			$my_line_in = false;
+			foreach($table->lines as $pos => $line)
+			{
+				++$pos;
+				if( ! $my_line->loaded() OR $line->id == $my_line->id OR $my_line_in OR count($lines_arr) < 9)
+				{
+					$lines_arr[$pos] = $line;
+				}
+
+				if($line->id == $my_line->id)
+				{
+					$my_line_in = true;
+				}
+
+				if(count($lines_arr) == 10)
+				{
+					break;
+				}
+			}
+
 			$view = View::factory('main');
 			$view->table = $table;
 			$view->last_matches = $last_matches;
 			$view->goleodors = $goleodors;
 			$view->my_line = $my_line;
+			$view->lines = $lines_arr;
 
 			$this->template->title = __('Главная');
 			$this->template->content = $view;
