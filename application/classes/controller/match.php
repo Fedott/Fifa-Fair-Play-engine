@@ -589,7 +589,7 @@
 				'description' => '',
 			);
 
-			if($_POST AND isset($_FILES))
+			if($_POST)
 			{
 				try
 				{
@@ -602,7 +602,28 @@
 					$youtube_description.= "\n".$video->description."\n";
 					$youtube_description.= "Чемпионат красивый футбол http://fifafairplay.ru";
 					$video->validate();
-					if($video->youtube_upload($_FILES['video']['tmp_name'], $youtube_title, $youtube_description, $_FILES['video']['name']))
+					$video_file = false;
+					$video_filename = false;
+					if(isset($_FILES))
+					{
+						$video_file = arr::path($_FILES, 'video.tmp_name'); //$_FILES['video']['tmp_name'];
+						$video_filename = arr::path($_FILES, 'video.name'); //$_FILES['video']['name'];
+					}
+					if( ! $video_file)
+					{
+						$video_url = arr::get($_POST, 'video_url');
+						if($video_url)
+						{
+							$video_file = $video->eaworld_download($video->eaworld_parse($video_url));
+							if($video_file)
+								$video_filename = basename($video_file) . ".flv";
+						}
+						if( ! $video_file)
+						{
+							$errors[] = "Не указан видео файл или неверная ссылка на видео";
+						}
+					}
+					if(empty($errors) AND $video->youtube_upload($video_file, $youtube_title, $youtube_description, $video_filename))
 					{
 						$video->save();
 						MISC::set_apply_message('Видео успешно загружено');

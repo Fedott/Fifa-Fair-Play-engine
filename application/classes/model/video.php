@@ -119,4 +119,36 @@ class Model_Video extends Jelly_Model
 	{
 		return ($this->loaded())?$this->_original['match']:FALSE;
 	}
+
+	public function eaworld_parse($url)
+	{
+		// http://www.ea.com/uk/football/videos/ugc/142783672
+//		$url = "http://www.ea.com/uk/football/videos/ugc/142783672";
+		require_once Kohana::find_file('vendor', 'phpQuery');
+
+		$html = file_get_contents($url);
+
+		$html = phpQuery::newDocumentHTML($html);
+
+		$video_url = $html->find("meta[property='media:video']")->attr('content');
+
+		return $video_url;
+	}
+
+	public function eaworld_download($url)
+	{
+		$file_path = tempnam(sys_get_temp_dir(), "fifavideo");
+		$remote_file_handle = fopen($url, "rb");
+		$local_file_handle = fopen($file_path, "wb");
+		$count_byte = stream_copy_to_stream($remote_file_handle, $local_file_handle);
+		fclose($remote_file_handle);
+		fclose($local_file_handle);
+
+		if($count_byte)
+		{
+			return $file_path;
+		}
+
+		return false;
+	}
 }
