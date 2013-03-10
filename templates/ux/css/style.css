@@ -13,3 +13,7 @@
 table caption h4 {
 	padding-bottom: 8px;
 }
+
+.tournament_schedule, .tournament_add_match {
+	padding-top: 22px;
+}

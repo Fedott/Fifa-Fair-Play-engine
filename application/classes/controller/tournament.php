@@ -57,12 +57,18 @@
 				}
 			}
 
-			$view = new View('tournament_view');
-			$view->tournament = $tournament;
+			$last_matches = Jelly::select('match')
+					->where('table', '=', $tournament->id)
+					->limit(10)
+					->execute();
+
+			$view = new View('tournament_view_new');
+			$view->table = $tournament;
 			$view->user = $this->user;
 			$view->goleodors = $goleodors;
 			$view->my_line = $my_line;
 			$view->uchastie = (bool) $my_line->loaded();
+			$view->last_matches = $last_matches;
 
 			$this->template->title = __(":name", array(":name" => $tournament->name));
 			$this->template->content = $view;
