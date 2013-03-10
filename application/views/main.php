@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.'); ?>
 <div class="row-fluid">
 	<div class="offset2 span8 center">
-		<h3><?=HTML::anchor('tournament/'.$table->url, $table->name);?></h3>
+		<h3><?=HTML::anchor('tournament/view/'.$table->url, $table->name);?></h3>
 	</div>
 </div>
 <div class="row-fluid">
