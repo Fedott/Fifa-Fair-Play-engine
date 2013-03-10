@@ -9,3 +9,7 @@
 .input-xxxlarge {
 	width: 570px;
 }
+
+table caption h4 {
+	padding-bottom: 8px;
+}
