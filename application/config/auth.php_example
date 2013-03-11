@@ -8,5 +8,5 @@ return array
 	'salt_pattern' => '1, 4, 6, 7, 14, 17, 20, 24, 28, 29',
 	'lifetime' => 1209600,
 	'session_key' => 'auth_user',
-	'sc' => 'sljkhasdfASFasjkfhasfkj23214jkawrASD124lasd@!#4jsad',
+	'sc' => '1234567',
 );
