@@ -287,7 +287,7 @@
 				$clubs[$line->id] = $line->club->name." ({$line->user->username})";
 			}
 
-			$view = new View('match_reg');
+			$view = new View('match_reg_new');
 			$view->match = $match;
 			$view->errors = $errors;
 			$view->comment = $comment;

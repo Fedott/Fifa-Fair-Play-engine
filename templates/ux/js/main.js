@@ -87,7 +87,7 @@ jQuery( function($) {
 		});
 
 		// Включем везде где надо визуальный редактор
-		$('.wysiwyg').wysihtml5();
+		$('.wysiwyg').wysihtml5('init', {lists: false});
 
 
 		// Всплывающие подсказки
