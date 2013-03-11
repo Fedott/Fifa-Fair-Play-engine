@@ -31,6 +31,23 @@
 				<?php endforeach;?>
 			</tbody>
 		</table>
+        <?php if(count($planned_matches)):?>
+            <table class="table table-condensed table-hover">
+                <caption>
+                    <h4>Ваши следующие матчи</h4>
+                </caption>
+                <tbody>
+                    <?php foreach($planned_matches as $match):?>
+                        <?php /** @var $match Model_Planned_Match */ ?>
+                        <tr>
+                            <td class="right"><?=HTML::anchor("match/view/".$match->id, $match->home->club->name);?></td>
+                            <td class="center">VS</td>
+                            <td><?=HTML::anchor("match/view/".$match->id, $match->away->club->name);?></td>
+                        </tr>
+                    <?php endforeach;?>
+                </tbody>
+            </table>
+        <?php endif;?>
 	</div>
 	<div class="span6">
 		<table class="table table-hover table-condensed">

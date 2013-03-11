@@ -14,4 +14,9 @@
 		{
 			return $this->where("table", "=", $tournament_id);
 		}
+
+		public function available()
+		{
+			return $this->where('available', '=', true);
+		}
 	}

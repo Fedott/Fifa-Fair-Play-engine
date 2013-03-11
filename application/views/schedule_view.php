@@ -18,7 +18,7 @@
 				</td>
                 <?php if($auth->logged_in('admin') AND ! $match->availible):?>
                     <td>
-                        <?=HTML::anchor('admin/tournament/active_match/'.$table->id.'/'.$match->id, 'Активировать');?>
+                        <?=HTML::anchor('admin/tournament/active_match/'.$match->id, 'Активировать');?>
                     </td>
                 <?php endif;?>
 			</tr>

@@ -412,4 +412,32 @@
 
 			$this->request->redirect('admin/tournament/view/'.$table->id);
 		}
+
+		public function action_active_match($match)
+		{
+			/** @var $match Model_Planned_Match */
+			$match = Jelly::select('planned_match', $match);
+			if($match->loaded())
+			{
+				if( ! $match->available AND ! $match->played)
+				{
+					$match->available = true;
+					$match->save();
+
+					MISC::set_apply_message('Матч активирован');
+				}
+				else
+				{
+					MISC::set_error_message('Матч уже активирован или сыгран');
+				}
+
+				$this->request->redirect('tournament/schedule/'.$match->table->id);
+			}
+			else
+			{
+				MISC::set_error_message('Матч не существует');
+
+				$this->request->redirect('tournament');
+			}
+		}
 	}
