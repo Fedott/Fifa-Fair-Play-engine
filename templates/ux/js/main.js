@@ -1,11 +1,5 @@
 jQuery( function($) {
 	$(document).ready( function() {
-//		$('#content').height($('#center').height()-250);
-//		$('#vmenu').height($('#center').height()-250);
-
-//		colums();
-//
-//		$(window).resize(colums());
 		var i_players_adds = 2;
 		var plform;
 		var i_goals_home = 1;
@@ -69,9 +63,6 @@ jQuery( function($) {
 			if(i_goals_away == 7)
 				$(this).hide();
 		});
-//		$(".add_goal_select_away").click(function (){
-//
-//		});
 
 		$("#away").bind('change', function (){
 			var tid = $(this).val();
@@ -79,6 +70,26 @@ jQuery( function($) {
 			$.get('/match/get_away_club_players/' + tid, 0, function(data){
 				$('#away_club_players_goal').html(data);
 			});
+		});
+
+		// Убираем уже выбранных игроков из списка
+		$(".home_players").focus(function(){
+			$(this).attr('prev-value', $(this).val());
+		}).change(function(){
+			var prev = $(this).attr('prev-value');
+			$(".home_players option[value='" + prev + "']").show();
+			$(".home_players option[value='" + $(this).val() + "']").hide();
+			$(this).children("option[value='" + $(this).val() + "']").show();
+		});
+
+		$(document).on("focus", ".away_players", function(){
+			$(this).attr('prev-value', $(this).val());
+		})
+		$(document).on('change', ".away_players", function(){
+			var prev = $(this).attr('prev-value');
+			$(".away_players option[value='" + prev + "']").show();
+			$(".away_players option[value='" + $(this).val() + "']").hide();
+			$(this).children("option[value='" + $(this).val() + "']").show();
 		});
 
 		// Ссылка с подтверждением

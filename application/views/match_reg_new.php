@@ -13,7 +13,7 @@
 				<?php for($i = 0; $i < 7; $i++):?>
 					<div class="player_select_home" <?=$i?'style="display:none"':'';?>>
 						<div class="input-append pull-left">
-							<?=form::select("goals_h[$i][0]", $my_players, NULL, array('class' => 'input-medium home_players'));?>
+							<?=form::select("goals_h[$i][0]", array(NULL => 'Игрок') + $my_players, NULL, array('class' => 'input-medium home_players'));?>
 						</div>
 						<div class="input-prepend">
 							<?=form::input("goals_h[$i][1]", NULL, array('class' => 'input-mini', 'placeholder' => 'Кол-во'));?>
