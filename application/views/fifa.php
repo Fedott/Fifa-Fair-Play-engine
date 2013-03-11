@@ -82,8 +82,5 @@
 			</div>
 		</div>
 	</div>
-<div id="kohana-profiler">
-	<?=View::factory('profiler/stats'); ?>
-</div> 
 </body>
 </html>
