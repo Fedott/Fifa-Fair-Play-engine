@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
 <h2>Турниры:</h2>
 <?if(count($tournaments)):?>
-<table cellpadding="3" cellspacing="1">
+<table class="table table-bordered table-striped table-hover">
 	<thead>
 		<tr>
 			<th>№</th>
@@ -12,8 +12,8 @@
 	<?$i = 1;?>
 	<?foreach($tournaments as $tournament):?>
 		<?$ii = 0;?>
-		<tr class="<?=text::alternate('nechet', 'chet');?>">
-			<td><?=$i++?>.</td>
+		<tr>
+			<td class="center"><?=$i++?></td>
 			<td><?=html::anchor('/tournament/view/'.$tournament->url, $tournament->name, array('class' => 'tournament'))?></td>
 			<td><?foreach($tournament->lines as $line):?><?=(++$ii!=1)?', ':''?><?=$line->club->name?><?endforeach;?></td>
 		</tr>
