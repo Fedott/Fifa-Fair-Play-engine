@@ -29,6 +29,18 @@
 		)))->execute();
 		?>
 		<div class="container">
+			<?php if(MISC::isset_apply_message()):?>
+				<div class="alert alert-success">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<?=MISC::get_apply_message();?>
+				</div>
+			<?php endif;?>
+			<?php if(MISC::isset_error_message()):?>
+				<div class="alert alert-error">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<?=MISC::get_error_message();?>
+				</div>
+			<?php endif;?>
 			<?=$content;?>
 		</div>
 		<div id="kohana-profiler">

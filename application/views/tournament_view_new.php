@@ -41,7 +41,7 @@
                         <?php /** @var $match Model_Planned_Match */ ?>
                         <tr>
                             <td class="right"><?=HTML::anchor("match/view/".$match->id, $match->home->club->name);?></td>
-                            <td class="center">VS</td>
+                            <td class="center">vs</td>
                             <td><?=HTML::anchor("match/view/".$match->id, $match->away->club->name);?></td>
                         </tr>
                     <?php endforeach;?>

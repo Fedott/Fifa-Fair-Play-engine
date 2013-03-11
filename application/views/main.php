@@ -1,8 +1,18 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.'); ?>
 <div class="row-fluid">
-	<div class="offset2 span8 center">
+	<div class="span3 right tournament_add_match">
+		<?php if($uchastie AND $table->active):?>
+			<?=html::anchor('match/reg/'.$table->id, 'Зарегистрировать матч');?>
+		<?php endif;?>
+	</div>
+	<div class="span6 center">
 		<h3><?=HTML::anchor('tournament/view/'.$table->url, $table->name);?></h3>
 	</div>
+	<?php if($table->scheduled):?>
+		<div class="span3 tournament_schedule">
+			<?=html::anchor('tournament/schedule/'.$table->id, 'Расписание');?>
+		</div>
+	<?php endif;?>
 </div>
 <div class="row-fluid">
 	<div class="span6">

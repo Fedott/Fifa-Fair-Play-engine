@@ -79,6 +79,7 @@
 			$view->goleodors = $goleodors;
 			$view->my_line = $my_line;
 			$view->lines = $lines_arr;
+			$view->uchastie = (bool) $my_line->loaded();
 
 			$this->template->title = __('Главная');
 			$this->template->content = $view;
