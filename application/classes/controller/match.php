@@ -179,7 +179,7 @@
 					$home_goals_count = 0;
 					foreach($_POST['goals_h'] as $goal)
 					{
-						if(!empty($goal[1]))
+						if(!empty($goal[1]) AND $goal[0] != -1)
 						{
 							$home_goals[] = Jelly::factory('goal', array(
 								'player' => $goal[0],
@@ -192,7 +192,7 @@
 					}
 					foreach($_POST['goals_a'] as $goal)
 					{
-						if(!empty($goal[1]))
+						if(!empty($goal[1]) AND $goal[0] != -1)
 						{
 							$away_goals[] = Jelly::factory('goal', array(
 								'player' => $goal[0],
@@ -211,56 +211,54 @@
 						$comment->author = $this->user->id;
 					}
 
-					if($match->home_goals == $home_goals_count AND $match->away_goals == $away_goals_count)
+					$match->home_goals = $home_goals_count;
+					$match->away_goals = $away_goals_count;
+
+					MISC::duplicate_send_time_set('register_match');
+					$match->save();
+					if($tournament->scheduled)
 					{
-						MISC::duplicate_send_time_set('register_match');
-						$match->save();
-						if($tournament->scheduled)
-						{
-							/** @var $planned_match Model_Planned_Match */
-							$planned_match = Jelly::select('planned_match')
+						/** @var $planned_match Model_Planned_Match */
+						$planned_match = Jelly::select('planned_match')
+							->where_open()
 								->where_open()
-									->where_open()
-										->where('home', '=', $match->home->id())
-										->or_where('away', '=', $match->away->id())
-									->where_close()
-									->or_where_open()
-										->where('home', '=', $match->away->id())
-										->or_where('away', '=', $match->home->id())
-									->or_where_close()
+									->where('home', '=', $match->home->id())
+									->or_where('away', '=', $match->away->id())
 								->where_close()
-								->and_where('table', '=', $tournament->id)
-								->and_where('available', '=', true)
-								->and_where('played', '=', false)
-								->limit(1)
-								->execute();
+								->or_where_open()
+									->where('home', '=', $match->away->id())
+									->or_where('away', '=', $match->home->id())
+								->or_where_close()
+							->where_close()
+							->and_where('table', '=', $tournament->id)
+							->and_where('available', '=', true)
+							->and_where('played', '=', false)
+							->limit(1)
+							->execute();
 
-							$planned_match->played = true;
-							$planned_match->match = $match;
-							$planned_match->save();
-						}
-						foreach($home_goals as $goal)
-						{
-							$goal->match = $match->id;
-							$goal->save();
-						}
-						foreach($away_goals as $goal)
-						{
-							$goal->match = $match->id;
-							$goal->save();
-						}
-						if(!empty($_POST['text']))
-						{
-							$comment->match = $match->id;
-							$comment->save();
-						}
-
-						Request::instance()->redirect('match/view/'.$match->id);
+						$planned_match->played = true;
+						$planned_match->match = $match;
+						$planned_match->save();
 					}
-					else
+
+					foreach($home_goals as $goal)
 					{
-						$errors[] = __('Количество забитых мячей не соответствует указанным бомбардирам');
+						$goal->match = $match->id;
+						$goal->save();
 					}
+					foreach($away_goals as $goal)
+					{
+						$goal->match = $match->id;
+						$goal->save();
+					}
+					if(!empty($_POST['text']))
+					{
+						$comment->match = $match->id;
+						$comment->save();
+					}
+
+					MISC::set_apply_message("Матч зарегистрирован");
+					Request::instance()->redirect('match/view/'.$match->id);
 				}
 				catch (Validate_Exception $exp)
 				{
