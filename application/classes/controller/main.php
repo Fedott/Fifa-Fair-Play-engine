@@ -22,6 +22,12 @@
 			else
 				$my_line = Jelly::factory ('line');
 
+			$my_matches = Jelly::select('match')
+					->line($my_line->id)
+					->tournament($table->id)
+					->limit(10)
+					->execute();
+
 			// TODO:: Переписать к чертям. А то быдлокод
 			$res = DB::select_array(array('goals.player_id', 'goals.line_id'))
 						->select(array('SUM("count")', 'goals'))
@@ -80,6 +86,7 @@
 			$view->my_line = $my_line;
 			$view->lines = $lines_arr;
 			$view->uchastie = (bool) $my_line->loaded();
+			$view->my_matches = $my_matches;
 
 			$this->template->title = __('Главная');
 			$this->template->content = $view;

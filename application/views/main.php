@@ -82,4 +82,23 @@
 			</tbody>
 		</table>
 	</div>
+	<div class="span6">
+
+		<?php if(count($my_matches)):?>
+			<table class="table table-hover table-condensed">
+				<caption>
+					<h4>Ваши матчи</h4>
+				</caption>
+				<?php foreach($my_matches as $match):?>
+					<tr <?=html::attributes(array('class' => ( ! $match->confirm AND $match->away->id() == $my_line->id)?"info":NULL));?>>
+						<?php /** @var $match Model_Match */ ?>
+						<td><?=MISC::get_human_short_date($match->date);?></td>
+						<td class="right"><?=$match->home->club->name;?></td>
+						<td class="center"><?=$match->home_goals." - ".$match->away_goals;?></td>
+						<td><?=$match->away->club->name;?></td>
+					</tr>
+				<?php endforeach;?>
+			</table>
+		<?php endif;?>
+	</div>
 </div>
