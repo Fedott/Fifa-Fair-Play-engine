@@ -113,6 +113,19 @@
 			$this->template->content = $view;
 		}
 
+		public function __goals_check(Validate $array, $field)
+		{
+			if(is_array($array[$field]))
+			{
+				foreach($array[$field] as $key => $value)
+				{
+					if( ! empty($value[1]) AND ( ! Validate::numeric($value[1]) OR ! Validate::numeric($value[0]))) {
+						$array->error("$field", 'Неверное значение голов, можно указывать только цифры');
+					}
+				}
+			}
+		}
+
 		public function action_reg($tourn)
 		{
 			if(!$this->auth->logged_in('coach'))
@@ -147,6 +160,7 @@
 			$match = Jelly::factory('match');
 			$comment = Jelly::factory('comment');
 			$errors = array();
+			$form = array();
 			$my_players = array();
 			$mplayers = Jelly::select('player')
 					->select("*")
@@ -168,6 +182,19 @@
 			{
 				try
 				{
+					$validation = Validate::factory($_POST);
+					$validation->rule('away', 'not_empty');
+					$validation->rule('away', 'numeric');
+					$validation->rule('goals_a', 'is_array');
+					$validation->callback('goals_a', array($this, '__goals_check'));
+					$validation->callback('goals_h', array($this, '__goals_check'));
+
+					$errors = $validation->check();
+					if(count($errors))
+					{
+						throw new Validate_Exception($validation);
+					}
+
 					$match->set(arr::extract($_POST, array('away', 'home_goals', 'away_goals')));
 					$match->date = time();
 					$match->table = $tournament->id;
@@ -263,6 +290,7 @@
 				catch (Validate_Exception $exp)
 				{
 					$errors = $exp->array->errors('match');
+					$form = $_POST;
 				}
 			}
 			elseif ( ! MISC::not_duplicate_send('register_match'))
@@ -291,6 +319,7 @@
 			$view->comment = $comment;
 			$view->my_players = $my_players;
 			$view->clubs = $clubs;
+			$view->form = $form;
 
 			$this->template->title = __('Регистрация матча');
 			$this->template->content = $view;

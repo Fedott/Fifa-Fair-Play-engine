@@ -5,18 +5,25 @@
 		<legend>
 			Регистрация матча
 		</legend>
+		<?php if(count($errors)):?>
+			<div class="alert alert-error">
+				<?php foreach($errors as $error):?>
+					<?=$error;?>
+				<?php endforeach;?>
+			</div>
+		<?php endif;?>
 		<label for="away">Соперник *</label>
-		<?=form::select('away', $clubs, $match->away->id, array('id' => 'away', 'class' => ''))?>
+		<?=form::select('away', $clubs, arr::get($form, 'away'), array('id' => 'away', 'class' => ''))?>
 		<div class="row-fluid">
 			<div class="span6">
 				<label>У вас забили</label>
 				<?php for($i = 0; $i < 7; $i++):?>
 					<div class="player_select_home" <?=$i?'style="display:none"':'';?>>
 						<div class="input-append pull-left">
-							<?=form::select("goals_h[$i][0]", array(-1 => 'Игрок') + $my_players, NULL, array('class' => 'input-medium home_players'));?>
+							<?=form::select("goals_h[$i][0]", array(-1 => 'Игрок') + $my_players, arr::path($form, "goals_h.$i.0"), array('class' => 'input-medium home_players'));?>
 						</div>
 						<div class="input-prepend">
-							<?=form::input("goals_h[$i][1]", NULL, array('class' => 'input-mini', 'placeholder' => 'Кол-во'));?>
+							<?=form::input("goals_h[$i][1]", arr::path($form, "goals_h.$i.1"), array('class' => 'input-mini', 'placeholder' => 'Кол-во'));?>
 						</div>
 					</div>
 				<?php endfor;?>
