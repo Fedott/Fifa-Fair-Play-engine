@@ -83,21 +83,31 @@
 		</div>
 	</div>
 
-	<!-- Yandex.Metrika counter -->
-	<div style="display:none;"><script type="text/javascript">
-	(function(w, c) {
-	    (w[c] = w[c] || []).push(function() {
-	        try {
-	            w.yaCounter336263 = new Ya.Metrika(336263);
-	             yaCounter336263.clickmap(true);
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter336263 = new Ya.Metrika({id:336263,
+                    webvisor:true,
+                    clickmap:true});
+        } catch(e) { }
+    });
 
-	        } catch(e) { }
-	    });
-	})(window, 'yandex_metrika_callbacks');
-	</script></div>
-	<script src="//mc.yandex.ru/metrika/watch.js" type="text/javascript" defer="defer"></script>
-	<noscript><div><img src="//mc.yandex.ru/watch/336263" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-	<!-- /Yandex.Metrika counter -->
+            var n = d.getElementsByTagName("script")[0],
+                        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+            s.type = "text/javascript";
+            s.async = true;
+                s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/336263" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 
 	<!--Google Analytics -->
 	<script type="text/javascript">
