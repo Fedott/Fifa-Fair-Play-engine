@@ -90,7 +90,10 @@
 					<h4>Ваши матчи</h4>
 				</caption>
 				<?php foreach($my_matches as $match):?>
-					<tr <?=html::attributes(array('class' => ( ! $match->confirm AND $match->away->id() == $my_line->id)?"info":NULL));?>>
+					<tr class="
+						<?=( ! $match->confirm AND $match->away->id() == $my_line->id)?"error":"";?>
+						<?=( ! $match->confirm AND $match->home->id() == $my_line->id)?"warning":"";?>
+					">
 						<?php /** @var $match Model_Match */ ?>
 						<td><?=MISC::get_human_short_date($match->date);?></td>
 						<td class="right"><?=$match->home->club->name;?></td>

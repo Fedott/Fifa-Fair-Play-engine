@@ -190,7 +190,7 @@
 					$validation->callback('goals_h', array($this, '__goals_check'));
 
 					$errors = $validation->check();
-					if(count($errors))
+					if($errors !== true)
 					{
 						throw new Validate_Exception($validation);
 					}
