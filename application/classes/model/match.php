@@ -4,13 +4,14 @@
  * @property $id
  * @property $date
  * @property $table
- * @property $home Model_Line
- * @property $away Model_Line
+ * @property Model_Line $home
+ * @property Model_Line $away
  * @property $home_goals
  * @property $away_goals
  * @property $confirm
  * @property $tech
  * @property $comments
+ * @property Model_Planned_Match $planned_match
  */
 class Model_Match extends Jelly_Model
 {
@@ -166,7 +167,7 @@ class Model_Match extends Jelly_Model
 
 	public function delete($key = NULL)
 	{
-		if($this->planned_match)
+		if($this->planned_match->loaded())
 		{
 			$this->planned_match->played = false;
 			$this->planned_match->match = NULL;
