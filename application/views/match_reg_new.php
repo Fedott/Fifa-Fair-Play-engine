@@ -42,10 +42,4 @@
 	<?=form::close();?>
 </div>
 
-<script type="text/javascript">
-	jQuery( function($) {
-		$(document).ready( function() {
-			$("#away").change();
-		});
-	});
-</script>
+<?=html::script('templates/ux/js/reg_match.js');?>
