@@ -105,6 +105,12 @@
 						<td><?=html::anchor($link, $match->away->club->name);?></td>
 					</tr>
 				<?php endforeach;?>
+				<tfoot>
+					<tr>
+						<th/>
+						<th colspan="3"><?=HTML::anchor('match/my', 'Все матчи', array('class' => 'muted'));?></th>
+					</tr>
+				</tfoot>
 			</table>
 		<?php endif;?>
 	</div>
