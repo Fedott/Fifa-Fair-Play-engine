@@ -476,7 +476,7 @@
 				);
 			}
 
-			$view = View::factory("match_view");
+			$view = View::factory("match_view_new");
 			$view->home_goals = $home_goals;
 			$view->away_goals = $away_goals;
 			$view->match = $match;

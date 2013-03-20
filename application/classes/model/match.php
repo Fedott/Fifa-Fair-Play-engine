@@ -3,7 +3,7 @@
 /**
  * @property $id
  * @property $date
- * @property $table
+ * @property Model_Table $table
  * @property Model_Line $home
  * @property Model_Line $away
  * @property $home_goals
