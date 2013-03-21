@@ -7,16 +7,16 @@
 			$this->action_list();
 		}
 
-		public function action_list($tableid = NULL)
+		public function action_list($table_id = null)
 		{	
-			if($tableid == NULL)
+			if($table_id == null)
 			{
 				$count = Jelly::select('match')->count();
 				$tournament = Jelly::factory('table');
 			}
 			else
 			{
-				$tournament = Jelly::select('table', $tableid);
+				$tournament = Jelly::select('table', $table_id);
 				$count = Jelly::select('match')
 						->tournament($tournament->id)
 						->count();
@@ -89,7 +89,7 @@
 				}
 			}
 
-			$view = new View('matches_list');
+			$view = new View('matches_list_new');
 			$view->matches = $matches;
 			$view->tourn = $tournament;
 			$view->pagination = $pagination;
