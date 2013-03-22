@@ -45,7 +45,7 @@
 						<?php endif;?>
 						<?if(isset($comments_arr[$match->id])):?>
 							<i class="icon-comment" title="Есть комментарии" show-match-comments="<?=$match->id;?>"></i>
-							<div class="popover bottom in fade" comments-match-id="<?=$match->id;?>" style="display: none;">
+							<div class="popover left in fade span4" comments-match-id="<?=$match->id;?>" style="display: none;">
 								<div class="arrow"></div>
 								<div class="popover-content">
 									<?foreach($comments_arr[$match->id] as $comment):?>
@@ -74,4 +74,4 @@
 	</table>
 </div>
 
-<?=html::script('templates/ux/js/popover.js');?>
+<?=html::script('templates/ux/js/popup_show.js');?>
