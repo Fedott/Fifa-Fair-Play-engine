@@ -2,8 +2,12 @@
 	text-align: center;
 }
 
-.right, td.right {
+.right, td.right, th.right {
 	text-align: right;
+}
+
+.bold {
+    font-weight: bold;
 }
 
 .input-xxxlarge, .wysiwyg {
@@ -22,4 +26,25 @@ table caption h4 {
 
 .tournament_schedule, .tournament_add_match {
 	padding-top: 22px;
+}
+
+
+.bullet {
+    font-size: 35px;
+}
+
+.bullet.yellow {
+    color: #ffff00;
+}
+
+.bullet.red {
+    color: red;
+}
+
+.bullet.green {
+    color: #008000;
+}
+
+.popup_profile {
+    display: none;
 }

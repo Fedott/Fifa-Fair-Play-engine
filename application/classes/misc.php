@@ -89,16 +89,52 @@
 			$last_send = Session::instance()->get($field_name, 0);
 			if($last_send < time() - $interval)
 			{
-				return true;
+				return TRUE;
 			}
 			else
 			{
-				return false;
+				return FALSE;
 			}
 		}
 
 		static public function duplicate_send_time_set($field_name)
 		{
 			return Session::instance()->set($field_name, time());
+		}
+
+		/**
+		 * @param Jelly_Collection  $matches
+		 * @param int               $line_id
+		 * @return string
+		 */
+		static public function matches_to_bullet($matches, $line_id)
+		{
+			$result = '';
+			foreach ($matches as $match)
+			{
+				/** @var Model_Match $match */
+				if ($match->home->id() == $line_id)
+				{
+					if ($match->home_goals > $match->away_goals)
+						$color = 'green';
+					else if ($match->home_goals == $match->away_goals)
+						$color = 'yellow';
+					else
+						$color = 'red';
+				}
+				else
+				{
+					if ($match->home_goals < $match->away_goals)
+						$color = 'green';
+					else if ($match->home_goals == $match->away_goals)
+						$color = 'yellow';
+					else
+						$color = 'red';
+				}
+
+				$result = html::anchor("match/view/".$match->id, "<span class='bullet {$color}'>&bullet;</span>") . $result;
+			}
+
+			return $result;
 		}
 	}

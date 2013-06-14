@@ -174,6 +174,12 @@
 					->line($line->id)
 					->execute();
 
+			$last_five_matches = Jelly::select('match')
+				->limit(5)
+				->with('club')
+				->line($line->id)
+				->execute();
+
 			$schedule = false;
 			$played_matches = false;
 			if($tournament->scheduled)
@@ -218,8 +224,9 @@
 				$clubs_arr[$tline->club->id] = $tline->club;
 			}
 
-			$view = new View('tournament_club_view');
+			$view = new View('tournament_club_view_new');
 			$view->matches = $matches;
+			$view->last_five_matches = $last_five_matches;
 			$view->line = $line;
 			$view->goleodors = $goleodors;
 			$view->played_matches = $played_matches;
