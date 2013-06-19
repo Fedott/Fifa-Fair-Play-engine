@@ -116,20 +116,20 @@
 				if ($match->home->id() == $line_id)
 				{
 					if ($match->home_goals > $match->away_goals)
-						$color = 'green';
+						$color = 'win';
 					else if ($match->home_goals == $match->away_goals)
-						$color = 'yellow';
+						$color = 'draw';
 					else
-						$color = 'red';
+						$color = 'lose';
 				}
 				else
 				{
 					if ($match->home_goals < $match->away_goals)
-						$color = 'green';
+						$color = 'win';
 					else if ($match->home_goals == $match->away_goals)
-						$color = 'yellow';
+						$color = 'draw';
 					else
-						$color = 'red';
+						$color = 'lose';
 				}
 
 				$result = html::anchor("match/view/".$match->id, "<span class='bullet {$color}'>&bullet;</span>") . $result;

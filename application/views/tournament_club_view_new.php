@@ -37,7 +37,7 @@
 		</div>
 		<div class="row-fluid">
 			<h4>Матчи команды</h4>
-			<table class="matches table table-condensed">
+			<table class="matches table table-condensed table-hover">
 				<thead>
 				<tr>
 					<th class="right">Домашняя команда</th>
@@ -50,7 +50,7 @@
 				<?php foreach($matches as $count => $match):?>
 					<tr
 						class="
-							<?=(($line->id != $my_line->id) AND (($match->away->id == $my_line->id) OR ($match->home->id == $my_line->id)))?' my_team':'';?>
+							<?=(($line->id != $my_line->id) AND (($match->away->id == $my_line->id) OR ($match->home->id == $my_line->id)))?' info':'';?>
 							<?=($count >= 10)?'hide':'';?>
 							"
 					>
@@ -72,7 +72,7 @@
 		<div class="row-fluid">
 			<?php if($schedule):?>
 				<h4>Расписание игр команды</h4>
-				<table class="schedule table table-condensed">
+				<table class="schedule table table-condensed table-hover">
 					<thead>
 					<tr>
 						<th class="right">Хозяева</th>
@@ -84,7 +84,7 @@
 					<?php foreach($schedule as $match):?>
 						<tr
 							class="
-								<?=(($line->id != $my_line->id) AND (($match->away->id == $my_line->id) OR ($match->home->id == $my_line->id)))?' my_team':'';?>
+								<?=(($line->id != $my_line->id) AND (($match->away->id == $my_line->id) OR ($match->home->id == $my_line->id)))?' info':'';?>
 								"
 						>
 							<td class="right">
@@ -108,43 +108,48 @@
 				</table>
 			<?php else:?>
 				<h4>Сыгранные/не сыгранные матчи</h4>
-				<table class="played_matches table table-condensed">
-					<thead>
-					<tr>
-						<th><?=$line->club->name;?></th>
-						<th />
-						<th></th>
-						<?php for($i = 1; $i <= $tournament->matches; $i++):?>
-							<th>Круг <?=$i;?></th>
-						<?php endfor;?>
-					</tr>
-					</thead>
-					<tbody>
-					<?php foreach($tournament->lines as $ll):?>
-						<?php if($ll->id != $line->id):?>
-							<tr class="<?=($ll->id == $my_line->id)?'my_team':'';?>">
-								<td />
-								<td>vs</td>
-								<td class="">
-									<?=html::anchor('tournament/club/'.$ll->id, $ll->club->name);?>
-								</td>
+				<div class="row-fluid">
+					<div class="span3">
+						<h5><?=$line->club->name;?></h5>
+					</div>
+					<div class="span9">
+						<table class="played_matches table table-condensed table-hover">
+							<thead>
+							<tr>
+								<th />
+								<th></th>
 								<?php for($i = 1; $i <= $tournament->matches; $i++):?>
-									<td>
-										<?php ?>
-										<?php if(arr::path($played_matches, $ll->id.".count", 0) >= $i):?>
-											<span class="play">Сыгран
-												(<?=MISC::matches_to_score_line($played_matches[$ll->id][$i], $line->id); ?>)
-											</span>
-										<?php else:?>
-											<span class="not_play">Не сыгран</span>
-										<?php endif;?>
-									</td>
+									<th>Круг <?=$i;?></th>
 								<?php endfor;?>
 							</tr>
-						<?php endif;?>
-					<?php endforeach;?>
-					</tbody>
-				</table>
+							</thead>
+							<tbody>
+							<?php foreach($tournament->lines as $ll):?>
+								<?php if($ll->id != $line->id):?>
+									<tr class="<?=($ll->id == $my_line->id)?'info':'';?>">
+										<td>vs</td>
+										<td class="">
+											<?=html::anchor('tournament/club/'.$ll->id, $ll->club->name);?>
+										</td>
+										<?php for($i = 1; $i <= $tournament->matches; $i++):?>
+											<td>
+												<?php ?>
+												<?php if(arr::path($played_matches, $ll->id.".count", 0) >= $i):?>
+													<span class="play">Сыгран
+														(<?=MISC::matches_to_score_line($played_matches[$ll->id][$i], $line->id); ?>)
+													</span>
+												<?php else:?>
+													<span class="not_play">Не сыгран</span>
+												<?php endif;?>
+											</td>
+										<?php endfor;?>
+									</tr>
+								<?php endif;?>
+							<?php endforeach;?>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			<?php endif;?>
 		</div>
 	</div>

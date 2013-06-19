@@ -87,7 +87,7 @@
 					<tr class="<?=($goleodor['line_id'] == $my_line->id)?'info':'';?>">
 						<td><?=$i++;?></td>
 						<td><?=$goleodor['player']->player_name(false);?></td>
-						<td><?=HTML::anchor('tournament/club/'.$goleodor['player']->club->id, $goleodor['player']->club->name);?></td>
+						<td><?=HTML::anchor('tournament/club/'.$goleodor['line_id'], $goleodor['player']->club->name);?></td>
 						<td><?=$goleodor['goals'];?></td>
 					</tr>
 				<?php endforeach;?>
