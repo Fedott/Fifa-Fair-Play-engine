@@ -137,4 +137,54 @@
 
 			return $result;
 		}
+
+		/**
+		 * @param Model_Match   $match
+		 * @param int           $line_id
+		 */
+		static public function matches_to_score_line($match, $line_id)
+		{
+			$result = '';
+
+			if ($match->home->id == $line_id)
+			{
+				$result = "<span class='";
+				if ($match->home_goals > $match->away_goals)
+				{
+					$result.= 'win';
+				}
+				else if ($match->home_goals == $match->away_goals)
+				{
+					$result.= 'draw';
+				}
+				else
+				{
+					$result.= 'lose';
+				}
+				$result.= "'>";
+				$result.= $match->home_goals . " - " . $match->away_goals;
+				$result.= "</span>";
+			}
+			else
+			{
+				$result = "<span class='";
+				if ($match->home_goals < $match->away_goals)
+				{
+					$result.= 'win';
+				}
+				else if ($match->home_goals == $match->away_goals)
+				{
+					$result.= 'draw';
+				}
+				else
+				{
+					$result.= 'lose';
+				}
+				$result.= "'>";
+				$result.= $match->away_goals . " - " . $match->home_goals;
+				$result.= "</span>";
+			}
+
+			return $result;
+		}
 	}

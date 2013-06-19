@@ -48,3 +48,15 @@ table caption h4 {
 .popup_profile {
     display: none;
 }
+
+span.win {
+    color: #008000;
+}
+
+span.draw {
+    color: darkgray;
+}
+
+span.lose {
+    color: red;
+}

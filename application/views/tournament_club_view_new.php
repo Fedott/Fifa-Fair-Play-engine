@@ -111,7 +111,9 @@
 				<table class="played_matches table table-condensed">
 					<thead>
 					<tr>
-						<th>Команда</th>
+						<th><?=$line->club->name;?></th>
+						<th />
+						<th></th>
 						<?php for($i = 1; $i <= $tournament->matches; $i++):?>
 							<th>Круг <?=$i;?></th>
 						<?php endfor;?>
@@ -121,6 +123,8 @@
 					<?php foreach($tournament->lines as $ll):?>
 						<?php if($ll->id != $line->id):?>
 							<tr class="<?=($ll->id == $my_line->id)?'my_team':'';?>">
+								<td />
+								<td>vs</td>
 								<td class="">
 									<?=html::anchor('tournament/club/'.$ll->id, $ll->club->name);?>
 								</td>
@@ -128,18 +132,11 @@
 									<td>
 										<?php ?>
 										<?php if(arr::path($played_matches, $ll->id.".count", 0) >= $i):?>
-											<p class="play">Сыгран (<?php
-												if (($played_matches[$ll->id][$i]->home->id == $line->id AND $played_matches[$ll->id][$i]->home_goals > $played_matches[$ll->id][$i]->away_goals) OR ($played_matches[$ll->id][$i]->home->id != $line->id AND $played_matches[$ll->id][$i]->home_goals < $played_matches[$ll->id][$i]->away_goals))
-												{
-													echo "<font class='green'>".$played_matches[$ll->id][$i]->home_goals." - ".$played_matches[$ll->id][$i]->away_goals."</font>";
-												}
-												else
-												{
-													echo "<font class='red'>".$played_matches[$ll->id][$i]->home_goals." - ".$played_matches[$ll->id][$i]->away_goals."</font>";
-												}
-												?>)</p>
+											<span class="play">Сыгран
+												(<?=MISC::matches_to_score_line($played_matches[$ll->id][$i], $line->id); ?>)
+											</span>
 										<?php else:?>
-											<p class="not_play">Не сыгран</p>
+											<span class="not_play">Не сыгран</span>
 										<?php endif;?>
 									</td>
 								<?php endfor;?>
