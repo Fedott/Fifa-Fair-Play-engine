@@ -1,20 +1,22 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
 <?php /** @var Model_Match $match */ ?>
-<div class="row-fluid">
+<div class="row-fluid" xmlns="http://www.w3.org/1999/html">
 	<div class="offset1 span10">
 		<div class="row-fluid">
 			<div class="span3 center">
 				<?=html::image($match->home->club->logo(), array('class' => 'team_logo', 'alt' => $match->home->club->name));?>
+				<h3><?=$match->home->club->name;?></h3>
 			</div>
 			<div class="span6 center">
 				<h4><?=$match->table->name;?></h4>
 				<?php if($match->table->scheduled):?>
-					<p><?=$match->planned_match->round;?></p>
+					<p><strong><?=$match->planned_match->round;?></strong> круг</p>
 				<?php endif;?>
 				<p><?=misc::get_human_date($match->date);?></p>
 			</div>
 			<div class="span3 center">
 				<?=html::image($match->away->club->logo(), array('class' => 'team_logo', 'alt' => $match->away->club->name));?>
+				<h3><?=$match->away->club->name;?></h3>
 			</div>
 		</div>
 		<div class="row-fluid">
@@ -85,7 +87,7 @@
 		</div>
 		<img id="comment_add_loadbar" src="/templates/fifa/img/ajax_load_bar.gif" style="display: none;"/>
 		<div class="row-fluid">
-			<div class="offset3">
+			<div class="offset2 span8">
 				<?if($auth->logged_in()):?>
 					<?=form::open('ajax/comment/add', array('id' => 'comment_add_form'));?>
 					<fieldset>
