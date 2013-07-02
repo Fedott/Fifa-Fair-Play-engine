@@ -2,6 +2,7 @@
 <?php /** @var Model_Match $match */ ?>
 <div class="row-fluid" xmlns="http://www.w3.org/1999/html">
 	<div class="offset1 span10">
+<!--
 		<div class="row-fluid">
 			<div class="span3 center">
 				<?=html::image($match->home->club->logo(), array('class' => 'team_logo', 'alt' => $match->home->club->name));?>
@@ -47,6 +48,65 @@
 				<?endif;?>
 			</div>
 		</div>
+-->
+		<div class="row-fluid" style="margin-top: 40px;">
+			<div class="span2 center">
+				<?=html::image($match->home->club->logo(), array('class' => 'team_logo', 'alt' => $match->home->club->name));?>
+			</div>
+
+			<div class="span2">
+				<div>
+					<?=$match->home->club->name;?>
+				</div>
+				<div>
+					Текущая форма
+				</div>
+				<div>
+					<?if($match->home_goals):?>
+						<?foreach ($home_goals as $goal):?>
+							<p><?=$goal->player->player_name();?> <?=misc::get_goals_images($goal->count);?></p>
+						<?endforeach;?>
+					<?endif;?>
+				</div>
+			</div>
+
+			<div class="span4 center">
+				<div>
+					<?=$match->home_goals;?>
+					:
+					<?=$match->away_goals;?>
+				</div>
+				<div>
+					<?=$match->table->name;?>
+					<?php if($match->table->scheduled):?>
+						<p><strong><?=$match->planned_match->round;?></strong> круг</p>
+					<?php endif;?>
+					<p><?=misc::get_human_date($match->date);?></p>
+				</div>
+			</div>
+
+			<div class="span2 right">
+				<div>
+					<?=$match->away->club->name;?>
+				</div>
+				<div>
+					Текущая форма
+				</div>
+				<div>
+					<?if($match->away_goals):?>
+						<?foreach ($away_goals as $goal):?>
+							<p><?=misc::get_goals_images($goal->count);?> <?=$goal->player->player_name();?></p>
+						<?endforeach;?>
+					<?endif;?>
+				</div>
+			</div>
+
+			<div class="span2 center">
+				<?=html::image($match->away->club->logo(), array('class' => 'team_logo', 'alt' => $match->away->club->name));?>
+			</div>
+		</div>
+
+
 		<div class="row-fluid">
 			<div class="offset2 span3 right">
 				<?if($other_matches->count()):?>
