@@ -60,3 +60,7 @@ span.draw {
 span.lose {
     color: red;
 }
+
+.team-name {
+    font-size: 22px;
+}

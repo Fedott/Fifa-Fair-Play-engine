@@ -2,102 +2,54 @@
 <?php /** @var Model_Match $match */ ?>
 <div class="row-fluid" xmlns="http://www.w3.org/1999/html">
 	<div class="offset1 span10">
-<!--
-		<div class="row-fluid">
-			<div class="span3 center">
-				<?=html::image($match->home->club->logo(), array('class' => 'team_logo', 'alt' => $match->home->club->name));?>
-				<h3><?=$match->home->club->name;?></h3>
-			</div>
-			<div class="span6 center">
-				<h4><?=$match->table->name;?></h4>
-				<?php if($match->table->scheduled):?>
-					<p><strong><?=$match->planned_match->round;?></strong> круг</p>
-				<?php endif;?>
-				<p><?=misc::get_human_date($match->date);?></p>
-			</div>
-			<div class="span3 center">
-				<?=html::image($match->away->club->logo(), array('class' => 'team_logo', 'alt' => $match->away->club->name));?>
-				<h3><?=$match->away->club->name;?></h3>
-			</div>
-		</div>
-		<div class="row-fluid">
-			<div class="span3 center">
-				<h1><?=$match->home_goals;?></h1>
-			</div>
-			<div class="span6 center">
-				<h1>:</h1>
-				<h4>Голы</h4>
-			</div>
-			<div class="span3 center">
-				<h1><?=$match->away_goals;?></h1>
-			</div>
-		</div>
-		<div class="row-fluid">
-			<div class="span5 right">
-				<?if($match->home_goals):?>
-					<?foreach ($home_goals as $goal):?>
-						<p><?=$goal->player->player_name();?> <?=misc::get_goals_images($goal->count);?></p>
-					<?endforeach;?>
-				<?endif;?>
-			</div>
-			<div class="offset2 span5">
-				<?if($match->away_goals):?>
-					<?foreach ($away_goals as $goal):?>
-						<p><?=misc::get_goals_images($goal->count);?> <?=$goal->player->player_name();?></p>
-					<?endforeach;?>
-				<?endif;?>
-			</div>
-		</div>
--->
+
 		<div class="row-fluid" style="margin-top: 40px;">
 			<div class="span2 center">
 				<?=html::image($match->home->club->logo(), array('class' => 'team_logo', 'alt' => $match->home->club->name));?>
 			</div>
 
-			<div class="span2">
-				<div>
-					<?=$match->home->club->name;?>
+			<div class="span8">
+				<div class="span4">
+					<h4 class="team-name">
+						<?=HTML::anchor('tournament/club/'.$match->home->id, $match->home->club->name);?>
+					</h4>
+					<div>
+						<?php if($match->home_goals):?>
+							<?php foreach ($home_goals as $goal):?>
+								<div><?=$goal->player->player_name();?> <?=misc::get_goals_images($goal->count);?></div>
+							<?php endforeach;?>
+						<?php endif;?>
+					</div>
 				</div>
-				<div>
-					Текущая форма
-				</div>
-				<div>
-					<?if($match->home_goals):?>
-						<?foreach ($home_goals as $goal):?>
-							<p><?=$goal->player->player_name();?> <?=misc::get_goals_images($goal->count);?></p>
-						<?endforeach;?>
-					<?endif;?>
-				</div>
-			</div>
 
-			<div class="span4 center">
-				<div>
-					<?=$match->home_goals;?>
-					:
-					<?=$match->away_goals;?>
+				<div class="span4 center">
+					<h2>
+						<?=$match->home_goals;?>
+						:
+						<?=$match->away_goals;?>
+					</h2>
+					<div>
+						<div>
+							<?=HTML::anchor('tournament/view/'.$match->table->id, $match->table->name);?>
+						</div>
+						<?php if($match->table->scheduled):?>
+							<div><strong><?=$match->planned_match->round;?></strong> круг</div>
+						<?php endif;?>
+						<div><?=misc::get_human_date($match->date);?></div>
+					</div>
 				</div>
-				<div>
-					<?=$match->table->name;?>
-					<?php if($match->table->scheduled):?>
-						<p><strong><?=$match->planned_match->round;?></strong> круг</p>
-					<?php endif;?>
-					<p><?=misc::get_human_date($match->date);?></p>
-				</div>
-			</div>
 
-			<div class="span2 right">
-				<div>
-					<?=$match->away->club->name;?>
-				</div>
-				<div>
-					Текущая форма
-				</div>
-				<div>
-					<?if($match->away_goals):?>
-						<?foreach ($away_goals as $goal):?>
-							<p><?=misc::get_goals_images($goal->count);?> <?=$goal->player->player_name();?></p>
-						<?endforeach;?>
-					<?endif;?>
+				<div class="span4 right">
+					<h4 class="team-name">
+						<?=HTML::anchor('tournament/club/'.$match->away->id, $match->away->club->name);?>
+					</h4>
+					<div>
+						<?php if($match->away_goals):?>
+							<?php foreach ($away_goals as $goal):?>
+								<div><?=misc::get_goals_images($goal->count);?> <?=$goal->player->player_name();?></div>
+							<?php endforeach;?>
+						<?php endif;?>
+					</div>
 				</div>
 			</div>
 
@@ -108,10 +60,10 @@
 
 
 		<div class="row-fluid">
-			<div class="offset2 span3 right">
-				<?if($other_matches->count()):?>
+			<div class="offset1 span4 right">
+				<?php if($other_matches->count()):?>
 					<h4>Другие матчи команд</h4>
-					<?foreach($other_matches as $omatch):?>
+					<?php foreach($other_matches as $omatch):?>
 						<p>
 							<?=$omatch->home->club->name;?>
 							<a href="<?=URL::site('match/view/'.$omatch->id);?>">
@@ -120,25 +72,36 @@
 								<?=$omatch->away_goals;?></a>
 							<?=$omatch->away->club->name;?>
 						</p>
-					<?endforeach;?>
+					<?php endforeach;?>
 				<?php endif;?>
 			</div>
-			<div class="offset2 span3">
-				<?if(count($match->videos)):?>
+			<div class="offset2 span4">
+				<?php if(count($match->videos)):?>
 					<div class="match_videos">
 						<h4>Видео матча</h4>
-						<?foreach($match->videos as $video):?>
+						<?php foreach($match->videos as $video):?>
 							<p>
 								<i class="icon-film"></i>
-								<?=HTML::anchor('http://youtu.be/'.$video->youtube_key, $video->title, array('class' => 'youtube', 'title' => HTML::chars($video->description), 'rel' => $video->youtube_key));?>
+								<?=HTML::anchor(
+									'http://youtu.be/'.$video->youtube_key,
+									$video->title,
+									array('class' => 'youtube', 'title' => HTML::chars($video->description), 'rel' => $video->youtube_key)
+								);?>
 							</p>
-						<?endforeach;?>
+						<?php endforeach;?>
 					</div>
-				<?endif;?>
+				<?php endif;?>
 
-				<?if($user->id == $match->home->user_id() OR $user->id == $match->away->user_id() OR $auth->logged_in('admin')):?>
+				<?php if (
+					$auth->logged_in()
+					AND (
+						$user->id == $match->home->user_id()
+						OR $user->id == $match->away->user_id()
+						OR $auth->logged_in('admin')
+					)
+				):?>
 					<p><?=HTML::anchor('match/video_upload/'.$match->id, 'Добавить видео к матчу');?></p>
-				<?endif;?>
+				<?php endif;?>
 			</div>
 		</div>
 		<div class="row-fluid comments">
@@ -148,11 +111,11 @@
 		<img id="comment_add_loadbar" src="/templates/fifa/img/ajax_load_bar.gif" style="display: none;"/>
 		<div class="row-fluid">
 			<div class="offset2 span8">
-				<?if($auth->logged_in()):?>
+				<?php if($auth->logged_in()):?>
 					<?=form::open('ajax/comment/add', array('id' => 'comment_add_form'));?>
 					<fieldset>
 						<legend>Добавить комментарий</legend>
-						<?php echo Form::textarea('comment_text', '', array(
+						<?=Form::textarea('comment_text', '', array(
 								'id' => 'field-comment_text',
 								'class' => 'textarea field wysiwyg input-xxxlarge',
 								'placeholder' => 'Введите текст комментария',
@@ -162,7 +125,7 @@
 					<?=form::hidden('match_id', $match->id);?>
 					<?=form::submit("", "Добавить", array('class' => 'btn'));?>
 					<?=form::close();?>
-				<? endif; ?>
+				<?php endif; ?>
 			</div>
 		</div>
 	</div>
