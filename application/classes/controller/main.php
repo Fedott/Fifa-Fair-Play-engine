@@ -6,6 +6,10 @@
 		{
 			/** @var $table Model_Table */
 			$table = Jelly::select('table')->limit(1)->visible()->execute();
+			if ( ! $table->loaded())
+			{
+				$this->request->redirect('/news');
+			}
 			$last_matches = Jelly::select('match')
 					->where('table', '=', $table->id)
 					->limit(10)
@@ -157,12 +161,15 @@
 				{
 					$user->set($post);
 					$user->validate();
-					$cv = Validate::factory($_POST)
-							->rule('chelovechnost','Captcha::valid')
-							->rule('chelovechnost', 'not_empty');
-					if( ! $cv->check())
+					if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1')
 					{
-						throw new Validate_Exception($cv, 'Bad captcha');
+						$cv = Validate::factory($_POST)
+								->rule('chelovechnost','Captcha::valid')
+								->rule('chelovechnost', 'not_empty');
+						if( ! $cv->check())
+						{
+							throw new Validate_Exception($cv, 'Bad captcha');
+						}
 					}
 					$user->add('roles', 1);
 					$user->save();

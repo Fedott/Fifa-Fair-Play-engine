@@ -1,0 +1,6 @@
+{
+    "require": {
+        "phing/phing": "*",
+        "codeception/codeception": "@stable"
+    }
+}

@@ -2,3 +2,5 @@ application/logs/*
 forum
 .idea/
 application/config/video.php
+vendor
+composer.lock

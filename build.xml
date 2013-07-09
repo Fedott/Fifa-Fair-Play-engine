@@ -1,0 +1,10 @@
+<project name="fifafairplay" description="fifafairplay test" default="test">
+    <target name="test" depends="selenium_start">
+        <exec command="./vendor/bin/codecept run" passthru="true" />
+    </target>
+
+    <target name="selenium_start">
+        <exec command="java -jar ./tests/_data/selenium-server-standalone*.jar" spawn="true" />
+        <exec command="sleep 5" />
+    </target>
+</project>

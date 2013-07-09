@@ -23,6 +23,7 @@ class Model_Club extends Jelly_Model
 			'url' => new Field_String,
 			'logo' => new Field_File(array(
 				'path' => 'media/logos',
+				'default' => '',
 			)),
 			'players' => new Field_HasMany,
 			'lines' => new Field_HasMany,

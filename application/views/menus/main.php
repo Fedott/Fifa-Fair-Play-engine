@@ -38,12 +38,15 @@
 					<li>
 						<?=HTML::anchor('profile', $user->username);?>
 					</li>
+					<li>
+						<?=HTML::anchor('logout', 'Выйти');?>
+					</li>
 				<?php else:?>
 					<li>
 						<?=HTML::anchor('login', 'Войти');?>
 					</li>
 					<li>
-						<?=HTML::anchor('logout', 'Зарегистрироваться');?>
+						<?=HTML::anchor('reg', 'Зарегистрироваться');?>
 					</li>
 				<?php endif;?>
 			</ul>

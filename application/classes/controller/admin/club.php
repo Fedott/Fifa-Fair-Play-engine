@@ -34,7 +34,7 @@
 				{
 					$club->set(Arr::extract($_POST, array('name')));
 					$club->url = url::string_to_url($club->name);
-					if(isset($_FILES))
+					if(isset($_FILES) AND isset($_FILES['logo']))
 						$club->logo = $_FILES['logo'];
 					$club->save();
 					Request::instance()->redirect('admin/club/view/'.$club->id);
