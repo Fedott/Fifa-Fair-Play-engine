@@ -46,16 +46,16 @@
 				<div id="breadcrumb">
 					<?=(isset($breadcrumb)?$breadcrumb:"").$title;?>
 				</div>
-			<?if(MISC::isset_error_message()):?>
+			<?php if(MISC::isset_error_message()):?>
 				<div id="error_message">
 					<?=MISC::get_error_message();?>
 				</div>
-			<?endif;?>
-			<?if(MISC::isset_apply_message()):?>
+			<?php endif;?>
+			<?php if(MISC::isset_apply_message()):?>
 				<div id="apply_message">
 					<?=MISC::get_apply_message();?>
 				</div>
-			<?endif;?>
+			<?php endif;?>
 				<div id="content">
 					<?=$content?>
 				</div>

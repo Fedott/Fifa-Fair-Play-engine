@@ -4,7 +4,7 @@
     <property name="db.database" value="fifa_test" />
     <property name="db.hostname" value="localhost" />
 
-    <target name="test" depends="db_config">
+    <target name="test" depends="db_config, host_start">
         <exec command="./vendor/bin/codecept run" passthru="true" />
     </target>
 
@@ -22,11 +22,26 @@
 
     </target>
 
+    <target name="host_start">
+        <exec command="php -S localhost:8777" spawn="true" />
+        <exec command="sleep 1" />
+    </target>
+
+    <target name="selenium_start_local">
+        <exec command="java -jar ./tests/_data/selenium-server-standalone*.jar" spawn="true" />
+        <exec command="sleep 3" />
+    </target>
+
     <target name="selenium_start">
         <exec
                 command="sh tests/_data/ephemeral-x.sh -x 'Xvfb -ac -screen 0 1024x768x24' java -jar ./tests/_data/selenium-server-standalone*.jar"
                 spawn="true" />
-        <!--<exec command="java -jar ./tests/_data/selenium-server-standalone*.jar" spawn="true" />-->
         <exec command="sleep 5" />
+    </target>
+
+    <target name="stop_all">
+        <exec command="pkill -f 'Xvfb'" />
+        <exec command="pkill -f 'php -S localhost:8777'" />
+        <exec command="pkill -f 'selenium'" />
     </target>
 </project>

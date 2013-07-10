@@ -1,10 +1,10 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
 <p>Команда, <?=$line->club->name?>, в турнире <?=$line->table->name;?></p>
-<?if($line->user->id):?>
+<?php if($line->user->id):?>
 <p>Управляет командой: <?=$line->user->username;?></p>
-<?else:?>
+<?php else:?>
 <p>Тренер не назначен</p>
-<?endif;?>
+<?php endif;?>
 <ul class="admin_actions">
 	<li>
 		<?=html::anchor('admin/tournament/line_coach/'.$line->id, 'Сменить управляющего командой');?>

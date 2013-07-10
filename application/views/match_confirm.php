@@ -1,18 +1,18 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
 Вы подтверждаете результат матча:<br>
 <?=$match->home->club->name." ".$match->home_goals." - ".$match->away_goals." ".$match->away->club->name;?><br>
-<?if(count($home_goals)):?>
+<?php if(count($home_goals)):?>
 	Голы хозяев:<br>
-	<?foreach($home_goals as $goal):?>
+	<?php foreach($home_goals as $goal):?>
 		<?=$goal->player->player_name()." - ".$goal->count?><br>
-	<?endforeach;?>
-<?endif;?>
-<?if(count($away_goals)):?>
+	<?php endforeach;?>
+<?php endif;?>
+<?php if(count($away_goals)):?>
 	Голы гостей:<br>
-	<?foreach($away_goals as $goal):?>
+	<?php foreach($away_goals as $goal):?>
 		<?=$goal->player->player_name()." - ".$goal->count?><br>
-	<?endforeach;?>
-<?endif;?>
+	<?php endforeach;?>
+<?php endif;?>
 <br>
 <?=form::open(NULL, array('id' => 'confirm_form'));?>
 <ul>

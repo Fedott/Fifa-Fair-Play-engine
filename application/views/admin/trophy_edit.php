@@ -1,16 +1,16 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
-<?if($errors):?>
+<?php if($errors):?>
 <div class="errors">
 	<p class="errors">Произошла ошибка</p>
 	<ul>
-		<?foreach($errors as $error):?>
+		<?php foreach($errors as $error):?>
 		<li>
 			<?=$error?>
 		</li>
-		<?endforeach;?>
+		<?php endforeach;?>
 </ul>
 </div>
-<?endif;?>
+<?php endif;?>
 
 <?=form::open(NULL, array('enctype' => 'multipart/form-data'));?>
 <ul>
@@ -45,9 +45,9 @@
 		</label>
 		<div>
 			<?=$trophy->input('image');?>
-			<?if(!empty($trophy->image)):?>
+			<?php if(!empty($trophy->image)):?>
 				<?=HTML::image("media/trophy/".$trophy->image);?>
-			<?endif;?>
+			<?php endif;?>
 		</div>
 	</li>
 	<li>

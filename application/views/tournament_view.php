@@ -15,8 +15,8 @@
 			<th>Очков</th>
 		</tr>
 	</thead>
-	<?$i = 1;?>
-	<?foreach ($tournament->lines as $line):?>
+	<?php $i = 1;?>
+	<?php foreach ($tournament->lines as $line):?>
 	<tr class="<?=text::alternate('nechet', 'chet');?><?=($line->id == $my_line->id)?' my_team':'';?>">
 		<td><?=$i++?></td>
 		<td><?=html::anchor('tournament/club/'.$line->id, $line->club->name);?></td>
@@ -29,9 +29,9 @@
 		<td><?=$line->goals - $line->passed_goals?></td>
 		<td><?=$line->points?></td>
 	</tr>
-	<?endforeach;?>
+	<?php endforeach;?>
 </table>
-<?if(count($goleodors)):?>
+<?php if(count($goleodors)):?>
 <h3>Бомбардиры турнира</h3>
 <table cellpadding="3" cellspacing="1">
 	<thead>
@@ -43,27 +43,27 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?$i = 1;?>
+		<?php $i = 1;?>
 		<?=text::alternate();?>
-		<?foreach ($goleodors as $line):?>
+		<?php foreach ($goleodors as $line):?>
 		<tr class="<?=text::alternate('nechet', 'chet');?><?=($line['line_id'] == $my_line->id)?' my_team':'';?>">
 			<td><?=$i++;?></td>
 			<td><?=$line['player']->player_name(NULL);?></td>
 			<td><?=html::anchor('tournament/club/'.$line['line_id'], $line['player']->club->name);?></td>
 			<td><?=$line['goals'];?></td>
 		</tr>
-		<?endforeach;?>
+		<?php endforeach;?>
 	</tbody>
 </table>
-<?else:?>
+<?php else:?>
 <p>Ещё не забито ни одного гола</p>
-<?endif;?>
+<?php endif;?>
 <?=html::anchor('match/list/'.$tournament->url, 'Матчи в рамках турнира');?>
 <?php if($tournament->scheduled):?>
 	<br />
 	<?=html::anchor('tournament/schedule/'.$tournament->id, 'Расписание');?>
 <?php endif;?>
-<?if($uchastie AND $tournament->active):?>
+<?php if($uchastie AND $tournament->active):?>
 	<hr>
 	<?=html::anchor('match/reg/'.$tournament->id, 'Зарегистрировать матч');?>
-<?endif;?>
+<?php endif;?>

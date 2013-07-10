@@ -91,21 +91,21 @@ jQuery( function($) {
 					<tr>
 						<td class="left">
 							<ul class="home_goals">
-							<?if($match->home_goals):?>
-								<?foreach ($home_goals as $goal):?>
+							<?php if($match->home_goals):?>
+								<?php foreach ($home_goals as $goal):?>
 								<li><?=$goal->player->player_name();?> <?=misc::get_goals_images($goal->count);?></li>
-								<?endforeach;?>
-							<?endif;?>
+								<?php endforeach;?>
+							<?php endif;?>
 							</ul>
 						</td>
 						<td class="center"> </td>
 						<td class="right">
 							<ul class="away_goals">
-							<?if($match->away_goals):?>
-								<?foreach ($away_goals as $goal):?>
+							<?php if($match->away_goals):?>
+								<?php foreach ($away_goals as $goal):?>
 								<li><?=misc::get_goals_images($goal->count);?> <?=$goal->player->player_name();?></li>
-								<?endforeach;?>
-							<?endif;?>
+								<?php endforeach;?>
+							<?php endif;?>
 							</ul>
 						</td>
 					</tr>
@@ -118,23 +118,23 @@ jQuery( function($) {
 	</tbody>
 </table>
 
-<?if(count($match->videos)):?>
+<?php if(count($match->videos)):?>
 	<div class="match_videos">
 		Видео матча:<br />
-		<?foreach($match->videos as $video):?>
+		<?php foreach($match->videos as $video):?>
 			<?=HTML::anchor('http://youtu.be/'.$video->youtube_key, $video->title, array('class' => 'youtube', 'title' => HTML::chars($video->description), 'rel' => $video->youtube_key));?><br />
-		<?endforeach;?>
+		<?php endforeach;?>
 	</div>
-<?endif;?>
+<?php endif;?>
 
-<?if($user->id == $match->home->user_id() OR $user->id == $match->away->user_id() OR $auth->logged_in('admin')):?>
+<?php if($user->id == $match->home->user_id() OR $user->id == $match->away->user_id() OR $auth->logged_in('admin')):?>
 	<?=HTML::anchor('match/video_upload/'.$match->id, 'Добавить видео к матчу');?>
-<?endif;?>
+<?php endif;?>
 
-	<?if($other_matches->count()):?>
+	<?php if($other_matches->count()):?>
 	<div class="other_matches">
 		Другие матчи команд:<br/>
-		<?foreach($other_matches as $omatch):?>
+		<?php foreach($other_matches as $omatch):?>
 		<?=$omatch->home->club->name;?>
 		<a href="<?=URL::site('match/view/'.$omatch->id);?>">
 		<?=$omatch->home_goals;?>
@@ -142,16 +142,16 @@ jQuery( function($) {
 		<?=$omatch->away_goals;?></a>
 		<?=$omatch->away->club->name;?>
 		<br/>
-		<?endforeach;?>
+		<?php endforeach;?>
 	</div>
-<?endif;?>
+<?php endif;?>
 
 <div class="comments">
 	<h4>Комментарии к матчу:</h4>
 	
 </div>
 <img id="comment_add_loadbar" src="/templates/fifa/img/ajax_load_bar.gif" style="display: none;"/>
-<?if($auth->logged_in()):?>
+<?php if($auth->logged_in()):?>
 	<?=form::open('ajax/comment/add', array('id' => 'comment_add_form'));?>
 		<fieldset>
 			<legend>Добавить комментарий</legend>
@@ -165,4 +165,4 @@ jQuery( function($) {
 		<?=form::hidden('match_id', $match->id);?>
 		<?=form::submit("", "Добавить", array('class' => 'btn'));?>
 	<?=form::close();?>
-<? endif; ?>
+<?php endif; ?>

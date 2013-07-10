@@ -161,7 +161,7 @@
 				{
 					$user->set($post);
 					$user->validate();
-					if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1')
+					if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1' AND $_SERVER['REMOTE_ADDR'] != '::1')
 					{
 						$cv = Validate::factory($_POST)
 								->rule('chelovechnost','Captcha::valid')

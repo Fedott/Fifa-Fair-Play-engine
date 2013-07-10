@@ -9,14 +9,14 @@
 		</tr>
 	</thead>
 	<tbody>
-	<?foreach($tournaments as $tournament):?>
-		<?$ii = 0;?>
+	<?php foreach($tournaments as $tournament):?>
+		<?php $ii = 0;?>
 		<tr class="<?=(($i%2)==0)?'chet':'nechet'?>">
 			<td><?=$i++?>.</td>
 			<td><?=html::anchor('/admin/tournament/view/'.$tournament->id, $tournament->name, array('class' => 'tournament'))?></td>
-			<td><?foreach($tournament->lines as $key => $line):?><?=(++$ii!=1)?', ':''?><?=$line->club->name?><?endforeach;?></td>
+			<td><?php foreach($tournament->lines as $key => $line):?><?=(++$ii!=1)?', ':''?><?=$line->club->name?><?php endforeach;?></td>
 		</tr>
-	<?endforeach;?>
+	<?php endforeach;?>
 	</tbody>
 </table>
 <hr/>

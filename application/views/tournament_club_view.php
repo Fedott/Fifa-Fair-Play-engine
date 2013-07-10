@@ -35,7 +35,7 @@
 	</tbody>
 </table>
 
-<?if(count($goleodors)):?>
+<?php if(count($goleodors)):?>
 <h4>Бамбардиры команды</h4>
 <table cellpadding="3" cellspacing="1">
 	<thead>
@@ -46,19 +46,19 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?$i = 1;?>
-		<?foreach ($goleodors as $lin):?>
+		<?php $i = 1;?>
+		<?php foreach ($goleodors as $lin):?>
 		<tr class="<?=text::alternate('nechet', 'chet')?>">
 			<td><?=$i++;?></td>
 			<td><?=$lin['player']->player_name(NULL);?></td>
 			<td><?=$lin['goals'];?></td>
 		</tr>
-		<?endforeach;?>
+		<?php endforeach;?>
 	</tbody>
 </table>
-<?else:?>
+<?php else:?>
 <p>Ещё не забито ни одного гола</p>
-<?endif;?>
+<?php endif;?>
 
 <h4>Матчи команды</h4>
 <table class="matches" cellpadding="3" cellspacing="1">
@@ -71,14 +71,14 @@
 		</tr>
 	</thead>
 	<tbody>
-	<?foreach($matches as $match):?>
+	<?php foreach($matches as $match):?>
 		<tr class="<?=text::alternate('nechet', 'chet')?> <?=(($line->id != $my_line->id) AND (($match->away->id == $my_line->id) OR ($match->home->id == $my_line->id)))?' my_team':'';?>">
 			<td><?=html::anchor('/tournament/club/'.$match->home->id, $clubs_arr[$match->home->club_id()]->name);?></td>
 			<td><?=html::anchor('match/view/'.$match->id, $match->home_goals." - ".$match->away_goals);?></td>
 			<td><?=html::anchor('/tournament/club/'.$match->away->id, $clubs_arr[$match->away->club_id()]->name);?></td>
 			<td><?=misc::get_human_date($match->date);?></td>
 		</tr>
-	<?endforeach;?>
+	<?php endforeach;?>
 	</tbody>
 </table>
 
@@ -120,15 +120,15 @@
 		<thead>
 			<tr>
 				<th>Команда</th>
-				<?for($i = 1; $i <= $tournament->matches; $i++):?>
+				<?php for($i = 1; $i <= $tournament->matches; $i++):?>
 				<th>Круг <?=$i;?></th>
-				<?endfor;?>
+				<?php endfor;?>
 			</tr>
 		</thead>
 		<tbody>
 			<?text::alternate();?>
-			<?foreach($tournament->lines as $ll):?>
-				<?if($ll->id != $line->id):?>
+			<?php foreach($tournament->lines as $ll):?>
+				<?php if($ll->id != $line->id):?>
 				<tr class="<?=text::alternate('nechet', 'chet')?> <?=($ll->id == $my_line->id)?'my_team':'';?>">
 					<td class="">
 						<div class="club_info_in_profile">
@@ -137,19 +137,19 @@
 							<div class="popup_profile">
 								<strong><?=$ll->club->name;?></strong>
 								<br>
-								<?if($ll->user->loaded()):?>
+								<?php if($ll->user->loaded()):?>
 									<?=__("Тренер: ").$ll->user->username;?>
 									<br>
 									<?=$ll->user->get_im("<br/>");?>
-								<?else:?>
+								<?php else:?>
 									У команды нет тренера
-								<?endif;?>
+								<?php endif;?>
 							</div>
 						</div>
 					</td>
-					<?for($i = 1; $i <= $tournament->matches; $i++):?>
+					<?php for($i = 1; $i <= $tournament->matches; $i++):?>
 					<td>
-						<?if(arr::path($played_matches, $ll->id.".count", 0) >= $i):?>
+						<?php if(arr::path($played_matches, $ll->id.".count", 0) >= $i):?>
 							<p class="play">Сыгран (<?php
 								if (($played_matches[$ll->id][$i]->home->id == $line->id AND $played_matches[$ll->id][$i]->home_goals > $played_matches[$ll->id][$i]->away_goals) OR ($played_matches[$ll->id][$i]->home->id != $line->id AND $played_matches[$ll->id][$i]->home_goals < $played_matches[$ll->id][$i]->away_goals))
 								{
@@ -160,14 +160,14 @@
 									echo "<font class='red'>".$played_matches[$ll->id][$i]->home_goals." - ".$played_matches[$ll->id][$i]->away_goals."</font>";
 								}
 							?>)</p>
-						<?else:?>
+						<?php else:?>
 							<p class="not_play">Не сыгран</p>
-						<?endif;?>
+						<?php endif;?>
 					</td>
-					<?endfor;?>
+					<?php endfor;?>
 				</tr>
-				<?endif;?>
-			<?endforeach;?>
+				<?php endif;?>
+			<?php endforeach;?>
 		</tbody>
 	</table>
 <?php endif;?>

@@ -193,7 +193,7 @@
 			</div>
 		</div>
 		<div class="row-fluid">
-			<?if(count($goleodors)):?>
+			<?php if(count($goleodors)):?>
 				<h4>Бамбардиры команды</h4>
 				<table class="table table-condensed">
 					<thead>
@@ -204,19 +204,19 @@
 					</tr>
 					</thead>
 					<tbody>
-					<?$i = 1;?>
-					<?foreach ($goleodors as $lin):?>
+					<?php $i = 1;?>
+					<?php foreach ($goleodors as $lin):?>
 						<tr class="<?=text::alternate('nechet', 'chet')?>">
 							<td><?=$i++;?></td>
 							<td><?=$lin['player']->player_name(NULL);?></td>
 							<td><?=$lin['goals'];?></td>
 						</tr>
-					<?endforeach;?>
+					<?php endforeach;?>
 					</tbody>
 				</table>
-			<?else:?>
+			<?php else:?>
 				<p>Ещё не забито ни одного гола</p>
-			<?endif;?>
+			<?php endif;?>
 		</div>
 	</div>
 </div>

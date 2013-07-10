@@ -11,11 +11,11 @@
  */
 ?>
 <div class="page-header">
-	<?if($tourn->loaded()):?>
+	<?php if($tourn->loaded()):?>
 		<h2>Матчи турнира "<?=$tourn->name;?>"</h2>
-	<?else:?>
+	<?php else:?>
 		<h2>Все матчи</h2>
-	<?endif;?>
+	<?php endif;?>
 </div>
 <div class="row-fluid">
 	<table class="table table-hover">
@@ -43,24 +43,24 @@
 						<?php else:?>
 							<i class="icon-remove" title="Не подтверждён"></i>
 						<?php endif;?>
-						<?if(isset($comments_arr[$match->id])):?>
+						<?php if(isset($comments_arr[$match->id])):?>
 							<i class="icon-comment" title="Есть комментарии" show-match-comments="<?=$match->id;?>"></i>
 							<div class="popover left in fade span4" comments-match-id="<?=$match->id;?>" style="display: none;">
 								<div class="arrow"></div>
 								<div class="popover-content">
-									<?foreach($comments_arr[$match->id] as $comment):?>
+									<?php foreach($comments_arr[$match->id] as $comment):?>
 										<p class="comment_author">
 											Автор: <b><?=$comment->author->username;?></b>
-											<?if($comment->author->id == $match->home->user_id()):?>
+											<?php if($comment->author->id == $match->home->user_id()):?>
 												(<b><?=$clubs_arr[$match->home->club_id()]->name;?></b>)
-											<?elseif($comment->author->id == $match->away->user_id()):?>
+											<?php elseif($comment->author->id == $match->away->user_id()):?>
 												(<b><?=$clubs_arr[$match->away->club_id()]->name;?></b>)
-											<?endif;?>
+											<?php endif;?>
 										</p>
 										<p class="comment_text">
 											<?=$comment->text;?>
 										</p>
-									<?endforeach;?>
+									<?php endforeach;?>
 								</div>
 							</div>
 						<?php endif;?>

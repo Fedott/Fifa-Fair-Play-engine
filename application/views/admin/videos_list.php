@@ -10,8 +10,8 @@
 	</tr>
 	</thead>
 	<tbody>
-	<?$i = 1;?>
-	<?foreach($videos as $video):?>
+	<?php $i = 1;?>
+	<?php foreach($videos as $video):?>
 		<tr class="<?=text::alternate('nechet', 'chet');?>">
 			<td><?=$i++?>.</td>
 			<td><?=html::anchor('/admin/video/edit/'.$video->id, $video->title, array('class' => 'video'))?></td>
@@ -20,6 +20,6 @@
 				<?=HTML::anchor('admin/video/delete/'.$video->id, 'Удалить');?>
 			</td>
 		</tr>
-	<?endforeach;?>
+	<?php endforeach;?>
 	</tbody>
 </table>

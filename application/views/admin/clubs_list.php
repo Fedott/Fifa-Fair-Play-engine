@@ -9,14 +9,14 @@
 		</tr>
 	</thead>
 	<tbody>
-	<?$i = 1;?>
-	<?foreach($clubs as $club):?>
+	<?php $i = 1;?>
+	<?php foreach($clubs as $club):?>
 		<tr class="<?=text::alternate('nechet', 'chet');?>">
 			<td><?=$i++?>.</td>
 			<td><?=html::anchor('/admin/club/view/'.$club->id, $club->name, array('class' => 'club'))?></td>
-			<td><?foreach($club->lines as $key => $line):?><?=($key==1)?', ':''?><?=$line->table->name?><?endforeach;?></td>
+			<td><?php foreach($club->lines as $key => $line):?><?=($key==1)?', ':''?><?=$line->table->name?><?php endforeach;?></td>
 		</tr>
-	<?endforeach;?>
+	<?php endforeach;?>
 	</tbody>
 </table>
 <hr/>

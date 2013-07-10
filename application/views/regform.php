@@ -1,17 +1,17 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
 <h2>Регистрация</h2>
-<?if($errors):?>
+<?php if($errors):?>
 <div class="errors">
 	Вы допустили следующие ошибки:
 	<ul>
-		<?foreach($errors as $error):?>
+		<?php foreach($errors as $error):?>
 		<li>
 			<?=$error?>
 		</li>
-		<?endforeach;?>
+		<?php endforeach;?>
 </ul>
 </div>
-<?endif;?>
+<?php endif;?>
 <?=form::open();?>
 <ul>
 	<li class="">

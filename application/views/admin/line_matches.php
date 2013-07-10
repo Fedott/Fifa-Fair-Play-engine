@@ -3,15 +3,15 @@
 	<thead>
 	<tr>
 		<th>Команда</th>
-		<?for($i = 1; $i <= $line->table->matches; $i++):?>
+		<?php for($i = 1; $i <= $line->table->matches; $i++):?>
 		<th>Круг <?=$i;?></th>
-		<?endfor;?>
+		<?php endfor;?>
 	</tr>
 	</thead>
 	<tbody>
 	<?text::alternate();?>
-	<?foreach($line->table->lines as $ll):?>
-		<?if($ll->id != $line->id):?>
+	<?php foreach($line->table->lines as $ll):?>
+		<?php if($ll->id != $line->id):?>
 		<tr class="<?=text::alternate('nechet', 'chet')?>">
 			<td class="">
 				<div class="club_info_in_profile">
@@ -20,35 +20,35 @@
 					<div class="popup_profile">
 						<strong><?=$ll->club->name;?></strong>
 						<br>
-						<?if($ll->user->loaded()):?>
+						<?php if($ll->user->loaded()):?>
 						<?=__("Тренер: ").$ll->user->username;?>
 						<br>
 						<?=$ll->user->get_im("<br/>");?>
-						<?else:?>
+						<?php else:?>
 						У команды нет тренера
-						<?endif;?>
+						<?php endif;?>
 					</div>
 				</div>
 			</td>
-			<?for($i = 1; $i <= $line->table->matches; $i++):?>
+			<?php for($i = 1; $i <= $line->table->matches; $i++):?>
 			<td>
-				<?if(arr::path($played_matches, $ll->id.".count", 0) >= $i):?>
-					<?if($played_matches[$ll->id][$i]->tech):?>
+				<?php if(arr::path($played_matches, $ll->id.".count", 0) >= $i):?>
+					<?php if($played_matches[$ll->id][$i]->tech):?>
 						<p class="tech_match">
 							Технический (<?=$played_matches[$ll->id][$i]->home_goals." - ".$played_matches[$ll->id][$i]->away_goals;?>)
 						</p>
-					<?else:?>
+					<?php else:?>
 						<p class="play">
 							Сыгран (<?=$played_matches[$ll->id][$i]->home_goals." - ".$played_matches[$ll->id][$i]->away_goals;?>)
 						</p>
-					<?endif;?>
-				<?else:?>
+					<?php endif;?>
+				<?php else:?>
 					<p class="not_play"><?=html::anchor('admin/tournament/line_new_tech_lose/'.$line->id.'/'.$ll->id, 'Тех поражение');?></p>
-				<?endif;?>
+				<?php endif;?>
 			</td>
-			<?endfor;?>
+			<?php endfor;?>
 		</tr>
-			<?endif;?>
-		<?endforeach;?>
+			<?php endif;?>
+		<?php endforeach;?>
 	</tbody>
 </table>

@@ -1,23 +1,23 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
 <h1><?=$tournament->name?></h1>
-<?if(count($tournament->lines)):?>
+<?php if(count($tournament->lines)):?>
 <p>Команды учавствующие в турнире:</p>
 <ul>
 	<?php /** @var $line Model_Line */?>
-	<?foreach($tournament->lines as $key => $line):?>
+	<?php foreach($tournament->lines as $key => $line):?>
 		<li>
 			<?=html::anchor('admin/tournament/line_view/'.$line->id, $line->club->name)?>
-			<?if($line->win + $line->drawn + $line->lose == 0):?>
+			<?php if($line->win + $line->drawn + $line->lose == 0):?>
 				| <?=html::anchor('admin/tournament/line_delete/'.$line->id, 'X');?>
-			<?endif;?>
+			<?php endif;?>
 		</li>
-	<?endforeach;?>
+	<?php endforeach;?>
 </ul>
-<?else:?>
+<?php else:?>
 <p>
 	Турнир пока пуст
 </p>
-<?endif?>
+<?php endif?>
 <hr>
 <?=html::anchor('admin/tournament/edit/'.$tournament->id, 'Редактировать')?>
 <?php if($tournament->scheduled):?>

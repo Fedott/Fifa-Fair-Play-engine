@@ -17,7 +17,7 @@ modules:
         - Db
     config:
         Selenium2:
-            url: 'http://fifa/'
+            url: 'http://localhost:8777/'
             browser: firefox
         WebDebug:
             disable: false

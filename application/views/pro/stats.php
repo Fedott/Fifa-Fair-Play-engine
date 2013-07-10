@@ -18,7 +18,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<? foreach ($end_values as $pro_player):?>
+		<?php foreach ($end_values as $pro_player):?>
 			<tr class="<?=text::alternate('nechet', 'chet');?>">
 				<td><?=$pro_player->nick;?></td>
 				<td>
@@ -58,6 +58,6 @@
 					(<?=$pro_player->tackles - arr::path($start_values, $pro_player->nick.".tackles", 0);?>)
 				</td>
 			</tr>
-		<? endforeach;?>
+		<?php endforeach;?>
 	</tbody>
 </table>
