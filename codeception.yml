@@ -13,8 +13,8 @@ modules:
     config:
         Db:
             dsn: 'mysql:host=localhost;dbname=fifa_test'
-            user: 'fifa'
-            password: 'fifa'
+            user: 'fifa_test'
+            password: 'fifa_test'
             dump: tests/_data/fifa_test.sql
             populate: true
             cleanup: false
