@@ -24,7 +24,7 @@ $I->see("Аршавин Андрей");
 
 $I->click("Администрирование");
 $I->click("Клубы");
-$I->seeLink("Зенит");
+$I->see("Зенит");
 $I->click("Создать команду");
 $I->fillField("name", "CSKA");
 $I->click("[type=submit]");
