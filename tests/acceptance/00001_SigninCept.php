@@ -13,7 +13,7 @@ $I->fillField('origin', 'tester');
 $I->click('input[type="submit"]');
 $I->seeLink("tester", '/profile');
 $I->click("tester");
-$I->see("Редактировать", 'a');
+$I->see("Редактировать");
 $I->see('Origin: tester');
 $I->seeLink("Выйти");
 $I->click("Выйти");
