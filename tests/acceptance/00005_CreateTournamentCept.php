@@ -50,4 +50,11 @@ $I->click("CSKA");
 $I->see("Управляет командой: tester");
 $I->moveBack();
 
+$I->reloadPage();
+
+$I->click("Редактировать");
+$I->selectOption("active", "Да");
+$I->selectOption("visible", "Да");
+$I->click("[type=submit]");
+
 $I->click("Выйти");
