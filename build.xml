@@ -24,7 +24,7 @@
 
     <target name="host_start">
         <exec command="php -S localhost:8777" spawn="true" />
-        <exec command="sleep 3" />
+        <exec command="sleep 7" />
     </target>
 
     <target name="selenium_start_local">
