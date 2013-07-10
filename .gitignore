@@ -4,3 +4,4 @@ forum
 application/config/video.php
 vendor
 composer.lock
+tests/_log/

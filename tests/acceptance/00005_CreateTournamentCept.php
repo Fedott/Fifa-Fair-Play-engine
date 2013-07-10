@@ -32,3 +32,22 @@ $I->click("[type=submit]");
 $I->seeLink("Зенит");
 $I->seeLink("CSKA");
 
+$I->click("Зенит");
+$I->click("Сменить управляющего командой");
+$I->selectOption("user_id", "admin");
+$I->click("[type=submit]");
+$I->see("Команды учавствующие в турнире");
+$I->click("Зенит");
+$I->see("Управляет командой: admin");
+$I->moveBack();
+
+$I->click("CSKA");
+$I->click("Сменить управляющего командой");
+$I->selectOption("user_id", "tester");
+$I->click("[type=submit]");
+$I->see("Команды учавствующие в турнире");
+$I->click("CSKA");
+$I->see("Управляет командой: tester");
+$I->moveBack();
+
+$I->click("Выйти");
