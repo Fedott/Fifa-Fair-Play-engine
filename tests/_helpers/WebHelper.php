@@ -5,9 +5,14 @@ namespace Codeception\Module;
 
 class WebHelper extends \Codeception\Module
 {
-	static public function admin_login(\WebGuy $I)
+	static public function login_as_admin(\WebGuy $I)
 	{
 		self::login($I, 'admin', 'qwerty');
+	}
+
+	static public function login_as_tester(\WebGuy $I)
+	{
+		self::login($I, 'tester', 'tester');
 	}
 
 	static public function login(\WebGuy $I, $user, $password)

@@ -236,6 +236,8 @@ CREATE TABLE IF NOT EXISTS `players` (
   UNIQUE KEY `first_name` (`first_name`,`last_name`,`year_of_birth`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;
 
+INSERT INTO `players` VALUE (1, NULL, "Автогол", 0, NULL );
+
 -- --------------------------------------------------------
 
 --

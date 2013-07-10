@@ -2,7 +2,7 @@
 $I = new WebGuy($scenario);
 $I->wantTo('Создать турнир и добавить туда команды');
 
-\Codeception\Module\WebHelper::admin_login($I);
+$I->login_as_admin($I);
 
 $I->amOnPage("/");
 $context = $I->click("Администрирование");

@@ -1522,13 +1522,30 @@ class WebGuy extends \Codeception\AbstractGuy
  
     /**
      *
-     * @see WebHelper::admin_login()
+     * @see WebHelper::login_as_admin()
      * @return \Codeception\Maybe
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
      */
-    public function admin_login($I) {
-        $this->scenario->action('admin_login', func_get_args());
+    public function login_as_admin($I) {
+        $this->scenario->action('login_as_admin', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     *
+     * @see WebHelper::login_as_tester()
+     * @return \Codeception\Maybe
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function login_as_tester($I) {
+        $this->scenario->action('login_as_tester', func_get_args());
         if ($this->scenario->running()) {
             $result = $this->scenario->runStep();
             return new Maybe($result);

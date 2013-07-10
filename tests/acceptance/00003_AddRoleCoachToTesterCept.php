@@ -1,7 +1,9 @@
 <?php
 $I = new WebGuy($scenario);
 $I->wantTo('Дать пользователю tester роль тренера');
-\Codeception\Module\WebHelper::admin_login($I);
+
+$I->login_as_admin($I);
+
 $I->amOnPage('/');
 $I->click("Администрирование");
 $I->click('Пользователи');

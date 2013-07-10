@@ -1,9 +1,9 @@
 <?php
 $I = new WebGuy($scenario);
 $I->wantTo("Создать несколько клубов");
-$I->amOnPage("/");
-$I->wait(1000);
-\Codeception\Module\WebHelper::admin_login($I);
+
+$I->login_as_admin($I);
+
 $I->amOnPage("/");
 $I->click("Администрирование");
 $I->click("Клубы");
