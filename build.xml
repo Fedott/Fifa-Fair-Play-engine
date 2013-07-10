@@ -4,7 +4,7 @@
     <property name="db.database" value="fifa_test" />
     <property name="db.hostname" value="localhost" />
 
-    <target name="test" depends="db_config, selenium_start">
+    <target name="test" depends="db_config">
         <exec command="./vendor/bin/codecept run" passthru="true" />
     </target>
 
@@ -23,10 +23,10 @@
     </target>
 
     <target name="selenium_start">
-        <exec command="Xvfb :15 -ac -screen 0 1024x768x16" spawn="true" />
-        <exec command="sleep 3" />
-        <exec command="export DISPLAY=localhost:15.0" />
-        <exec command="java -jar ./tests/_data/selenium-server-standalone*.jar" spawn="true" />
+        <exec
+                command="sh tests/_data/ephemeral-x.sh -x 'Xvfb -ac -screen 0 1024x768x24' java -jar ./tests/_data/selenium-server-standalone*.jar"
+                spawn="true" />
+        <!--<exec command="java -jar ./tests/_data/selenium-server-standalone*.jar" spawn="true" />-->
         <exec command="sleep 5" />
     </target>
 </project>
