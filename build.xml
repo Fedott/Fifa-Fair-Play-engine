@@ -23,6 +23,9 @@
     </target>
 
     <target name="selenium_start">
+        <exec command="Xvfb :15 -ac -screen 0 1024x768x16" spawn="true" />
+        <exec command="sleep 3" />
+        <exec command="export DISPLAY=localhost:15.0" />
         <exec command="java -jar ./tests/_data/selenium-server-standalone*.jar" spawn="true" />
         <exec command="sleep 5" />
     </target>
