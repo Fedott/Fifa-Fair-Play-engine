@@ -4,7 +4,7 @@
     <property name="db.database" value="fifa_test" />
     <property name="db.hostname" value="localhost" />
 
-    <target name="test" depends="db_config, host_start">
+    <target name="test" depends="db_config, host_start, selenium_start_local">
         <exec command="./vendor/bin/codecept run" passthru="true" />
     </target>
 
