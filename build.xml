@@ -1,6 +1,25 @@
 <project name="fifafairplay" description="fifafairplay test" default="test">
-    <target name="test" depends="selenium_start">
+    <property name="db.username" value="fifa_test" />
+    <property name="db.password" value="fifa_test" />
+    <property name="db.database" value="fifa_test" />
+    <property name="db.hostname" value="localhost" />
+
+    <target name="test" depends="db_config, selenium_start">
         <exec command="./vendor/bin/codecept run" passthru="true" />
+    </target>
+
+    <target name="db_config">
+        <copy file="application/config/database_orig.php" tofile="application/config/database.php" overwrite="true">
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="__USERNAME__" replace="${db.username}" />
+                    <regexp pattern="__PASSWORD__" replace="${db.password}" />
+                    <regexp pattern="__DATABASE__" replace="${db.database}" />
+                    <regexp pattern="__HOSTNAME__" replace="${db.hostname}" />
+                </replaceregexp>
+            </filterchain>
+        </copy>
+
     </target>
 
     <target name="selenium_start">

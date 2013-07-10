@@ -2,6 +2,7 @@ application/logs/*
 forum
 .idea/
 application/config/video.php
+application/config/database.php
 vendor
 composer.lock
 tests/_log/

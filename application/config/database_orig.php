@@ -17,11 +17,11 @@ return array
 			 *
 			 * Ports and sockets may be appended to the hostname.
 			 */
-			'hostname'   => 'localhost',
-			'username'   => 'fifa',
-			'password'   => 'fifa',
+			'hostname'   => '__HOSTNAME__',
+			'username'   => '__USERNAME__',
+			'password'   => '__PASSWORD__',
 			'persistent' => FALSE,
-			'database'   => 'fifa',
+			'database'   => '__DATABASE__',
 		),
 		'table_prefix' => '',
 		'charset'      => 'utf8',
