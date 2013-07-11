@@ -12,7 +12,7 @@ class WebHelper extends \Codeception\Module
 
 	static public function login_as_tester(\WebGuy $I)
 	{
-		self::login($I, 'tester', 'tester');
+		self::login($I, 'tester', 'qwerty');
 	}
 
 	static public function login(\WebGuy $I, $user, $password)
