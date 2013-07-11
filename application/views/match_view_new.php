@@ -13,7 +13,7 @@
 					<h4 class="team-name">
 						<?=HTML::anchor('tournament/club/'.$match->home->id, $match->home->club->name);?>
 					</h4>
-					<div>
+					<div class="home_goals">
 						<?php if($match->home_goals):?>
 							<?php foreach ($home_goals as $goal):?>
 								<div><?=$goal->player->player_name();?> <?=misc::get_goals_images($goal->count);?></div>
@@ -43,7 +43,7 @@
 					<h4 class="team-name">
 						<?=HTML::anchor('tournament/club/'.$match->away->id, $match->away->club->name);?>
 					</h4>
-					<div>
+					<div class="away_goals">
 						<?php if($match->away_goals):?>
 							<?php foreach ($away_goals as $goal):?>
 								<div><?=misc::get_goals_images($goal->count);?> <?=$goal->player->player_name();?></div>

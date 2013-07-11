@@ -24,4 +24,13 @@ class WebHelper extends \Codeception\Module
 		$I->click('[type=submit]');
 		$I->seeLink($user);
 	}
+
+	public function countElements($expected, $selector, $context = '')
+	{
+		/** @var \Behat\Mink\Session $session */
+		$session = $this->getModule('Selenium2')->session;
+		$page = $session->getPage();
+		$elements = $page->findAll("css", $selector);
+		$this->assertEquals($expected, count($elements));
+	}
 }

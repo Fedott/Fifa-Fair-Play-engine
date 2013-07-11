@@ -207,6 +207,9 @@ $I->see("S. Ignashevich");
 $I->see("A. Dzagoev");
 $I->see(" K. Nababkin");
 
+$I->countElements(4, "div.home_goals div");
+$I->countElements(3, "div.away_goals div");
+
 $I->see("10 : 6");
 $I->see("First Test Tournament");
 $I->seeLink("Добавить видео к матчу");
@@ -231,7 +234,7 @@ $I->click("Выйти");
 $I->login_as_tester($I);
 
 $I->see("Зенит 10 - 6 CSKA", "tr.error");
-$I->click("10 - 6", "tr.error");
+$I->click("tr.need_confirm a");
 
 $I->see("Вы подтверждаете результат матча:");
 $I->see("Зенит 10 - 6 CSKA");
@@ -255,6 +258,9 @@ $I->see("Автогол");
 $I->see("S. Ignashevich");
 $I->see("A. Dzagoev");
 $I->see(" K. Nababkin");
+
+$I->countElements(4, "div.home_goals div");
+$I->countElements(3, "div.away_goals div");
 
 $I->see("10 : 6");
 $I->see("First Test Tournament");

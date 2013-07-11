@@ -91,14 +91,17 @@
 				</caption>
 				<?php foreach($my_matches as $match):?>
 					<tr class="
-						<?=( ! $match->confirm AND $match->away->id() == $my_line->id)?"error":"";?>
-						<?=( ! $match->confirm AND $match->home->id() == $my_line->id)?"warning":"";?>
+						<?=( ! $match->confirm AND $match->away->id() == $my_line->id)?"error need_confirm":"";?>
+						<?=( ! $match->confirm AND $match->home->id() == $my_line->id)?"warning wait_confirm":"";?>
 					"
 						<?=( ! $match->confirm AND $match->away->id() == $my_line->id)?"title='Матч требует вашего подтверждения'":"";?>
 						<?=( ! $match->confirm AND $match->home->id() == $my_line->id)?"title='Матч ожидает подтверждения соперником'":"";?>
 					>
 						<?php /** @var $match Model_Match */ ?>
-						<?php $link = ( ! $match->confirm AND $match->away->id() == $my_line->id)?url::site('match/confirm/'.$match->id):url::site('match/view/'.$match->id);?>
+						<?php $link = ( ! $match->confirm AND $match->away->id() == $my_line->id)
+							? url::site('match/confirm/'.$match->id)
+							: url::site('match/view/'.$match->id)
+						;?>
 						<td><?=MISC::get_human_short_date($match->date);?></td>
 						<td class="right"><?=html::anchor($link, $match->home->club->name);?></td>
 						<td class="center"><?=html::anchor($link, $match->home_goals." - ".$match->away_goals);?></td>

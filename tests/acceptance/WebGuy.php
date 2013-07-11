@@ -1572,6 +1572,23 @@ class WebGuy extends \Codeception\AbstractGuy
 
  
     /**
+     *
+     * @see WebHelper::countElements()
+     * @return \Codeception\Maybe
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function countElements($expected, $selector, $context = null) {
+        $this->scenario->action('countElements', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
      * Inserts SQL record into database. This record will be erased after the test.
      *
      * ``` php
