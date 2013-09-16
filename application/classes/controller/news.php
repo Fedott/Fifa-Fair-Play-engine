@@ -19,7 +19,7 @@ class Controller_News extends Controller_Template
 				->limit($pagination->items_per_page)
 				->execute();
 
-		$view = new View('news_list');
+		$view = new View('news_list_new');
 		$view->News = $News;
 		$view->pagination = $pagination;
 
