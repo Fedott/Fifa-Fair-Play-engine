@@ -19,4 +19,9 @@
 		{
 			return $this->where('available', '=', true);
 		}
+
+		public function not_played()
+		{
+			return $this->where('played', '=', false);
+		}
 	}

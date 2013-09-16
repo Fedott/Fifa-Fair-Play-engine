@@ -62,10 +62,17 @@
 					->limit(10)
 					->execute();
 
+			$my_matches = Jelly::select('match')
+				->line($my_line->id)
+				->tournament($tournament->id)
+				->limit(10)
+				->execute();
+
             $planned_matches = Jelly::select('planned_match')
                     ->tournament($tournament->id)
                     ->line($my_line->id)
                     ->available()
+                    ->not_played()
                     ->execute();
 
 			$view = new View('tournament_view_new');
@@ -76,6 +83,7 @@
 			$view->uchastie = (bool) $my_line->loaded();
 			$view->last_matches = $last_matches;
             $view->planned_matches = $planned_matches;
+			$view->my_matches = $my_matches;
 
 			$this->template->title = __(":name", array(":name" => $tournament->name));
 			$this->template->content = $view;

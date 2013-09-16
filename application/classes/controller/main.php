@@ -28,6 +28,13 @@
 					->limit(10)
 					->execute();
 
+			$planned_matches = Jelly::select('planned_match')
+				->tournament($table->id)
+				->line($my_line->id)
+				->available()
+				->not_played()
+				->execute();
+
 			// TODO:: Переписать к чертям. А то быдлокод
 			$res = DB::select_array(array('goals.player_id', 'goals.line_id'))
 						->select(array('SUM("count")', 'goals'))
@@ -87,6 +94,7 @@
 			$view->lines = $lines_arr;
 			$view->uchastie = (bool) $my_line->loaded();
 			$view->my_matches = $my_matches;
+			$view->planned_matches = $planned_matches;
 
 			$this->template->title = __('Главная');
 			$this->template->content = $view;

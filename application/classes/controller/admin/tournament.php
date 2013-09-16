@@ -273,7 +273,6 @@
 							->or_where_close()
 							->where_close()
 							->and_where('table', '=', $match->table->id)
-							->and_where('available', '=', true)
 							->and_where('played', '=', false)
 							->limit(1)
 							->execute();

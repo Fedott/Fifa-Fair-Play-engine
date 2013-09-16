@@ -37,8 +37,43 @@
 				</tr>
 			</tfoot>
 		</table>
+
+		<table class="table table-hover table-condensed">
+			<caption>
+				<h4>Бомбардиры туринра</h4>
+			</caption>
+			<tbody>
+			<?php $i = 1;?>
+			<?php foreach($goleodors as $goleodor):?>
+				<tr class="<?=($goleodor['line_id'] == $my_line->id)?'info':'';?>">
+					<td><?=$i++;?></td>
+					<td><?=$goleodor['player']->player_name(false);?></td>
+					<td><?=HTML::anchor('tournament/club/'.$goleodor['player']->club->id, $goleodor['player']->club->name);?></td>
+					<td><?=$goleodor['goals'];?></td>
+				</tr>
+			<?php endforeach;?>
+			</tbody>
+		</table>
 	</div>
 	<div class="span6">
+		<?php if(count($planned_matches)):?>
+			<table class="table table-condensed table-hover">
+				<caption>
+					<h4>Мои следующие матчи</h4>
+				</caption>
+				<tbody>
+				<?php foreach($planned_matches as $match):?>
+					<?php /** @var $match Model_Planned_Match */ ?>
+					<tr>
+						<td class="right span5"><?=HTML::anchor("match/view/".$match->id, $match->home->club->name);?></td>
+						<td class="center span1">vs</td>
+						<td class="span5"><?=HTML::anchor("match/view/".$match->id, $match->away->club->name);?></td>
+					</tr>
+				<?php endforeach;?>
+				</tbody>
+			</table>
+		<?php endif;?>
+
 		<table class="table table-hover table-condensed">
 			<caption>
 				<h4>Матчи</h4>
@@ -61,33 +96,10 @@
 			</tr>
 			</tfoot>
 		</table>
-	</div>
-</div>
-<div class="row-fluid">
-	<div class="span6">
-		<table class="table table-hover table-condensed">
-			<caption>
-				<h4>Бомбардиры туринра</h4>
-			</caption>
-			<tbody>
-				<?php $i = 1;?>
-				<?php foreach($goleodors as $goleodor):?>
-					<tr class="<?=($goleodor['line_id'] == $my_line->id)?'info':'';?>">
-						<td><?=$i++;?></td>
-						<td><?=$goleodor['player']->player_name(false);?></td>
-						<td><?=HTML::anchor('tournament/club/'.$goleodor['player']->club->id, $goleodor['player']->club->name);?></td>
-						<td><?=$goleodor['goals'];?></td>
-					</tr>
-				<?php endforeach;?>
-			</tbody>
-		</table>
-	</div>
-	<div class="span6">
-
 		<?php if(count($my_matches)):?>
 			<table class="table table-hover table-condensed">
 				<caption>
-					<h4>Ваши матчи</h4>
+					<h4>Мои матчи</h4>
 				</caption>
 				<?php foreach($my_matches as $match):?>
 					<tr class="
@@ -96,7 +108,7 @@
 					"
 						<?=( ! $match->confirm AND $match->away->id() == $my_line->id)?"title='Матч требует вашего подтверждения'":"";?>
 						<?=( ! $match->confirm AND $match->home->id() == $my_line->id)?"title='Матч ожидает подтверждения соперником'":"";?>
-					>
+						>
 						<?php /** @var $match Model_Match */ ?>
 						<?php $link = ( ! $match->confirm AND $match->away->id() == $my_line->id)?url::site('match/confirm/'.$match->id):url::site('match/view/'.$match->id);?>
 						<td><?=MISC::get_human_short_date($match->date);?></td>
@@ -106,10 +118,10 @@
 					</tr>
 				<?php endforeach;?>
 				<tfoot>
-					<tr>
-						<th/>
-						<th colspan="3"><?=HTML::anchor('match/my', 'Все матчи', array('class' => 'muted'));?></th>
-					</tr>
+				<tr>
+					<th/>
+					<th colspan="3"><?=HTML::anchor('match/my', 'Все матчи', array('class' => 'muted'));?></th>
+				</tr>
 				</tfoot>
 			</table>
 		<?php endif;?>
