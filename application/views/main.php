@@ -43,7 +43,7 @@
 			<tfoot>
 				<tr>
 					<th/>
-					<th colspan="3"><?=HTML::anchor('tournament/view/'.$table->url, 'Полная таблица', array('class' => 'muted'));?></th>
+					<th colspan="4"><?=HTML::anchor('tournament/view/'.$table->url, 'Полная таблица', array('class' => 'muted'));?></th>
 				</tr>
 			</tfoot>
 		</table>
