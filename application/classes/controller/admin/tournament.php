@@ -334,6 +334,16 @@
 					$match->delete();
 				}
 
+				$planned_matches = Jelly::select('planned_match')
+					->line($line->id)
+					->execute();
+
+				/** @var $match Model_Planned_Match */
+				foreach ($planned_matches as $match)
+				{
+					$match->delete();
+				}
+
 				$table_id = $line->table->id;
 				$line->delete();
 				MISC::set_apply_message('Команда успешно выпилена из турнира. Все результаты игр анулированы');
