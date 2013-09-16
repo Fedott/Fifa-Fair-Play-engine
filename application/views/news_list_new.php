@@ -9,12 +9,14 @@
 			<div
 				class="news-element"
 				<?=HTML::attributes(array(
-					'news_title' => $news->title,
 					'news_date' => $news->date(),
 					'id' => $news->url,
 				));?>
 			>
 				<?=$news->text;?>
+				<div class="news-title">
+					<?=html::anchor('news/view/'.$news->url, $news->title);?>
+				</div>
 			</div>
 		<?php endforeach;?>
 	</div>
