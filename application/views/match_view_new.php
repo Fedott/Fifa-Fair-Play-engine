@@ -33,7 +33,7 @@
 							<?=HTML::anchor('tournament/view/'.$match->table->id, $match->table->name);?>
 						</div>
 						<?php if($match->table->scheduled):?>
-							<div><strong><?=$match->planned_match->round;?></strong> круг</div>
+							<div><strong><?=$match->planned_match->round;?></strong> тур</div>
 						<?php endif;?>
 						<div><?=misc::get_human_date($match->date);?></div>
 					</div>
