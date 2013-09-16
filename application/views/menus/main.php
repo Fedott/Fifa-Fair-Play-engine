@@ -16,6 +16,11 @@
 				<li>
 					<?=HTML::anchor('forum', 'Форум');?>
 				</li>
+				<?php if($auth->logged_in('coach')):?>
+					<li>
+						<?=HTML::anchor('match/my', 'Мои матчи');?>
+					</li>
+				<?php endif;?>
 				<?php if($auth->logged_in("admin")):?>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">

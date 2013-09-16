@@ -258,6 +258,31 @@
 					$match->tech = true;
 					$match->save();
 
+					if($match->table->scheduled)
+					{
+						/** @var $planned_match Model_Planned_Match */
+						$planned_match = Jelly::select('planned_match')
+							->where_open()
+							->where_open()
+							->where('home', '=', $match->home->id())
+							->or_where('away', '=', $match->away->id())
+							->where_close()
+							->or_where_open()
+							->where('home', '=', $match->away->id())
+							->or_where('away', '=', $match->home->id())
+							->or_where_close()
+							->where_close()
+							->and_where('table', '=', $match->table->id)
+							->and_where('available', '=', true)
+							->and_where('played', '=', false)
+							->limit(1)
+							->execute();
+
+						$planned_match->played = true;
+						$planned_match->match = $match;
+						$planned_match->save();
+					}
+
 					$match->commit();
 
 					$comment->text = "Техническое поражение.<br/>Причина:<br/>" . $comment->text;

@@ -304,7 +304,7 @@
 				Request::instance()->redirect('match/view/'.$last_match->id);
 			}
 
-			$lines = $this->_avalible_play_matches($tournament, $myline);
+			$lines = $this->_available_play_matches($tournament, $myline);
 
 
 			$clubs = array('NULL' => 'Выберете команду соперника');
@@ -333,7 +333,7 @@
 		 * @param Model_Line $my_line
 		 * @return Jelly_Collection
 		 */
-		protected function _avalible_play_matches($tournament, $my_line)
+		protected function _available_play_matches($tournament, $my_line)
 		{
 			if($tournament->scheduled)
 			{
@@ -563,7 +563,7 @@
 					->where("table.visible", "=", 1)
 					->execute();
 
-			$view = new View('match_my');
+			$view = View::factory('match_my_new');
 			$view->uncmatches = $uncmatches;
 			$view->uncymatches = $uncymatches;
 			$view->matches = $matches;
