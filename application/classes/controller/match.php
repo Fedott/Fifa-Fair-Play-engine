@@ -525,7 +525,7 @@
 			$home_goals = Jelly::select('goal')->where("match_id", "=", $match->id)->where("line_id", "=", $match->home->id)->execute();
 			$away_goals = Jelly::select('goal')->where("match_id", "=", $match->id)->where("line_id", "=", $match->away->id)->execute();
 
-			$view = new View('match_confirm');
+			$view = new View('match_confirm_new');
 			$view->match = $match;
 			$view->home_goals = $home_goals;
 			$view->away_goals = $away_goals;

@@ -42,10 +42,10 @@
 			'class' => 'wysiwyg input-xxlarge',
 			'placeholder' => 'Коментарий',
 		)); ?>
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">Зарегистрировать</button>
+		</div>
 	</fieldset>
-	<div class="form-actions">
-		<button type="submit" class="btn btn-primary">Зарегистрировать</button>
-	</div>
 	<?=form::close();?>
 </div>
 
