@@ -20,13 +20,23 @@
 			<caption>
 				<h4>Таблица</h4>
 			</caption>
+			<thead>
+				<tr>
+					<th>Пос</th>
+					<th>Команда</th>
+					<th class="center">И</th>
+					<th class="center">З-П</th>
+					<th class="center">О</th>
+				</tr>
+			</thead>
 			<tbody>
 				<?php foreach($lines as $pos => $line):?>
 					<tr class="<?=($line->id == $my_line->id)?"info":'';?>">
 						<td><?=$pos;?></td>
 						<td><?=HTML::anchor('tournament/club/'.$line->id, $line->club->name);?></td>
-						<td><?=$line->points;?></td>
-						<td><?=$line->goals;?> - <?=$line->passed_goals;?></td>
+						<td class="center"><?=$line->games;?></td>
+						<td class="center"><?=$line->goals;?> - <?=$line->passed_goals;?></td>
+						<td class="center"><?=$line->points;?></td>
 					</tr>
 				<?php endforeach;?>
 			</tbody>
