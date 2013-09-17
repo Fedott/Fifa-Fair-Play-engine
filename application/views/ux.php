@@ -8,6 +8,7 @@
 		<?=HTML::style('templates/ux/css/bootstrap.css', array('rel' => 'stylesheet', 'media' => 'screen'));?>
 		<?=HTML::style('templates/ux/css/bootstrap-responsive.css', array('rel' => 'stylesheet'));?>
 		<?=HTML::style('templates/ux/css/bootstrap-wysihtml5.css');?>
+		<?=HTML::style('http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/redmond/jquery-ui.css');?>
 
 		<?=HTML::style('templates/ux/css/style.css', array('rel' => 'stylesheet'));?>
 
