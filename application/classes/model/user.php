@@ -71,7 +71,7 @@ class Model_User extends Model_Auth_User
 	{
 		if(!empty($this->avatar))
 		{
-			return URL::base().'media/avatars/'.$this->avatar;
+			return 'media/avatars/'.$this->avatar;
 		}
 		else
 		{
