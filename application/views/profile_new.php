@@ -18,7 +18,7 @@
 	</div>
 	<div class="row-fluid">
 		<div class="span2 center">
-			<?=HTML::image($user->get_avatar());?>
+			<img src="<?=$user->get_avatar();?>" />
 		</div>
 		<div class="span6">
 

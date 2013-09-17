@@ -24,7 +24,12 @@
 						<tr>
 							<td>Тренер</td>
 							<td>
-								<?=sprintf('%s %s (%s)', $line->user->first_name, $line->user->last_name, $line->user->username);?>
+								<?=sprintf(
+									'%s %s (%s)',
+									$line->user->first_name,
+									$line->user->last_name,
+									html::anchor('profile/'. $line->user->id, $line->user->username))
+								;?>
 							</td>
 						</tr>
 						<tr>
