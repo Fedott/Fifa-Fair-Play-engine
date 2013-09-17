@@ -90,7 +90,7 @@
 			</caption>
 			<tbody>
 				<?php foreach($last_matches as $match):?>
-					<tr>
+					<tr class="<?=($match->home->id() == $my_line->id || $match->away->id() == $my_line->id)?"info":'';?>">
 						<?php /** @var $match Model_Match */ ?>
 						<td><?=MISC::get_human_short_date($match->date);?></td>
 						<td class="right"><?=HTML::anchor("match/view/".$match->id, $match->home->club->name);?></td>
