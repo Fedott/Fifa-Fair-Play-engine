@@ -5,6 +5,13 @@
 		<title>
 			<?=$title;?>
 		</title>
+		<link rel="shortcut icon" href="/templates/fifa/img/favicon.ico" type="image/x-icon" />
+
+		<meta http-equiv="Content-Type" Content="text/html; Charset=UTF-8">
+		<meta http-equiv="content-language" content="ru">
+		<meta name="description" Content="Чемпионат Красивый футбол сайт где проводится чемпионат по игре FIFA Soccer. Здесь в этом чемпионате играют только в красивый футбол, без багов, без задротства. Чемпионат создан для получения удовольствия от игры в футбол на виртуальных полях.">
+		<meta name="keywords" content="Fifa 14, fifa 15, fifa 13, fifa 12, fifa, fifa soccer, чемпионат fifa 14, чемпионат fifa 13, турнир fifa 14, турнир fifa 13, футбол, красивый футбол, чемпионат">
+
 		<?=HTML::style('templates/ux/css/bootstrap.css', array('rel' => 'stylesheet', 'media' => 'screen'));?>
 		<?=HTML::style('templates/ux/css/bootstrap-responsive.css', array('rel' => 'stylesheet'));?>
 		<?=HTML::style('templates/ux/css/bootstrap-wysihtml5.css');?>
