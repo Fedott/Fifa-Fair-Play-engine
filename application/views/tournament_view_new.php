@@ -77,6 +77,7 @@
 						<td class="right span5"><?=HTML::anchor("match/view/".$match->id, $match->home->club->name);?></td>
 						<td class="center span1">vs</td>
 						<td class="span5"><?=HTML::anchor("match/view/".$match->id, $match->away->club->name);?></td>
+						<td class="span2"><?=$match->round;?> тур</td>
 					</tr>
 				<?php endforeach;?>
 				</tbody>
