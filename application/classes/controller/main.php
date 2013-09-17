@@ -294,7 +294,7 @@
 						->execute();
 			}
 
-			$view = new View('profile');
+			$view = new View('profile_new');
 			$view->user = $user;
 			$view->coach = $coach;
 			$view->my_profile = ($user->id == $this->user->id)?true:false;

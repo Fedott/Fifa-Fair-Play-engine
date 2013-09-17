@@ -101,3 +101,17 @@ span.lose {
     position: absolute;
     top: -1px;
 }
+
+table.profile {
+    width: 77%;
+}
+
+table.profile tbody tr:last-child td {
+    padding-bottom: 15px;
+}
+
+table.profile th {
+    text-align: left;
+    vertical-align: top;
+    width: 30%;
+}
