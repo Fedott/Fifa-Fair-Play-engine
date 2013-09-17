@@ -35,6 +35,8 @@
 				->not_played()
 				->execute();
 
+			$club_loader = new Loader_Clubs();
+
 			// TODO:: Переписать к чертям. А то быдлокод
 			$res = DB::select_array(array('goals.player_id', 'goals.line_id'))
 						->select(array('SUM("count")', 'goals'))
@@ -69,6 +71,8 @@
 			$my_line_in = false;
 			foreach($table->lines as $pos => $line)
 			{
+				$club_loader->add_by_line($line);
+
 				++$pos;
 				if( ! $my_line->loaded() OR $line->id == $my_line->id OR $my_line_in OR count($lines_arr) < 9)
 				{
@@ -95,6 +99,7 @@
 			$view->uchastie = (bool) $my_line->loaded();
 			$view->my_matches = $my_matches;
 			$view->planned_matches = $planned_matches;
+			$view->club_loader = $club_loader;
 
 			$this->template->title = __('Главная');
 			$this->template->content = $view;

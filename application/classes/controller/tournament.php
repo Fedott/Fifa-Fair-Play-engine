@@ -27,6 +27,8 @@
 			else
 				$my_line = Jelly::factory ('line');
 
+			$club_loader = new Loader_Clubs();
+
 			$res = DB::select_array(array('goals.player_id', 'goals.line_id'))
 					->select(array('SUM("count")', 'goals'))
 					->from('goals')
@@ -75,6 +77,8 @@
                     ->not_played()
                     ->execute();
 
+			$club_loader->add_by_ids($tournament->lines->as_array('id', 'club'));
+
 			$view = new View('tournament_view_new');
 			$view->table = $tournament;
 			$view->user = $this->user;
@@ -84,6 +88,7 @@
 			$view->last_matches = $last_matches;
             $view->planned_matches = $planned_matches;
 			$view->my_matches = $my_matches;
+			$view->club_loader = $club_loader;
 
 			$this->template->title = __(":name", array(":name" => $tournament->name));
 			$this->template->content = $view;

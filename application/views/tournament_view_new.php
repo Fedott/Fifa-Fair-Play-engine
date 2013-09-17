@@ -74,9 +74,9 @@
 				<?php foreach($planned_matches as $match):?>
 					<?php /** @var $match Model_Planned_Match */ ?>
 					<tr>
-						<td class="right span5"><?=HTML::anchor("match/view/".$match->id, $match->home->club->name);?></td>
+						<td class="right span5"><?=HTML::anchor("match/view/".$match->id, $club_loader->get_by_line($match->home)->name);?></td>
 						<td class="center span1">vs</td>
-						<td class="span5"><?=HTML::anchor("match/view/".$match->id, $match->away->club->name);?></td>
+						<td class="span5"><?=HTML::anchor("match/view/".$match->id, $club_loader->get_by_line($match->away)->name);?></td>
 						<td class="span2"><?=$match->round;?> тур</td>
 					</tr>
 				<?php endforeach;?>
@@ -93,9 +93,9 @@
 					<tr class="<?=($match->home->id() == $my_line->id || $match->away->id() == $my_line->id)?"info":'';?>">
 						<?php /** @var $match Model_Match */ ?>
 						<td><?=MISC::get_human_short_date($match->date);?></td>
-						<td class="right"><?=HTML::anchor("match/view/".$match->id, $match->home->club->name);?></td>
+						<td class="right"><?=HTML::anchor("match/view/".$match->id, $club_loader->get_by_line($match->home)->name);?></td>
 						<td class="center"><?=HTML::anchor("match/view/".$match->id, $match->home_goals." - ".$match->away_goals);?></td>
-						<td><?=HTML::anchor("match/view/".$match->id, $match->away->club->name);?></td>
+						<td><?=HTML::anchor("match/view/".$match->id, $club_loader->get_by_line($match->away)->name);?></td>
 					</tr>
 				<?php endforeach;?>
 				<?php if( ! count($last_matches)):?>
@@ -128,9 +128,9 @@
 						<?php /** @var $match Model_Match */ ?>
 						<?php $link = ( ! $match->confirm AND $match->away->id() == $my_line->id)?url::site('match/confirm/'.$match->id):url::site('match/view/'.$match->id);?>
 						<td><?=MISC::get_human_short_date($match->date);?></td>
-						<td class="right"><?=html::anchor($link, $match->home->club->name);?></td>
+						<td class="right"><?=html::anchor($link, $club_loader->get_by_line($match->home)->name);?></td>
 						<td class="center"><?=html::anchor($link, $match->home_goals." - ".$match->away_goals);?></td>
-						<td><?=html::anchor($link, $match->away->club->name);?></td>
+						<td><?=html::anchor($link, $club_loader->get_by_line($match->away)->name);?></td>
 					</tr>
 				<?php endforeach;?>
 				<tfoot>
