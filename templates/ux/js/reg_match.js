@@ -78,5 +78,28 @@ jQuery( function($) {
 		});
 
 		$("#away").change();
+
+        var match_score = function(){
+            var home_goals = 0;
+            var away_goals = 0;
+            $(".player_select_home input.input-mini").each(function(number, element) {
+                var value = $(element).val();
+                if (/^[0-9]+$/.test(value)) {
+                    home_goals += (+value);
+                }
+            })
+            $(".player_select_away input.input-mini").each(function(number, element) {
+                var value = $(element).val();
+                if (/^[0-9]+$/.test(value)) {
+                    away_goals += (+value);
+                }
+            })
+
+            $(".match-result").html(home_goals + " - " + away_goals);
+        }
+
+        match_score();
+
+        $(document).on("keyup", ".player_select_away input.input-mini, .player_select_home input.input-mini", match_score)
 	});
 });

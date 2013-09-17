@@ -36,6 +36,10 @@
 				</div>
 			</div>
 		</div>
+		<div class="row-fluid">
+			<p class="muted center">Общий счёт матча</p>
+			<p class="muted center match-result"></p>
+		</div>
 		<br />
 		<?php echo Form::textarea('text', NULL, array(
 			'id' => 'comment',
