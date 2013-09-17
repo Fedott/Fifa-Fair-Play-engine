@@ -114,6 +114,19 @@
 				$password = $_POST['password'];
 				$remember = (isset($_POST['remember']))?TRUE:FALSE;
 
+				if (Validate::email($username))
+				{
+					/** @var Model_User $user */
+					$user = Jelly::select("user")
+						->where("email", "=", $username)
+						->limit(1)
+						->execute();
+					if ($user->loaded())
+					{
+						$username = $user->username;
+					}
+				}
+
 				if($this->auth->login($username, $password, $remember))
 				{
 					Request::instance()->redirect('');

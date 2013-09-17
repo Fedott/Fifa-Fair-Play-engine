@@ -48,7 +48,7 @@
 						<?=HTML::anchor('login', 'Войти');?>
 					</li>
 					<li>
-						<?=HTML::anchor('logout', 'Зарегистрироваться');?>
+						<?=HTML::anchor('reg', 'Зарегистрироваться');?>
 					</li>
 				<?php endif;?>
 			</ul>
