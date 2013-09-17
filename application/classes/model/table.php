@@ -13,6 +13,7 @@
  * @property Jelly_Collection $lines
  * @property $matches
  * @property $scheduled
+ * @property $cup
  */
 class Model_Table extends Jelly_Model
 {
@@ -46,6 +47,9 @@ class Model_Table extends Jelly_Model
 				'default' => 2,
 			)),
 			'scheduled' => new Field_Boolean(array(
+				'default' => FALSE,
+			)),
+			'cup' => new Field_Boolean(array(
 				'default' => FALSE,
 			)),
 			'planned_matches' => Jelly::field('hasmany'),
@@ -105,6 +109,99 @@ class Model_Table extends Jelly_Model
 		}
 
 		return $this->_create_planned_matches($matches, $save);
+	}
+
+	public function make_schedule_cup($save = FALSE)
+	{
+		ini_set('max_execution_time', 120);
+
+		$matches = array();
+		$match_objects = array();
+
+		$clubs = $this->lines->as_array(NULL, 'id');
+
+		$count_clubs = count($clubs);
+
+		if($count_clubs < 2)
+		{
+			return FALSE;
+		}
+
+		$rounds = $this->get_rounds_from_count_clubs($count_clubs);
+		if ($rounds === FALSE)
+		{
+			return FALSE;
+		}
+
+		for ($round = 1; $round <= $rounds; $round++)
+		{
+			for ($match_count = 1; $match_count <= $this->matches; $match_count++)
+			{
+				/** @var Model_Planned_Match $match */
+				$match = Jelly::factory('planned_match');
+				$match->round = $round;
+				$match->table = $this;
+
+				if ( ! isset($match_objects[$round]))
+				{
+					$match_objects[$round] = array();
+				}
+
+				$match_objects[$round][] = $match;
+
+				if ($save)
+				{
+					$match->save();
+				}
+			}
+		}
+
+		$last_round = $this->make_schedule_cup_round($round, $save);
+	}
+
+	public function make_schedule_cup_round($round, $save = FALSE)
+	{
+		$prev_round_matches = Jelly::select('match')
+			->where("round", '=', $round - 1)
+			->tournament($this->id)
+			->execute();
+
+		$clubs = array();
+
+		if (count($prev_round_matches) > 0)
+		{
+			$clubs = $this->get_round_winner_clubs($prev_round_matches);
+		}
+		else
+		{
+			$clubs = $this->lines->as_array('id');
+
+		}
+	}
+
+	protected function get_round_winner_clubs($matches)
+	{
+
+	}
+
+	protected function get_rounds_from_count_clubs($count)
+	{
+		$rounds = 1;
+
+		while (TRUE)
+		{
+			if ($rounds * 2 >= $count)
+			{
+				return $rounds;
+			}
+
+			if ($rounds > 32)
+			{
+				return FALSE;
+			}
+
+			$rounds++;
+		}
 	}
 
 	protected function _create_planned_matches($matches, $save = FALSE)

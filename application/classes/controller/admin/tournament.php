@@ -372,6 +372,11 @@
 				MISC::set_error_message('Этот турнир проводиться без расписания');
 				$this->request->redirect('admin/tournament/view/'.$table->id);
 			}
+			if($table->cup)
+			{
+				MISC::set_error_message('Это кубковый турнир');
+				$this->request->redirect('admin/tournament/view/'.$table->id);
+			}
 			if(Jelly::select('planned_matches')->where('table_id', '=', $table->id)->count())
 			{
 				MISC::set_error_message('Расписание для этого турнира уже существует');
@@ -379,6 +384,32 @@
 			}
 
 			$table->make_schedule(TRUE);
+
+			MISC::set_apply_message('Расписание успешно сгенерированно');
+			$this->request->redirect('admin/tournament/view/'.$table->id);
+		}
+
+		public function action_make_schedule_cup($table_id)
+		{
+			/** @var $table Model_Table */
+			$table = Jelly::select('table', $table_id);
+			if( ! $table->scheduled)
+			{
+				MISC::set_error_message('Этот турнир проводиться без расписания');
+				$this->request->redirect('admin/tournament/view/'.$table->id);
+			}
+			if( ! $table->cup)
+			{
+				MISC::set_error_message('Это НЕ кубковый турнир');
+				$this->request->redirect('admin/tournament/view/'.$table->id);
+			}
+			if(Jelly::select('planned_matches')->where('table_id', '=', $table->id)->count())
+			{
+				MISC::set_error_message('Расписание для этого турнира уже существует');
+				$this->request->redirect('admin/tournament/view/'.$table->id);
+			}
+
+			$table->make_schedule_cup(TRUE);
 
 			MISC::set_apply_message('Расписание успешно сгенерированно');
 			$this->request->redirect('admin/tournament/view/'.$table->id);

@@ -48,6 +48,14 @@
 		</div>
 	</li>
 	<li>
+		<label class="desc" for="field-cup">
+			<?=__('Кубок');?>
+		</label>
+		<div>
+			<?=$tournament->input('cup');?>
+		</div>
+	</li>
+	<li>
 		<label class="desc" for="field-active">
 			<?=__('Активировать');?>
 		</label>
