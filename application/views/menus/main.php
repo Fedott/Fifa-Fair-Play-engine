@@ -16,11 +16,6 @@
 				<li>
 					<?=HTML::anchor('forum', 'Форум');?>
 				</li>
-				<?php if($auth->logged_in('coach')):?>
-					<li>
-						<?=HTML::anchor('match/my', 'Мои матчи');?>
-					</li>
-				<?php endif;?>
 				<?php if($auth->logged_in("admin")):?>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -40,8 +35,20 @@
 			</ul>
 			<ul class="nav pull-right">
 				<?php if($auth->logged_in()):?>
-					<li>
-						<?=HTML::anchor('profile', $user->username);?>
+					<?php if($auth->logged_in('coach')):?>
+						<li>
+							<?=HTML::anchor('match/my', 'Мои матчи');?>
+						</li>
+					<?php endif;?>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<?=$user->username;?>
+							<b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">
+							<li><?=HTML::anchor('profile', 'Профиль');?></li>
+							<li><?=HTML::anchor('logout', 'Выйти');?></li>
+						</ul>
 					</li>
 				<?php else:?>
 					<li>
