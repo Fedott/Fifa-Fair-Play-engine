@@ -1,4 +1,8 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');?>
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+/**
+ * @var Model_Page $page
+ */
+?>
 <?if($errors):?>
 <div class="errors">
 	<p class="errors">Произошла ошибка</p>
@@ -27,7 +31,7 @@
 			Текст
 		</label>
 		<div>
-			<?=$page->input('text');?>
+			<?=$page->input('text', 'admin/jelly/field');?>
 		</div>
 	</li>
 	<li class="">
