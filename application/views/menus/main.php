@@ -37,7 +37,15 @@
 				<?php if($auth->logged_in()):?>
 					<?php if($auth->logged_in('coach')):?>
 						<li>
-							<?=HTML::anchor('match/my', 'Мои матчи');?>
+							<a href="<?=url::site('match/my');?>">
+								Мои матчи
+								<?php if ($matches_not_apply_my) :?>
+									<span class="badge badge-important" title="Неподтверждённые вами матчи"><?=$matches_not_apply_my;?></span>
+								<?php endif;?>
+								<?php if ($matches_not_apply_opponent) :?>
+									<span class="badge badge-info" title="Неподтверждённые соперником матчи"><?=$matches_not_apply_opponent;?></span>
+								<?php endif;?>
+							</a>
 						</li>
 					<?php endif;?>
 					<li class="dropdown">
