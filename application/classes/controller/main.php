@@ -4,19 +4,102 @@
 	{
 		public function action_index()
 		{
-			$count = Jelly::select('news')->count();
-			$pagination = Pagination::factory(array(
-				'total_items' => $count,
-			));
-
-			$News = Jelly::select('news')
-					->offset($pagination->offset)
-					->limit($pagination->items_per_page)
+			/** @var $table Model_Table */
+			$table = Jelly::select('table')->limit(1)->visible()->execute();
+			$last_matches = Jelly::select('match')
+					->where('table', '=', $table->id)
+					->limit(10)
 					->execute();
 
-			$view = new View('news_list');
-			$view->News = $News;
-			$view->pagination = $pagination;
+			if($this->user->loaded())
+			{
+				$my_line = Jelly::select('line')
+						->where('table_id', "=", $table->id)
+						->and_where("user_id", "=", $this->user->id)
+						->limit(1)
+						->execute();
+			}
+			else
+				$my_line = Jelly::factory ('line');
+
+			$my_matches = Jelly::select('match')
+					->line($my_line->id)
+					->tournament($table->id)
+					->limit(10)
+					->execute();
+
+			$planned_matches = Jelly::select('planned_match')
+				->tournament($table->id)
+				->line($my_line->id)
+				->available()
+				->not_played()
+				->execute();
+
+			$club_loader = new Loader_Clubs();
+
+			// TODO:: Переписать к чертям. А то быдлокод
+			$res = DB::select_array(array('goals.player_id', 'goals.line_id'))
+						->select(array('SUM("count")', 'goals'))
+						->from('goals')
+						->group_by('player_id')
+						->limit(10)
+						->order_by('goals', 'DESC')
+						->where('table_id', "=", $table->id)
+						->execute();
+			$goleodors = array();
+			$players_like = array();
+			foreach ($res as $row)
+			{
+				$players_like[] = $row['player_id'];
+				$goleodors[$row['player_id']] = array('player_id' => $row['player_id'], 'goals' => $row['goals'], 'line_id' => $row['line_id']);
+			}
+
+			if(!empty($players_like))
+			{
+				$players_goals = Jelly::select('player')
+						->with('club')
+						->where(":primary_key", "IN", $players_like)
+						->execute();
+
+				foreach($players_goals as $player)
+				{
+					$goleodors[$player->id]['player'] = $player;
+				}
+			}
+
+			$lines_arr = array();
+			$my_line_in = false;
+			foreach($table->lines as $pos => $line)
+			{
+				$club_loader->add_by_line($line);
+
+				++$pos;
+				if( ! $my_line->loaded() OR $line->id == $my_line->id OR $my_line_in OR count($lines_arr) < 9)
+				{
+					$lines_arr[$pos] = $line;
+				}
+
+				if($line->id == $my_line->id)
+				{
+					$my_line_in = true;
+				}
+
+				if(count($lines_arr) == 10)
+				{
+					break;
+				}
+			}
+
+			$view = View::factory('main');
+			$view->table = $table;
+			$view->last_matches = $last_matches;
+			$view->goleodors = $goleodors;
+			$view->my_line = $my_line;
+			$view->lines = $lines_arr;
+			$view->uchastie = (bool) $my_line->loaded();
+			$view->my_matches = $my_matches;
+			$view->planned_matches = $planned_matches;
+			$view->club_loader = $club_loader;
 
 			$this->template->title = __('Главная');
 			$this->template->content = $view;
@@ -35,6 +118,19 @@
 				$username = $_POST['username'];
 				$password = $_POST['password'];
 				$remember = (isset($_POST['remember']))?TRUE:FALSE;
+
+				if (Validate::email($username))
+				{
+					/** @var Model_User $user */
+					$user = Jelly::select("user")
+						->where("email", "=", $username)
+						->limit(1)
+						->execute();
+					if ($user->loaded())
+					{
+						$username = $user->username;
+					}
+				}
 
 				if($this->auth->login($username, $password, $remember))
 				{
@@ -216,7 +312,7 @@
 						->execute();
 			}
 
-			$view = new View('profile');
+			$view = new View('profile_new');
 			$view->user = $user;
 			$view->coach = $coach;
 			$view->my_profile = ($user->id == $this->user->id)?true:false;

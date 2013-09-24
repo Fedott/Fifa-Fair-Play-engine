@@ -14,4 +14,14 @@
 		{
 			return $this->where("table", "=", $tournament_id);
 		}
+
+		public function available()
+		{
+			return $this->where('available', '=', true);
+		}
+
+		public function not_played()
+		{
+			return $this->where('played', '=', false);
+		}
 	}

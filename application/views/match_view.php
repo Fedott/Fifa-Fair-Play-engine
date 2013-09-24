@@ -38,14 +38,16 @@ jQuery( function($) {
 })
 </script>
 <script id="comment_tmpl" type="text/x-jquery-tmpl">
-	<div class="comment">
-		<div class="comment_author">
-			<img src="${avatar_url}" alt="${username}" />
+	<div class="comment row-fluid">
+		<div class="span2">
+			<div class="comment_author">
+				<img src="${avatar_url}" alt="${username}" />
+			</div>
+			<div class="comment_header">
+				<b>${username}</b> ${date}
+			</div>
 		</div>
-		<div class="comment_header">
-			<b>${username}</b> ${date}
-		</div>
-		<div class="comment_text">
+		<div class="comment_text span8">
 			{{html text}}
 		</div>
 	</div>
@@ -151,15 +153,16 @@ jQuery( function($) {
 <img id="comment_add_loadbar" src="/templates/fifa/img/ajax_load_bar.gif" style="display: none;"/>
 <?if($auth->logged_in()):?>
 	<?=form::open('ajax/comment/add', array('id' => 'comment_add_form'));?>
-		<h4>Добавить комментарий</h4>
-		<?php echo Form::textarea('comment_text', '', array(
-				'id' => 'field-comment_text',
-				'rows' => 8,
-				'cols' => 40,
-				'class' => 'textarea field wysiwyg max',
-			));
-		?>
+		<fieldset>
+			<legend>Добавить комментарий</legend>
+			<?php echo Form::textarea('comment_text', '', array(
+					'id' => 'field-comment_text',
+					'class' => 'textarea field wysiwyg input-xxxlarge',
+					'placeholder' => 'Введите текст комментария',
+				));
+			?>
+		</fieldset>
 		<?=form::hidden('match_id', $match->id);?>
-		<?=form::submit("", "Добавить");?>
+		<?=form::submit("", "Добавить", array('class' => 'btn'));?>
 	<?=form::close();?>
 <? endif; ?>

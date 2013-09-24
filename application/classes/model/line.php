@@ -1,9 +1,9 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
 /**
- * @property $table
- * @property $club
- * @property $user
+ * @property Model_Table $table
+ * @property Model_Club $club
+ * @property Model_User $user
  * @property $games
  * @property $win
  * @property $drawn

@@ -27,6 +27,8 @@
 			else
 				$my_line = Jelly::factory ('line');
 
+			$club_loader = new Loader_Clubs();
+
 			$res = DB::select_array(array('goals.player_id', 'goals.line_id'))
 					->select(array('SUM("count")', 'goals'))
 					->from('goals')
@@ -57,12 +59,36 @@
 				}
 			}
 
-			$view = new View('tournament_view');
-			$view->tournament = $tournament;
+			$last_matches = Jelly::select('match')
+					->where('table', '=', $tournament->id)
+					->limit(10)
+					->execute();
+
+			$my_matches = Jelly::select('match')
+				->line($my_line->id)
+				->tournament($tournament->id)
+				->limit(10)
+				->execute();
+
+            $planned_matches = Jelly::select('planned_match')
+                    ->tournament($tournament->id)
+                    ->line($my_line->id)
+                    ->available()
+                    ->not_played()
+                    ->execute();
+
+			$club_loader->add_by_ids($tournament->lines->as_array('id', 'club'));
+
+			$view = new View('tournament_view_new');
+			$view->table = $tournament;
 			$view->user = $this->user;
 			$view->goleodors = $goleodors;
 			$view->my_line = $my_line;
 			$view->uchastie = (bool) $my_line->loaded();
+			$view->last_matches = $last_matches;
+            $view->planned_matches = $planned_matches;
+			$view->my_matches = $my_matches;
+			$view->club_loader = $club_loader;
 
 			$this->template->title = __(":name", array(":name" => $tournament->name));
 			$this->template->content = $view;
@@ -161,6 +187,12 @@
 					->line($line->id)
 					->execute();
 
+			$last_five_matches = Jelly::select('match')
+				->limit(5)
+				->with('club')
+				->line($line->id)
+				->execute();
+
 			$schedule = false;
 			$played_matches = false;
 			if($tournament->scheduled)
@@ -205,8 +237,9 @@
 				$clubs_arr[$tline->club->id] = $tline->club;
 			}
 
-			$view = new View('tournament_club_view');
+			$view = new View('tournament_club_view_new');
 			$view->matches = $matches;
+			$view->last_five_matches = $last_five_matches;
 			$view->line = $line;
 			$view->goleodors = $goleodors;
 			$view->played_matches = $played_matches;

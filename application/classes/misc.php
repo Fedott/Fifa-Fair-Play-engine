@@ -18,6 +18,11 @@
 //			return date('d M Y H:i', $date);
 		}
 
+		public static function get_human_short_date($timestamp = NULL)
+		{
+			return strftime('%e %b', $timestamp);
+		}
+
 		public static function set_error_message($text)
 		{
 			Session::instance()->set('error_message', $text);
@@ -84,16 +89,102 @@
 			$last_send = Session::instance()->get($field_name, 0);
 			if($last_send < time() - $interval)
 			{
-				return true;
+				return TRUE;
 			}
 			else
 			{
-				return false;
+				return FALSE;
 			}
 		}
 
 		static public function duplicate_send_time_set($field_name)
 		{
 			return Session::instance()->set($field_name, time());
+		}
+
+		/**
+		 * @param Jelly_Collection  $matches
+		 * @param int               $line_id
+		 * @return string
+		 */
+		static public function matches_to_bullet($matches, $line_id)
+		{
+			$result = '';
+			foreach ($matches as $match)
+			{
+				/** @var Model_Match $match */
+				if ($match->home->id() == $line_id)
+				{
+					if ($match->home_goals > $match->away_goals)
+						$color = 'win';
+					else if ($match->home_goals == $match->away_goals)
+						$color = 'draw';
+					else
+						$color = 'lose';
+				}
+				else
+				{
+					if ($match->home_goals < $match->away_goals)
+						$color = 'win';
+					else if ($match->home_goals == $match->away_goals)
+						$color = 'draw';
+					else
+						$color = 'lose';
+				}
+
+				$result = html::anchor("match/view/".$match->id, "<span class='bullet {$color}'>&bullet;</span>") . $result;
+			}
+
+			return $result;
+		}
+
+		/**
+		 * @param Model_Match   $match
+		 * @param int           $line_id
+		 */
+		static public function matches_to_score_line($match, $line_id)
+		{
+			$result = '';
+
+			if ($match->home->id == $line_id)
+			{
+				$result = "<span class='";
+				if ($match->home_goals > $match->away_goals)
+				{
+					$result.= 'win';
+				}
+				else if ($match->home_goals == $match->away_goals)
+				{
+					$result.= 'draw';
+				}
+				else
+				{
+					$result.= 'lose';
+				}
+				$result.= "'>";
+				$result.= $match->home_goals . " - " . $match->away_goals;
+				$result.= "</span>";
+			}
+			else
+			{
+				$result = "<span class='";
+				if ($match->home_goals < $match->away_goals)
+				{
+					$result.= 'win';
+				}
+				else if ($match->home_goals == $match->away_goals)
+				{
+					$result.= 'draw';
+				}
+				else
+				{
+					$result.= 'lose';
+				}
+				$result.= "'>";
+				$result.= $match->away_goals . " - " . $match->home_goals;
+				$result.= "</span>";
+			}
+
+			return $result;
 		}
 	}

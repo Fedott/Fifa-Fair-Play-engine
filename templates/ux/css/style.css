@@ -1,0 +1,117 @@
+.center, td.center, th.center {
+	text-align: center;
+}
+
+.right, td.right, th.right {
+	text-align: right;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.input-xxxlarge, .wysiwyg {
+	width: 570px;
+}
+
+.input-micro {
+	width: 20px;
+}
+
+
+
+table caption h4 {
+	padding-bottom: 8px;
+}
+
+.tournament_schedule, .tournament_add_match {
+	padding-top: 22px;
+}
+
+
+.bullet {
+    font-size: 35px;
+}
+
+.bullet.yellow {
+    color: #ffff00;
+}
+
+.bullet.red {
+    color: red;
+}
+
+.bullet.green {
+    color: #008000;
+}
+
+.popup_profile {
+    display: none;
+}
+
+span.win {
+    color: #008000;
+}
+
+span.draw {
+    color: darkgray;
+}
+
+span.lose {
+    color: red;
+}
+
+.team-name {
+    font-size: 22px;
+}
+
+.news-element {
+    background-color: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px 4px 4px 4px;
+    margin: 15px 0;
+    padding: 39px 19px 14px;
+    position: relative;
+}
+
+.news-element .news-title {
+    background-color: #F5F5F5;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px 0 4px 0;
+    color: #9DA0A4;
+    content: attr(news_title);
+    font-size: 12px;
+    font-weight: bold;
+    left: -1px;
+    padding: 3px 7px;
+    position: absolute;
+    top: -1px;
+}
+
+.news-element:before {
+    background-color: #F5F5F5;
+    border: 1px solid #DDDDDD;
+    border-radius: 0 4px 0 4px;
+    color: #9DA0A4;
+    content: attr(news_date);
+    font-size: 12px;
+    font-weight: bold;
+    right: -1px;
+    padding: 3px 7px;
+    position: absolute;
+    top: -1px;
+}
+
+table.profile {
+    width: 77%;
+}
+
+table.profile tbody tr:last-child td {
+    padding-bottom: 15px;
+}
+
+table.profile th {
+    text-align: left;
+    vertical-align: top;
+    width: 30%;
+}

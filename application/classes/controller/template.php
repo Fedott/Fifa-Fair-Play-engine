@@ -1,11 +1,12 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
 	/**
-	 * @property $user
+	 * @property Model_User $user
+	 * @property Auth $auth
 	 */
 	class Controller_Template extends Kohana_Controller_Template
 	{
-		public $template = 'fifa';
+		public $template = 'ux';
 
 		public function before()
 		{

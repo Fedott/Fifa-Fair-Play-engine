@@ -89,7 +89,10 @@ class Model_Table extends Jelly_Model
 				array_unshift($clubs_first_half, $first_club);
 				for($i = 0; $i < count($clubs_first_half); $i++)
 				{
-					$matches[$circle][$round][] = array('home' => $clubs_first_half[$i], 'away' => $clubs_second_half[$i]);
+					$match_clubs = array($clubs_first_half[$i], $clubs_second_half[$i]);
+					shuffle($match_clubs);
+					$matches[$circle][$round][] = array('home' => $match_clubs[0], 'away' => $match_clubs[1]);
+//					$matches[$circle][$round][] = array('home' => $clubs_first_half[$i], 'away' => $clubs_second_half[$i]);
 					$circle_matches[$clubs_first_half[$i]][$clubs_second_half[$i]] = 1;
 					$circle_matches[$clubs_second_half[$i]][$clubs_first_half[$i]] = 1;
 				}

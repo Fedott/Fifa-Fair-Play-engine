@@ -71,11 +71,11 @@ class Model_User extends Model_Auth_User
 	{
 		if(!empty($this->avatar))
 		{
-			return 'media/avatars/'.$this->avatar;
+			return url::site('media/avatars/'.$this->avatar);
 		}
 		else
 		{
-			return 'media/avatars/noava.jpg';
+			return 'http://www.gravatar.com/avatar/'.md5(strtolower($this->email)).'?d=wavatar';
 		}
 	}
 
@@ -96,5 +96,24 @@ class Model_User extends Model_Auth_User
 		}
 
 		return implode($delimiter, $return);
+	}
+
+	public function get_im_as_array()
+	{
+		$return = array();
+		if( ! empty($this->icq))
+		{
+			$return["ICQ"] = $this->icq;
+		}
+		if( ! empty($this->skype))
+		{
+			$return["Skype"] = $this->skype." <a href='skype:".$this->skype."?chat'>".html::image('templates/fifa/img/chat.png')."</a>";
+		}
+		if( ! empty($this->origin))
+		{
+			$return["Origin"] = $this->origin;
+		}
+
+		return $return;
 	}
 }

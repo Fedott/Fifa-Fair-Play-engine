@@ -68,4 +68,11 @@ class Controller_Admin_User extends Controller_Admin
 				.HTML::anchor('admin/user', __("Управление пользователями"))." > "
 				.HTML::anchor('admin/user/list', __("Список"))." > ";
 	}
+
+	public function action_login($user_id)
+	{
+		$user = Jelly::select('user', $user_id);
+		$this->auth->force_login($user);
+		Request::instance()->redirect('/');
+	}
 }
