@@ -17,10 +17,12 @@ class Controller_Pro_Club extends Controller_Template
 	{
 		$start = $this->request->param('start_date', date('d-m-Y', strtotime('monday previous week')));
 		$end = $this->request->param('end_date', date('d-m-Y', strtotime("monday this week")));
+		$season = $this->request->param('season', 2013);
 
 		$pro_players = Jelly::select("pro_player")
 				->where('date', '<=', strtotime($end))
 				->and_where('date', '>=', strtotime($start))
+				->and_where('season', '=', $season)
 				->execute();
 
 		$start_values = array();
