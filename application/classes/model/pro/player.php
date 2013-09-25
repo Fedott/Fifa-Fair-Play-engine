@@ -35,10 +35,10 @@ class Model_Pro_Player extends Jelly_Model
 		));
 	}
 
-	public static function parse_eafoolballworld($season = '2012')
+	public static function parse_eafoolballworld($season = '2013')
 	{
 		ob_end_clean();
-		$members_url = 'http://www.eafootballworld.com/en_GB/clubs/partial/395A0001/1111/members-list';
+		$members_url = 'http://www.eafootballworld.com/en_GB/clubs/partial/FFA14PCC/423/members-list';
 		include_once Kohana::find_file('vendor', 'phpQuery');
 
 		// Расчитываем сегодняшную дату
