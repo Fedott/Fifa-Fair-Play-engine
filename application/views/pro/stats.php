@@ -1,5 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.'); ?>
-<table cellspacing="1" cellpading="3">
+<h2 class="page-header">Статистика игроков</h2>
+<table class="table table-bordered">
 	<thead>
 		<tr>
 			<th>Ник</th>
