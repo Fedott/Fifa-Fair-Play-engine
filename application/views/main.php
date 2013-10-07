@@ -81,9 +81,9 @@
 				<?php foreach($planned_matches as $match):?>
 					<?php /** @var $match Model_Planned_Match */ ?>
 					<tr>
-						<td class="right span4"><?=HTML::anchor("match/view/".$match->id, $club_loader->get_by_line($match->home)->name);?></td>
+						<td class="right span4"><?=HTML::anchor("/tournament/club/" . $match->home->id(), $club_loader->get_by_line($match->home)->name);?></td>
 						<td class="center span1">vs</td>
-						<td class="span4"><?=HTML::anchor("match/view/".$match->id, $club_loader->get_by_line($match->away)->name);?></td>
+						<td class="span4"><?=HTML::anchor("/tournament/club/" . $match->away->id(), $club_loader->get_by_line($match->away)->name);?></td>
 						<td class="span2"><?=$match->round;?> тур</td>
 					</tr>
 				<?php endforeach;?>
