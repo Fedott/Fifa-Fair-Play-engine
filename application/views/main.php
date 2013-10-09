@@ -103,6 +103,13 @@
 						<td class="right"><?=HTML::anchor("match/view/".$match->id, $club_loader->get_by_line($match->home)->name);?></td>
 						<td class="center"><?=HTML::anchor("match/view/".$match->id, $match->home_goals." - ".$match->away_goals);?></td>
 						<td><?=HTML::anchor("match/view/".$match->id, $club_loader->get_by_line($match->away)->name);?></td>
+						<td>
+							<?php if($match->confirm):?>
+								<i class="icon-ok" title="Подтверждён"></i>
+							<?php else:?>
+								<i class="icon-remove" title="Не подтверждён"></i>
+							<?php endif;?>
+						</td>
 					</tr>
 				<?php endforeach;?>
 			</tbody>
