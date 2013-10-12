@@ -623,7 +623,7 @@
 					$video->title = arr::get($_POST, 'title');
 					$video->description = arr::get($_POST, 'description');
 					$video->match = $match;
-					$youtube_title = "КФ: ".$video->title;
+					$youtube_title = "КФ, ".$match->home->club->name." - ".$match->away->club->name." : ".$video->title;
 					$youtube_description = "КФ, турнир: ".$match->table->title;
 					$youtube_description.= "Матч: ".$match->home->club->name." ".$match->home_goals." - ".$match->away_goals." ".$match->away->club->name;
 					$youtube_description.= "\n".$video->description."\n";

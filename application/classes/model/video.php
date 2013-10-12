@@ -11,6 +11,8 @@ class Model_Video extends Jelly_Model
 {
 	public $http_client = NULL;
 
+	const EA_SPORTS_API_URL = "http://www.easports.com/fifa/football-club/api/media/list?personaName=__USERNAME__&platformName=__PLATFORM__&year=__YEAR__";
+
 	public static function initialize(Jelly_Meta $meta)
 	{
 		$meta->fields(array(
@@ -122,21 +124,57 @@ class Model_Video extends Jelly_Model
 
 	public function eaworld_parse($url)
 	{
-		// http://www.ea.com/uk/football/videos/ugc/142783672
-//		$url = "http://www.ea.com/uk/football/videos/ugc/142783672";
-		require_once Kohana::find_file('vendor', 'phpQuery');
+		// http://www.easports.com/fifa/football-club/profile/media/PC/Fedotishe/2013/video/153282329
+		// http://www.easports.com/fifa/football-club/api/media/list?personaName=Fedotishe&platformName=PC&year=2013
+		$url_path = parse_url($url, PHP_URL_PATH);
+		if ($url_path === null)
+		{
+			return false;
+		}
+		$url_path = trim($url_path, "/");
+		$url_path_array = explode("/", $url_path);
 
-		$html = file_get_contents($url);
+		if (count($url_path_array) != 9)
+		{
+			return false;
+		}
 
-		$html = phpQuery::newDocumentHTML($html);
+		$video_id = $url_path_array[8];
 
-		$video_url = $html->find("meta[property='media:video']")->attr('content');
+		$api_url = str_replace(array(
+				'__USERNAME__',
+				'__PLATFORM__',
+				'__YEAR__',
+			), array(
+				$url_path_array[5],
+				$url_path_array[4],
+				$url_path_array[6],
+			),
+			self::EA_SPORTS_API_URL
+		);
+
+		$json_response = file_get_contents($api_url);
+		$json_response = json_decode($json_response, true);
+
+		$video_url = false;
+		foreach (Arr::path($json_response, 'data.videos', array()) as $video_array)
+		{
+			if ($video_array['id'] == $video_id)
+			{
+				$video_url = $video_array['url'];
+			}
+		}
 
 		return $video_url;
 	}
 
 	public function eaworld_download($url)
 	{
+		if ( ! $url)
+		{
+			return false;
+		}
+
 		$file_path = tempnam(sys_get_temp_dir(), "fifavideo");
 		$remote_file_handle = fopen($url, "rb");
 		$local_file_handle = fopen($file_path, "wb");
