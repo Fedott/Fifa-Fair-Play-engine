@@ -79,6 +79,21 @@
 
 			$club_loader->add_by_ids($tournament->lines->as_array('id', 'club'));
 
+			$match_ids = $last_matches->as_array('id', 'id');
+			$video_ids = array();
+			if(count($match_ids))
+			{
+				/** @var $videos Jelly_Collection */
+				$videos = Jelly::select('video')
+					->where('match_id', 'IN', $match_ids)
+					->execute();
+
+				foreach($videos as $video)
+				{
+					$video_ids[$video->match_id()] = $video->id;
+				}
+			}
+
 			$view = new View('tournament_view_new');
 			$view->table = $tournament;
 			$view->user = $this->user;
@@ -89,6 +104,7 @@
             $view->planned_matches = $planned_matches;
 			$view->my_matches = $my_matches;
 			$view->club_loader = $club_loader;
+			$view->video_ids = $video_ids;
 
 			$this->template->title = __(":name", array(":name" => $tournament->name));
 			$this->template->content = $view;

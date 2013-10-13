@@ -22,6 +22,22 @@
 			else
 				$my_line = Jelly::factory ('line');
 
+			$match_ids = $last_matches->as_array('id', 'id');
+
+			$video_ids = array();
+			if(count($match_ids))
+			{
+				/** @var $videos Jelly_Collection */
+				$videos = Jelly::select('video')
+					->where('match_id', 'IN', $match_ids)
+					->execute();
+
+				foreach($videos as $video)
+				{
+					$video_ids[$video->match_id()] = $video->id;
+				}
+			}
+
 			$my_matches = Jelly::select('match')
 					->line($my_line->id)
 					->tournament($table->id)
@@ -100,6 +116,7 @@
 			$view->my_matches = $my_matches;
 			$view->planned_matches = $planned_matches;
 			$view->club_loader = $club_loader;
+			$view->videos_ids = $video_ids;
 
 			$this->template->title = __('Главная');
 			$this->template->content = $view;
