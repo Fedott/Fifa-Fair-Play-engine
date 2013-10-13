@@ -102,7 +102,7 @@
 							<?php else:?>
 								<i class="icon-remove" title="Не подтверждён"></i>
 							<?php endif;?>
-							<?php if(isset($videos_ids[$match->id])):?>
+							<?php if(isset($video_ids[$match->id])):?>
 								<i class="icon-film" title="Есть видео"></i>
 							<?php endif;?>
 						</td>
