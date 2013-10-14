@@ -664,11 +664,12 @@
 				}
 			}
 
-			$view = View::factory('video_upload');
+			$view = View::factory('video_upload_new');
 			$view->errors = $errors;
 			$view->video = $video;
 			$view->match = $match;
 			$view->form = $form;
+			$view->user = $this->user;
 
 			$this->template->title = 'Загрузка видео к матчу';
 			$this->template->content = $view;
