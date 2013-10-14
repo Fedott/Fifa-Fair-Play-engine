@@ -472,7 +472,7 @@
 					'avatar_url' => $comment->author->get_avatar(),
 					'username'   => $comment->author->username,
 					'date'       => misc::get_human_date($comment->date),
-					'text'       => str_replace('&nbsp;', "", $comment->text),
+					'text'       => $comment->text,
 				);
 			}
 
