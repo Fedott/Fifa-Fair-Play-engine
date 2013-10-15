@@ -23,7 +23,7 @@
 	                    <?php if($auth->logged_in('admin') AND ! $match->available):?>
 	                        <?=HTML::anchor('admin/tournament/active_match/'.$match->id, 'Активировать');?>
 	                    <?php endif;?>
-	                    <?php if($auth->logged_in('admin') AND $match->available):?>
+	                    <?php if($auth->logged_in('admin') AND $match->available AND ! $match->played):?>
 		                    <?=HTML::anchor('admin/tournament/deactivate_match/'.$match->id, 'Деативировать');?>
 	                    <?php endif;?>
 	                </td>
